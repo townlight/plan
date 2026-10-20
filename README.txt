@@ -22,4 +22,4 @@ Quickstart: install CivicCore first with python -m pip install https://github.co
 
 Set CIVICPLAN_POLICY_DB_URL to enable persistent plan-policy and staff-analysis records. Persisted staff-analysis create/read routes are staff-only and require X-CivicPlan-Role: staff from a trusted staff or service workflow. When unset, CivicPlan continues to use deterministic in-memory sample data.
 
-Code license: Apache 2.0. Documentation license: CC BY 4.0.
+Code license: AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying deployments. See LICENSE and LICENSE-EXCEPTION.md. Documentation license: CC BY 4.0 (LICENSE-DOCS).
