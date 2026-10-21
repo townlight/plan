@@ -1,4 +1,4 @@
-"""Staff-analysis outline helpers for CivicPlan."""
+"""Staff-analysis outline helpers for Townlight Planning."""
 
 from __future__ import annotations
 

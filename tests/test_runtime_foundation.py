@@ -43,7 +43,7 @@ def test_root_endpoint_states_runtime_boundary() -> None:
     assert payload["version"] == "0.2.2"
     assert payload["status"] == "v1 cited planning policy and staff analysis runtime"
     assert "staff-only local policy ingestion" in payload["message"]
-    assert "CivicZone and CivicClerk context contracts" in payload["message"]
+    assert "Townlight Zoning and Townlight Meetings context contracts" in payload["message"]
     assert "does not make official planning determinations" in payload["message"]
     assert payload["next_step"].startswith("Configure local plan policies")
 

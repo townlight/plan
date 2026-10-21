@@ -1,4 +1,4 @@
-"""FastAPI runtime foundation for CivicPlan."""
+"""FastAPI runtime foundation for Townlight Planning."""
 
 import os
 from typing import Annotated
@@ -113,9 +113,9 @@ def root() -> dict[str, str]:
         "version": __version__,
         "status": "v1 cited planning policy and staff analysis runtime",
         "message": (
-            "CivicPlan v0.2.2 provides cited plan-policy lookup, staff-only local policy ingestion, "
+            "Townlight Planning v0.2.2 provides cited plan-policy lookup, staff-only local policy ingestion, "
             "goal/objective/policy navigation, cited plan Q&A, cross-plan synthesis, amendment history, progress tracking, "
-            "CivicZone and CivicClerk context contracts, optional database-backed policy and staff-analysis records, records-ready exports, "
+            "Townlight Zoning and Townlight Meetings context contracts, optional database-backed policy and staff-analysis records, records-ready exports, "
             "local adversarial integration mocks, and an accessible public UI. It does not make official planning determinations, "
             "provide legal advice, call live external systems by default, or replace planner/elected-body judgment."
         ),
@@ -161,7 +161,7 @@ async def validation_exception_handler(
         status_code=422,
         content={
             "detail": {
-                "message": f"CivicPlan could not validate: {field_list}.",
+                "message": f"Townlight Planning could not validate: {field_list}.",
                 "fix": fix,
                 "fields": fields,
             }
@@ -192,7 +192,7 @@ def ingest_policy(
         raise HTTPException(
             status_code=503,
             detail={
-                "message": "CivicPlan policy ingestion requires configured local persistence.",
+                "message": "Townlight Planning policy ingestion requires configured local persistence.",
                 "fix": "Set CIVICPLAN_POLICY_DB_URL, then retry the staff-only ingestion request.",
             },
         )
@@ -306,7 +306,7 @@ def zoning_policy_context(request: ZoningPolicyContextRequest) -> dict[str, obje
         "source": source,
         "civiczone_context_id": request.civiczone_context_id,
         "boundary": (
-            "CivicPlan provides cited comprehensive-plan context only; it is not a "
+            "Townlight Planning provides cited comprehensive-plan context only; it is not a "
             "zoning determination, planning approval, or legal advice."
         ),
     }
@@ -353,7 +353,7 @@ def get_staff_analysis(
         raise HTTPException(
             status_code=503,
             detail={
-                "message": "CivicPlan policy persistence is not configured.",
+                "message": "Townlight Planning policy persistence is not configured.",
                 "fix": "Set CIVICPLAN_POLICY_DB_URL to retrieve persisted staff-analysis records.",
             },
         )

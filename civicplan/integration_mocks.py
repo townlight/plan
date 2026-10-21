@@ -31,14 +31,14 @@ class IntegrationResult:
 
 
 class CivicPlanIntegrationMockLayer:
-    """Local-only integration boundary checks for CivicPlan v1."""
+    """Local-only integration boundary checks for Townlight Planning v1."""
 
     def run(self, provider: str, payload: dict[str, Any]) -> IntegrationResult | IntegrationError:
         if provider not in SUPPORTED_PROVIDERS:
             return IntegrationError(
                 provider=provider,
-                message="Unsupported CivicPlan mock integration provider.",
-                fix="Use a supported local mock provider for CivicPlan v1 validation.",
+                message="Unsupported Townlight Planning mock integration provider.",
+                fix="Use a supported local mock provider for Townlight Planning v1 validation.",
                 code="unsupported_provider",
             )
         for key in ("url", "endpoint", "service_url"):
@@ -46,7 +46,7 @@ class CivicPlanIntegrationMockLayer:
             if isinstance(value, str) and value.startswith(("http://", "https://")):
                 return IntegrationError(
                     provider=provider,
-                    message="Live external calls are disabled for CivicPlan v1 integration mocks.",
+                    message="Live external calls are disabled for Townlight Planning v1 integration mocks.",
                     fix="Use local fixture payloads; do not provide http/https endpoints.",
                     code="air_gap_violation",
                 )

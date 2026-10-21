@@ -218,7 +218,7 @@ def civicclerk_staff_report_context(*, agenda_item: str, topic: str) -> dict[str
         "citations": list(answer.citations),
         "review_required": True,
         "boundary": (
-            "CivicPlan provides staff-report context for CivicClerk; the staff report remains "
+            "Townlight Planning provides staff-report context for Townlight Meetings; the staff report remains "
             "draft-only until reviewed by planning staff."
         ),
     }
