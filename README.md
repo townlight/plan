@@ -1,61 +1,84 @@
-<a id="civicplan"></a>
-
 # Townlight Planning
 
-Townlight Planning is the Townlight module for comprehensive-plan policy lookup and cited planning analysis support.
+Current state: **0.3.0+dev.0 P1/P2 development foundation**. This is unreleased
+source-administration work, not an installed public beta. Townlight Planning uses
+the hash-pinned Townlight Core v1.2.1 release wheel. The previous v1.0.0 release
+was published in error; published v0.2.2 remains a corrective demotion state and
+is preserved with its original tag and assets.
 
-Current state: **v0.2.2 corrective demotion state - deterministic scaffold; no real AI layer, full frontend, real municipal data/search, migrations, or public-use gate. The previous v1.0.0 release was published in error. This narrow truth-repair release is no functional upgrade; it exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression. The Townlight Core pin is unchanged.** Townlight Planning remains aligned to the Townlight Core v1.1.0 release wheel. Townlight Planning does not ship official planning determinations, legal advice, live external vendor calls by default, permitting-system write-back, or elected-body decisions.
+P1/P2 adds explicit additive migrations and staff-verified local source bundles
+for comprehensive, small-area, transportation, parks and sustainability plans.
+Original documents and SHA256 hashes, goal/objective/policy structure, source and
+adoption dates, adoption evidence, visibility, revisions and chained audit events
+are durable. Corrections append a new revision; they never overwrite evidence.
 
-<a id="what-civicplan-does"></a>
+This does not make official planning determinations. Cited staff analysis,
+connected Zoning/Meetings/Records workflows, an operational desktop UI and a
+Planning installer profile remain P3-P6 work. The signed Townlight 1.4 installer
+is unchanged and does not enable Planning.
 
-## What Townlight Planning Does
-
-- Looks up sample comprehensive-plan, transportation-plan, and parks-plan policies with citations.
-- Ingests local adopted, pending, or superseded plan policies into the configured database.
-- Lets residents and staff browse plan structure and ask cited plan-policy questions.
-- Synthesizes cross-plan context with citations and review-required boundaries.
-- Returns cited comprehensive-plan context for Townlight Zoning zoning questions while preserving a review-required boundary.
-- Returns Townlight Meetings staff-report context without making the staff report official.
-- Flags sample consistency factors while keeping the planner of record responsible for official findings.
-- Tracks amendment status and progress-target evidence for staff review.
-- Drafts a cited staff-analysis outline that requires human review.
-- Builds records-ready export checklists that preserve proposal, policy, reviewer, and generated-output provenance.
-- Demonstrates a public plan-policy lookup UI at `/civicplan`.
-
-## Developer Quickstart
+## Development and source administration
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-python -m pip install https://github.com/CivicSuite/civiccore/releases/download/v1.1.0/civiccore-1.1.0-py3-none-any.whl
 python -m pip install -e ".[dev]"
+$env:CIVICPLAN_POLICY_DB_URL = "postgresql+psycopg2://USER:PASSWORD@127.0.0.1:PORT/DATABASE"
+# Back up the intended database before migration; never use a production DSN for tests.
+python -m civicplan.migrations
+# Set CIVICPLAN_STAFF_API_KEY through the existing trusted local configuration.
+python -m uvicorn civicplan.main:app --host 127.0.0.1 --port 8040
+```
+
+The migration command only owns Planning's schema and preserves legacy policies
+and analyses. Import handlers require migrations already applied; they do not
+initialize schemas or load samples. PostgreSQL is the municipal runtime;
+SQLite is supported for isolated development tests.
+
+- `POST /api/v1/civicplan/source-imports`: import a complete local bundle and an
+  optional `expected_previous_revision` for amendments/corrections.
+- `GET /api/v1/civicplan/source-plans/{plan_id}/history`: revision and audit history.
+- `GET /api/v1/civicplan/source-revisions/{revision_id}`: versioned policy/source metadata.
+- `GET /api/v1/civicplan/source-revisions/{revision_id}/documents/{document_id}`:
+  download exact original bytes with a SHA256 header.
+
+All source-administration routes require both `X-CivicPlan-Role: staff` and a
+matching `X-CivicPlan-Staff-Key`. This is the existing trusted-service boundary,
+not individual municipal identity. Audits record `trusted-staff-key` as the
+service actor and retain the supplied reviewer label separately. P5 must reuse
+native authenticated identity; browser clients must never receive this key.
+
+Public foundation lookup/navigation includes only adopted, effective, explicitly
+public municipal policies. Private, pending, future and demo records are not
+current public policy. Exact policy-ID lookup has no sample fallback. Broader
+question interpretation and conflict review remain P3 work.
+
+Metadata-only `/policies/ingest` is retained as an actionable transition response;
+it cannot create an apparently adopted municipal policy without original files.
+Legacy staff analyses remain readable behind the existing staff gate. Municipal
+analysis/export/Meetings/Zoning context stubs return actionable unavailable
+responses until implemented. Sample helpers are available only when explicitly
+setting `CIVICPLAN_DEMO_MODE=1` with no database configured. `/civicplan` remains
+an explicitly labeled static sample page.
+
+See [the source-bundle contract and P1/P2 evidence](docs/PLANNING-P1-P2.md) and
+[the operator manual](USER-MANUAL.md). No signing, publication or historical
+release modification is part of P1/P2.
+
+## Verification
+
+```powershell
+# Point this only at a disposable Planning test database.
+$env:PLANNING_TEST_DATABASE_URL = "postgresql+psycopg2://USER:PASSWORD@127.0.0.1:PORT/TEST_DATABASE"
 python -m pytest -q
 bash scripts/verify-release.sh
 ```
 
-## API Foundation
-
-- `GET /` returns current module status and next roadmap boundary.
-- `GET /health` returns package and Townlight Core version information.
-- `GET /civicplan` returns the accessible public sample UI.
-- `POST /api/v1/civicplan/policies/lookup` returns a cited sample plan policy.
-- `POST /api/v1/civicplan/policies/ingest` stores a staff-only local plan policy when `CIVICPLAN_POLICY_DB_URL` is configured.
-- `GET /api/v1/civicplan/plans/navigator` returns cited plan structure grouped by plan type.
-- `POST /api/v1/civicplan/questions/answer` returns a cited, review-required plan-policy answer.
-- `POST /api/v1/civicplan/plans/synthesis` returns cited cross-plan synthesis for a topic.
-- `GET /api/v1/civicplan/amendments/history` distinguishes adopted, pending, and superseded plan language.
-- `GET /api/v1/civicplan/progress/targets` returns measurable target status and evidence.
-- `POST /api/v1/civicplan/context/zoning` returns cited plan-policy context for Townlight Zoning questions.
-- `POST /api/v1/civicplan/context/civicclerk` returns cited staff-report context for Townlight Meetings.
-- `POST /api/v1/civicplan/integrations/mock` validates local integration fixtures and rejects live endpoints.
-- `POST /api/v1/civicplan/consistency/check` returns sample consistency-support factors.
-- `POST /api/v1/civicplan/staff-analysis/draft` returns a cited staff-analysis outline; persisted records require `X-CivicPlan-Role: staff` and `X-CivicPlan-Staff-Key` when `CIVICPLAN_POLICY_DB_URL` is configured.
-- `GET /api/v1/civicplan/staff-analysis/{analysis_id}` retrieves persisted staff-analysis records when `CIVICPLAN_POLICY_DB_URL` is configured and both staff headers are present.
-- `POST /api/v1/civicplan/export` returns a records-ready plan-policy export checklist.
-
-Set `CIVICPLAN_POLICY_DB_URL` to enable persistent plan-policy and staff-analysis records. Persisted staff-analysis and policy-ingestion routes are staff-only and require `CIVICPLAN_STAFF_API_KEY`, `X-CivicPlan-Role: staff`, and matching `X-CivicPlan-Staff-Key`. Townlight Planning uses Townlight Core `staff_key_gate` for timing-safe key comparison. When unset, Townlight Planning continues to use deterministic in-memory sample data.
+The required `verify` job supplies PostgreSQL and runs the full gate. The source
+and wheel must retain the Planning migration files. A green foundation gate does
+not prove installed Planning acceptance.
 
 ## License
 
-Code: AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying deployments. See [LICENSE](LICENSE) and [LICENSE-EXCEPTION.md](LICENSE-EXCEPTION.md).
-Documentation: CC BY 4.0 ([LICENSE-DOCS](LICENSE-DOCS)).
+Code: AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying
+deployments. See LICENSE and LICENSE-EXCEPTION.md. Documentation: CC BY 4.0.

@@ -76,49 +76,37 @@ def test_civicclerk_context_is_draft_only_and_cited() -> None:
     assert "draft-only" in payload["boundary"]
 
 
-def test_staff_policy_ingestion_requires_database_and_persists(tmp_path, monkeypatch) -> None:
-    no_db = client.post(
-        "/api/v1/civicplan/policies/ingest",
-        json=_ingest_payload(),
-        headers=STAFF_HEADERS,
-    )
-    db_url = f"sqlite+pysqlite:///{tmp_path / 'policies.db'}"
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", db_url)
+def test_staff_policy_ingestion_requires_complete_sources(tmp_path, monkeypatch) -> None:
+    from civicplan.migrations import source_engine, upgrade
+    from source_fixtures import bundle
     monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-staff-key")
-    created = client.post(
-        "/api/v1/civicplan/policies/ingest",
-        json=_ingest_payload(),
-        headers=STAFF_HEADERS,
-    )
-    main_module._dispose_policy_repository()
-    found = client.post(
-        "/api/v1/civicplan/policies/lookup",
-        json={"topic": "resilience", "plan_type": "sustainability"},
-    )
-
-    assert no_db.status_code == 503
-    assert "Set CIVICPLAN_POLICY_DB_URL" in no_db.json()["detail"]["fix"]
+    old = client.post("/api/v1/civicplan/policies/ingest", json=_ingest_payload(), headers=STAFF_HEADERS)
+    assert old.status_code == 409 and "source-imports" in old.text
+    engine = source_engine(f"sqlite:///{tmp_path / 'policies.db'}")
+    upgrade(engine)
+    engine.dispose()
+    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", str(engine.url))
+    created = client.post("/api/v1/civicplan/source-imports", json={"bundle": bundle()}, headers=STAFF_HEADERS)
     assert created.status_code == 200
-    assert created.json()["policy"]["policy_id"] == "sustainability-plan-4.2"
-    assert found.status_code == 200
-    assert found.json()["policy_id"] == "sustainability-plan-4.2"
+    found = client.post("/api/v1/civicplan/policies/lookup", json={"topic": "H-1"})
+    assert found.status_code == 200 and found.json()["citation"] == "Fictional Plan, H-1"
 
 
-def test_policy_ingestion_labels_pending_language(tmp_path, monkeypatch) -> None:
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", f"sqlite+pysqlite:///{tmp_path / 'pending.db'}")
+def test_policy_ingestion_preserves_pending_status(tmp_path, monkeypatch) -> None:
+    from civicplan.migrations import source_engine, upgrade
+    from source_fixtures import bundle
+    engine = source_engine(f"sqlite:///{tmp_path / 'pending.db'}")
+    upgrade(engine)
+    engine.dispose()
+    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", str(engine.url))
     monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-staff-key")
-    payload = _ingest_payload()
-    payload["adoption_status"] = "pending"
-
-    created = client.post(
-        "/api/v1/civicplan/policies/ingest",
-        json=payload,
-        headers=STAFF_HEADERS,
-    )
-
+    created = client.post("/api/v1/civicplan/source-imports",
+                          json={"bundle": bundle(status="pending")}, headers=STAFF_HEADERS)
     assert created.status_code == 200
-    assert created.json()["adoption_status"] == "pending"
-    assert "pending" in created.json()["policy"]["relevance"]
+    rid = created.json()["revision_id"]
+    stored = client.get(f"/api/v1/civicplan/source-revisions/{rid}", headers=STAFF_HEADERS).json()
+    assert stored["status"] == "pending" and stored["adoption_evidence"]
+    assert client.get("/api/v1/civicplan/plans/navigator").json()["plans"] == []
 
 
 def test_integration_mocks_reject_live_endpoints_and_malformed_payloads() -> None:
@@ -150,3 +138,8 @@ def _ingest_payload() -> dict[str, str]:
         "adoption_status": "adopted",
         "source_document": "2025 Sustainability Plan",
     }
+
+
+@pytest.fixture(autouse=True)
+def explicit_sample_mode(monkeypatch):
+    monkeypatch.setenv("CIVICPLAN_DEMO_MODE", "1")

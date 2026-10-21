@@ -46,7 +46,7 @@ def render_public_lookup_page() -> str:
   <p class="eyebrow">Townlight / Townlight Planning public sample</p>
   <h1>Find plan policies with citations before the meeting packet gets written.</h1>
   <p class="lede">Townlight Planning demonstrates cited comprehensive-plan lookup, policy-consistency support, and staff-analysis outlines. It helps staff and residents find adopted policy context without turning software into the decision-maker.</p>
-  <p><span class="badge">v0.2.2 cited plan policy + staff analysis</span></p>
+  <p><span class="badge">0.3.0+dev.0 explicit static sample</span></p>
 </header>
 <main id="main" tabindex="-1">
   <section class="grid" aria-labelledby="lookup-title">
@@ -93,7 +93,7 @@ def render_public_lookup_page() -> str:
   </section>
   <section class="notice" aria-labelledby="boundary-title">
     <h2 id="boundary-title">Important boundaries</h2>
-    <p>Townlight Planning v0.2.2 is a narrow truth-repair release with no functional upgrade. It exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression; the Townlight Core pin is unchanged. Townlight Planning provides cited plan lookup, local policy ingestion when configured, Townlight Zoning and Townlight Meetings context contracts, amendment history, progress targets, and adversarial local integration validation. It does not call live external systems by default, provide legal advice, or make official planning determinations.</p>
+    <p>Townlight Planning 0.3.0+dev.0 is the P1/P2 development foundation. This page is an explicit static sample, not the municipal workflow. The published v0.2.2 remains a narrow truth-repair release with no functional upgrade. It exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression; the Townlight Core pin is unchanged. Townlight Planning provides cited plan lookup, local policy ingestion when configured, Townlight Zoning and Townlight Meetings context contracts, amendment history, progress targets, and adversarial local integration validation. It does not call live external systems by default, provide legal advice, or make official planning determinations.</p>
   </section>
 </main>
 <footer><p>Townlight Planning is part of the AGPL-3.0 Townlight open-source municipal AI project.</p></footer>

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0+dev.0] - Unreleased
+
+- P1/P2 source foundation: Core 1.2.1 hash-pinned compatibility, explicit Planning migrations, original source bundles, immutable revisions, adoption evidence, visibility and Core hash-chained audit.
+- Preserve legacy policies/analyses without automatically promoting them or loading sample policies. Municipal analysis/context/export stubs remain unavailable until P3/P4.
+- No installer, signing or publication. Historical releases and signed Townlight 1.4 remain unchanged.
+
 ## [0.2.2] - 2026-05-23
 
 - Narrow truth-repair release. No functional upgrade.

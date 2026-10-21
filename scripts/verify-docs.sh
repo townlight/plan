@@ -75,8 +75,8 @@ for file in "${current_files[@]}"; do
 done
 
 required_markers=(
-  "v0.2.2 corrective demotion state"
-  "Townlight Core v1.1.0 release wheel"
+  "0.3.0+dev.0 P1/P2 development foundation"
+  "Townlight Core v1.2.1 release wheel"
 )
 
 for marker in "${required_markers[@]}"; do
