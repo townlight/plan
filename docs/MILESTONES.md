@@ -1,4 +1,6 @@
-# CivicPlan Milestones
+<a id="civicplan-milestones"></a>
+
+# Townlight Planning Milestones
 
 ## Milestone 0/1 - Scaffold And Runtime
 

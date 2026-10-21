@@ -1,4 +1,4 @@
-"""Plan-policy consistency helpers for CivicPlan."""
+"""Plan-policy consistency helpers for Townlight Planning."""
 
 from __future__ import annotations
 

@@ -76,7 +76,7 @@ done
 
 required_markers=(
   "v0.2.2 corrective demotion state"
-  "CivicCore v1.1.0 release wheel"
+  "Townlight Core v1.1.0 release wheel"
 )
 
 for marker in "${required_markers[@]}"; do

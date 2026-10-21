@@ -1,4 +1,4 @@
-"""Deterministic comprehensive-plan policy lookup helpers for CivicPlan."""
+"""Deterministic comprehensive-plan policy lookup helpers for Townlight Planning."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 
 DISCLAIMER = (
-    "CivicPlan provides cited planning-support information only. It does not make "
+    "Townlight Planning provides cited planning-support information only. It does not make "
     "land-use determinations, grant entitlements, or replace planner, attorney, or "
     "elected-official judgment."
 )
