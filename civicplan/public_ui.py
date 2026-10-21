@@ -11,7 +11,7 @@ def render_public_lookup_page() -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CivicPlan Public Policy Lookup</title>
+<title>Townlight Planning Public Policy Lookup</title>
 <style>
   :root { --ink:#17202a; --muted:#56606a; --paper:#fffaf0; --blue:#184d70; --green:#2f6b50; --gold:#d8b45b; --line:#d6c6a1; }
   * { box-sizing: border-box; }
@@ -43,9 +43,9 @@ def render_public_lookup_page() -> str:
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <header>
-  <p class="eyebrow">CivicSuite / CivicPlan public sample</p>
+  <p class="eyebrow">Townlight / Townlight Planning public sample</p>
   <h1>Find plan policies with citations before the meeting packet gets written.</h1>
-  <p class="lede">CivicPlan demonstrates cited comprehensive-plan lookup, policy-consistency support, and staff-analysis outlines. It helps staff and residents find adopted policy context without turning software into the decision-maker.</p>
+  <p class="lede">Townlight Planning demonstrates cited comprehensive-plan lookup, policy-consistency support, and staff-analysis outlines. It helps staff and residents find adopted policy context without turning software into the decision-maker.</p>
   <p><span class="badge">v0.2.2 cited plan policy + staff analysis</span></p>
 </header>
 <main id="main" tabindex="-1">
@@ -88,15 +88,15 @@ def render_public_lookup_page() -> str:
     <article class="card">
       <p class="kicker">Planning boundary</p>
       <h2>No official determination</h2>
-      <div class="result warning"><p>CivicPlan does not make zoning, land-use, environmental, legal, or elected-body decisions. Staff and officials remain responsible for every official action.</p></div>
+      <div class="result warning"><p>Townlight Planning does not make zoning, land-use, environmental, legal, or elected-body decisions. Staff and officials remain responsible for every official action.</p></div>
     </article>
   </section>
   <section class="notice" aria-labelledby="boundary-title">
     <h2 id="boundary-title">Important boundaries</h2>
-    <p>CivicPlan v0.2.2 is a narrow truth-repair release with no functional upgrade. It exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression; the CivicCore pin is unchanged. CivicPlan provides cited plan lookup, local policy ingestion when configured, CivicZone and CivicClerk context contracts, amendment history, progress targets, and adversarial local integration validation. It does not call live external systems by default, provide legal advice, or make official planning determinations.</p>
+    <p>Townlight Planning v0.2.2 is a narrow truth-repair release with no functional upgrade. It exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression; the Townlight Core pin is unchanged. Townlight Planning provides cited plan lookup, local policy ingestion when configured, Townlight Zoning and Townlight Meetings context contracts, amendment history, progress targets, and adversarial local integration validation. It does not call live external systems by default, provide legal advice, or make official planning determinations.</p>
   </section>
 </main>
-<footer><p>CivicPlan is part of the AGPL-3.0 CivicSuite open-source municipal AI project.</p></footer>
+<footer><p>Townlight Planning is part of the AGPL-3.0 Townlight open-source municipal AI project.</p></footer>
 </body>
 </html>
 """

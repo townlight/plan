@@ -31,9 +31,9 @@ from civicplan.staff_analysis import draft_staff_analysis
 
 
 app = FastAPI(
-    title="CivicPlan",
+    title='Townlight Planning',
     version=__version__,
-    description="Comprehensive-plan policy lookup and cited planning analysis support for CivicSuite.",
+    description='Comprehensive-plan policy lookup and cited planning analysis support for Townlight.',
 )
 
 _policy_repository: PlanPolicyRepository | None = None

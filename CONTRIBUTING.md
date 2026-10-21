@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for helping CivicPlan become useful municipal software.
+Thank you for helping Townlight Planning become useful municipal software.
 
 ## Development Loop
 
@@ -11,8 +11,8 @@ Thank you for helping CivicPlan become useful municipal software.
 
 ## Boundaries
 
-- CivicPlan gives planning-policy support, not official planning determinations.
+- Townlight Planning gives planning-policy support, not official planning determinations.
 - Do not present generated staff-analysis drafts as publication-ready without planner review.
-- Do not import CivicCore placeholder packages.
+- Do not import Townlight Core placeholder packages.
 - Do not claim planned behavior is shipped.
 

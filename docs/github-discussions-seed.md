@@ -1,8 +1,10 @@
 # GitHub Discussions Seed Posts
 
-## Welcome to CivicPlan
+<a id="welcome-to-civicplan"></a>
 
-CivicPlan is the CivicSuite module for comprehensive-plan policy lookup and cited planning analysis support.
+## Welcome to Townlight Planning
+
+Townlight Planning is the Townlight module for comprehensive-plan policy lookup and cited planning analysis support.
 
 ## What should be reviewed first?
 
