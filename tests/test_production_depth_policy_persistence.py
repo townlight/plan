@@ -3,7 +3,6 @@ from fastapi.testclient import TestClient
 import civicplan.main as main_module
 from civicplan.main import app
 from civicplan.persistence import PlanPolicyRepository
-from civicplan.policy_lookup import PlanPolicy
 
 
 client = TestClient(app)
@@ -11,7 +10,7 @@ client = TestClient(app)
 
 def test_policy_and_staff_analysis_records_persist(tmp_path) -> None:
     db_path = tmp_path / "policy-records.db"
-    repository = PlanPolicyRepository(db_url=f"sqlite:///{db_path}")
+    repository = PlanPolicyRepository(db_url=f"sqlite:///{db_path}", seed_defaults=True, initialize=True)
 
     policy = repository.lookup_policy(topic="housing", plan_type="comprehensive")
     stored = repository.create_staff_analysis(
@@ -35,43 +34,14 @@ def test_policy_and_staff_analysis_records_persist(tmp_path) -> None:
     db_path.unlink(missing_ok=True)
 
 
-def test_api_uses_configured_policy_database(monkeypatch, tmp_path) -> None:
-    db_path = tmp_path / "api-policy-records.db"
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", f"sqlite:///{db_path}")
+def test_municipal_staff_analysis_does_not_use_sample_policy(monkeypatch, tmp_path) -> None:
+    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", f"sqlite:///{tmp_path / 'municipal.db'}")
     monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-staff-key")
-    staff_headers = {"X-CivicPlan-Role": "staff", "X-CivicPlan-Staff-Key": "test-staff-key"}
-
-    try:
-        policy_response = client.post(
-            "/api/v1/civicplan/policies/lookup",
-            json={"topic": "housing", "plan_type": "comprehensive"},
-        )
-        create_response = client.post(
-            "/api/v1/civicplan/staff-analysis/draft",
-            json={
-                "project_name": "Maple Avenue Homes",
-                "proposal": "Housing near transit and sidewalks.",
-                "policy_id": "housing",
-            },
-            headers=staff_headers,
-        )
-        analysis_id = create_response.json()["analysis_id"]
-        get_response = client.get(
-            f"/api/v1/civicplan/staff-analysis/{analysis_id}",
-            headers=staff_headers,
-        )
-    finally:
-        main_module._dispose_policy_repository()
-        main_module._policy_db_url = None
-
-    assert policy_response.status_code == 200
-    assert policy_response.json()["policy_id"] == "comp-plan-housing-2.1"
-    assert create_response.status_code == 200
-    assert analysis_id
-    assert get_response.status_code == 200
-    assert get_response.json()["analysis_id"] == analysis_id
-    assert get_response.json()["review_required"] is True
-    db_path.unlink(missing_ok=True)
+    response = client.post("/api/v1/civicplan/staff-analysis/draft", json={
+        "project_name": "Actual proposal", "proposal": "Housing near services", "policy_id": "real-policy",
+    }, headers={"X-CivicPlan-Role": "staff", "X-CivicPlan-Staff-Key": "test-staff-key"})
+    assert response.status_code == 503
+    assert "P3/P4" in response.text
 
 
 def test_persisted_staff_analysis_requires_staff_role(monkeypatch, tmp_path) -> None:
@@ -125,106 +95,11 @@ def test_staff_analysis_rejects_oversized_persisted_proposal(monkeypatch, tmp_pa
     db_path.unlink(missing_ok=True)
 
 
-def test_zoning_context_api_uses_configured_policy_database(monkeypatch, tmp_path) -> None:
-    db_path = tmp_path / "api-policy-context.db"
-    db_url = f"sqlite:///{db_path}"
-    repository = PlanPolicyRepository(db_url=db_url, seed_defaults=False)
-    repository.seed_policies(
-        [
-            (
-                "accessory dwelling unit",
-                PlanPolicy(
-                    policy_id="housing-adu-4.2",
-                    plan_type="housing",
-                    title="ADU compatibility near services",
-                    citation="Housing Plan, Policy H-4.2",
-                    excerpt="Support accessory dwelling units where services and adopted design standards are available.",
-                    relevance="Relevant when CivicZone asks for ADU policy context.",
-                ),
-            )
-        ]
-    )
-    repository.engine.dispose()
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", db_url)
-
-    try:
-        response = client.post(
-            "/api/v1/civicplan/context/zoning",
-            json={
-                "topic": "accessory dwelling unit",
-                "zone_code": "R-2",
-                "use": "ADU",
-                "plan_type": "housing",
-                "civiczone_context_id": "ledger-1",
-            },
-        )
-    finally:
-        main_module._dispose_policy_repository()
-        main_module._policy_db_url = None
-
-    assert response.status_code == 200
-    payload = response.json()
-    assert payload["policy_id"] == "housing-adu-4.2"
-    assert payload["citation"] == "Housing Plan, Policy H-4.2"
-    assert payload["source"] == "persisted"
-    assert payload["review_required"] is True
-    assert payload["civiczone_context_id"] == "ledger-1"
-    db_path.unlink()
-
-
-def test_zoning_context_persisted_lookup_does_not_match_plan_type_only(monkeypatch, tmp_path) -> None:
-    db_path = tmp_path / "api-policy-context-scope.db"
-    db_url = f"sqlite:///{db_path}"
-    repository = PlanPolicyRepository(db_url=db_url, seed_defaults=False)
-    repository.seed_policies(
-        [
-            (
-                "industrial expansion",
-                PlanPolicy(
-                    policy_id="industrial-1",
-                    plan_type="housing",
-                    title="Industrial transition policy",
-                    citation="Housing Plan, Policy I-1",
-                    excerpt="Review industrial transition areas before residential conversion.",
-                    relevance="Not relevant to an ADU question.",
-                ),
-            ),
-            (
-                "accessory dwelling unit",
-                PlanPolicy(
-                    policy_id="housing-adu-4.2",
-                    plan_type="housing",
-                    title="ADU compatibility near services",
-                    citation="Housing Plan, Policy H-4.2",
-                    excerpt="Support accessory dwelling units where services and adopted design standards are available.",
-                    relevance="Relevant when CivicZone asks for ADU policy context.",
-                ),
-            ),
-        ]
-    )
-    repository.engine.dispose()
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", db_url)
-
-    try:
-        response = client.post(
-            "/api/v1/civicplan/context/zoning",
-            json={
-                "topic": "accessory dwelling unit",
-                "zone_code": "R-2",
-                "use": "ADU",
-                "plan_type": "housing",
-            },
-        )
-    finally:
-        main_module._dispose_policy_repository()
-        main_module._policy_db_url = None
-
-    assert response.status_code == 200
-    payload = response.json()
-    assert payload["policy_id"] == "housing-adu-4.2"
-    assert payload["policy_id"] != "industrial-1"
-    assert payload["source"] == "persisted"
-    db_path.unlink()
+def test_zoning_context_does_not_substitute_sample_for_municipal_data(monkeypatch, tmp_path) -> None:
+    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", f"sqlite:///{tmp_path / 'municipal.db'}")
+    response = client.post("/api/v1/civicplan/context/zoning", json={"topic": "accessory dwelling unit"})
+    assert response.status_code == 503
+    assert "P3/P4" in response.text
 
 
 def test_staff_analysis_lookup_requires_configured_database() -> None:

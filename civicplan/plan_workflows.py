@@ -126,7 +126,7 @@ def normalize_ingested_policy(
 
 
 def plan_navigator(policies: tuple[PlanPolicy, ...] | None = None) -> dict[str, object]:
-    records = policies or tuple(POLICIES.values())
+    records = tuple(POLICIES.values()) if policies is None else policies
     grouped: dict[str, list[dict[str, str]]] = {}
     for policy in records:
         grouped.setdefault(policy.plan_type, []).append(
@@ -153,7 +153,7 @@ def answer_plan_question(
     policies: tuple[PlanPolicy, ...] | None = None,
 ) -> PlanQuestionAnswer:
     normalized = question.casefold()
-    candidates = policies or tuple(POLICIES.values())
+    candidates = tuple(POLICIES.values()) if policies is None else policies
     matches = tuple(
         policy
         for policy in candidates
@@ -163,7 +163,7 @@ def answer_plan_question(
             or any(word in normalized for word in _topic_words(policy))
         )
     )
-    if not matches:
+    if not matches and policies is None:
         fallback = lookup_plan_policy(topic=question, plan_type=plan_type)
         matches = (fallback,)
     citations = tuple(policy.citation for policy in matches)
@@ -171,7 +171,7 @@ def answer_plan_question(
         f"{policy.title}: {policy.excerpt} Relevance: {policy.relevance}" for policy in matches
     )
     return PlanQuestionAnswer(
-        status="answered",
+        status="answered" if matches else "no_supported_policy",
         answer=answer,
         citations=citations,
         source_policy_ids=tuple(policy.policy_id for policy in matches),
@@ -180,12 +180,12 @@ def answer_plan_question(
 
 
 def synthesize_plan_context(*, topic: str, policies: tuple[PlanPolicy, ...] | None = None) -> dict[str, object]:
-    candidates = policies or tuple(POLICIES.values())
+    candidates = tuple(POLICIES.values()) if policies is None else policies
     matched = tuple(
         policy
         for policy in candidates
         if any(word in topic.casefold() for word in _topic_words(policy))
-    ) or candidates[:2]
+    )
     return {
         "topic": topic,
         "summary": " ".join(policy.relevance for policy in matched),

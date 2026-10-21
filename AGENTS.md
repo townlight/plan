@@ -20,8 +20,11 @@
 
 ## Placeholder Package Warning
 
-Do not import from Townlight Core placeholder packages until Townlight Core ships real implementations for them: `audit`, `auth`, `catalog`, `connectors`, `exemptions`, `ingest`, `notifications`, `onboarding`, `scaffold`, `search`, `verification`.
+Do not import from Townlight Core placeholder packages until Townlight Core ships real implementations for them: `catalog`, `connectors`, `exemptions`, `ingest`, `notifications`, `onboarding`, `scaffold`, `search`, `verification`.
 
 ## Milestone Rule
 
 Work one milestone at a time. When a milestone is done, report what changed, audit it once, fix findings once, re-audit once, then continue immediately unless there is a true blocker.
+
+P1/P2 uses the verified Core 1.2.1 auth gate and persisted audit hash primitives.
+These are implemented contracts; retain checks against the remaining unused placeholder imports.

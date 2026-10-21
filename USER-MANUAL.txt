@@ -1,52 +1,51 @@
-# Townlight Planning User Manual
+# Townlight Planning operator manual
 
-## For Residents And Municipal Decision-Makers
+Current state: **0.3.0+dev.0 P1/P2 development foundation**. The previous v1.0.0 release
+was published in error. Published v0.2.2 and its historical evidence are preserved.
+This does not make official planning determinations and is not an installed public beta.
+The signed Townlight 1.4 installer remains unchanged.
 
-Townlight Planning helps cities connect planning proposals to adopted plan policies. It can show sample cited policy context, highlight consistency factors for staff review, and produce records-ready plan-policy exports.
+P1/P2 is for local source administration behind the existing trusted staff boundary.
+It is not a resident portal, staff-analysis product or installer upgrade.
 
-Current state: v0.2.2 corrective demotion state. The previous v1.0.0 release was published in error. This narrow truth-repair release is no functional upgrade; it exists solely to supersede the false v1.0.0 release from 2026-05-21 in GitHub's Latest impression, with the Townlight Core pin unchanged. The module includes deterministic cited plan-policy lookup, staff-only local policy ingestion, optional database-backed policy and staff-analysis records, a goal/objective/policy navigator, cited plan Q&A, cross-plan synthesis, amendment history, progress tracking, a cited zoning policy-context endpoint for Townlight Zoning, a draft staff-report context endpoint for Townlight Meetings, local adversarial integration mocks, Townlight Core v1.1.0 release-wheel alignment, and a public UI at /civicplan. It does not provide legal advice, official planning determinations, live external calls by default, permitting-system write-back, or final staff-report approval.
+1. Back up the intended database. Configure CIVICPLAN_POLICY_DB_URL for the
+   existing local PostgreSQL service and run `python -m civicplan.migrations`.
+   Keep credentials out of logs and source files. No source request runs migrations.
+2. Prepare a version-1 JSON bundle using the contract in docs/PLANNING-P1-P2.md.
+   Include original document bytes as base64 and independently computed SHA256s,
+   staff-verified policy excerpts/anchors, source dates and explicit visibility.
+3. For adopted plans, record adoption/effective dates and supporting evidence.
+   A manually recorded source is valid; meeting minutes are not a mandatory
+   prerequisite. A meeting reference is preserved evidence, not a verified live link.
+4. Submit it to POST /api/v1/civicplan/source-imports from the trusted staff workflow.
+   Include the existing staff role/key headers. Do not put the key into a browser.
+5. Read the returned revision and download its original source. Check its hash
+   against the file you imported. Inspect the history/audit endpoint.
+6. For an amendment or correction, read the latest history and include its revision
+   ID as expected_previous_revision. Explain the change. A stale revision returns
+   409; refresh and reconcile rather than retrying a blind overwrite.
 
-## For IT And Technical Staff
+Each revision preserves its original bytes, policies, adoption state/evidence,
+visibility, actor and reviewer label. A repeated identical bundle returns the
+same revision without duplicating history or resetting the current revision.
+Pending amendments do not replace adopted policy. Future-effective revisions do
+not apply early. Supersession is a separate evidenced revision; old citations
+remain available in history. A new visibility value applies to that revision;
+this phase does not provide a publication/revocation manager.
 
-Townlight Planning is a FastAPI Python package pinned to the published Townlight Core v1.1.0 release wheel. The current runtime exposes:
+Only explicitly public, effective, adopted municipal policies appear in public
+foundation lookup/navigation. Demo records and private/pending versions do not.
+No configured database implicitly loads fictional policies. Legacy records are
+preserved but require staff reimport with original sources and evidence before
+becoming authoritative municipal policies.
 
-- `GET /`
-- `GET /health`
-- `GET /civicplan`
-- `POST /api/v1/civicplan/policies/lookup`
-- `POST /api/v1/civicplan/policies/ingest`
-- `GET /api/v1/civicplan/plans/navigator`
-- `POST /api/v1/civicplan/questions/answer`
-- `POST /api/v1/civicplan/plans/synthesis`
-- `GET /api/v1/civicplan/amendments/history`
-- `GET /api/v1/civicplan/progress/targets`
-- `POST /api/v1/civicplan/context/zoning`
-- `POST /api/v1/civicplan/context/civicclerk`
-- `POST /api/v1/civicplan/integrations/mock`
-- `POST /api/v1/civicplan/consistency/check`
-- `POST /api/v1/civicplan/staff-analysis/draft`; persisted records require X-CivicPlan-Role: staff when CIVICPLAN_POLICY_DB_URL is configured
-- `GET /api/v1/civicplan/staff-analysis/{analysis_id}` when CIVICPLAN_POLICY_DB_URL is configured and X-CivicPlan-Role: staff is present
-- `POST /api/v1/civicplan/export`
+PDF and DOCX files are preserved without executing or extracting them. Staff
+provide verified excerpts and anchors. UTF-8 text/Markdown excerpts must occur
+in their referenced original source. OCR, automatic interpretation and live
+vendor imports are deferred. Invalid hashes, paths, references or adoption
+metadata are rejected; no partial import is committed.
 
-Set CIVICPLAN_POLICY_DB_URL to persist plan-policy records and staff-analysis outlines. Persisted staff-analysis create/read routes are staff-only and require X-CivicPlan-Role: staff from a trusted staff or service workflow. Leave it unset for deterministic sample behavior.
-
-Run local verification with:
-
-```powershell
-python -m pip install https://github.com/CivicSuite/civiccore/releases/download/v1.1.0/civiccore-1.1.0-py3-none-any.whl
-python -m pip install -e ".[dev]"
-python -m pytest -q
-bash scripts/verify-release.sh
-```
-
-## Architecture
-
-```mermaid
-flowchart LR
-  PublicUser["Resident or staff planner"] --> CivicPlan["CivicPlan"]
-  CivicPlan --> CivicCore["CivicCore v1.1.0"]
-CivicPlan -. policy-context API .-> CivicZone["CivicZone context"]
-CivicPlan -. staff-report context .-> CivicClerk["CivicClerk context"]
-```
-
-Townlight Planning depends on Townlight Core. Townlight Core does not depend on Townlight Planning. Townlight Planning v0.2.2 exposes deterministic, review-required context contracts for Townlight Zoning and Townlight Meetings; live vendor calls and official decisions remain outside Townlight Planning.
+For explicit isolated sample evaluation only, unset CIVICPLAN_POLICY_DB_URL and
+set CIVICPLAN_DEMO_MODE=1. The /civicplan page remains a labeled static sample.
+Staff analysis, actual exports and connected product workflows remain unshipped.
+No source attachment automatically approves or publishes a municipal decision.

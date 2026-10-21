@@ -64,15 +64,18 @@ class StoredStaffAnalysis:
 class PlanPolicyRepository:
     """SQLAlchemy-backed policy and staff-analysis records for local planning workflows."""
 
-    def __init__(self, *, db_url: str | None = None, engine: Engine | None = None, seed_defaults: bool = True) -> None:
+    def __init__(self, *, db_url: str | None = None, engine: Engine | None = None,
+                 seed_defaults: bool = False, initialize: bool = False) -> None:
         base_engine = engine or create_engine(db_url or "sqlite+pysqlite:///:memory:", future=True)
         if base_engine.dialect.name == "sqlite":
             self.engine = base_engine.execution_options(schema_translate_map={"civicplan": None})
         else:
             self.engine = base_engine
+        if initialize:
             with self.engine.begin() as connection:
-                connection.execute(sa.text("CREATE SCHEMA IF NOT EXISTS civicplan"))
-        metadata.create_all(self.engine)
+                if self.engine.dialect.name == "postgresql":
+                    connection.execute(sa.text("CREATE SCHEMA IF NOT EXISTS civicplan"))
+            metadata.create_all(self.engine)
         if seed_defaults:
             self.seed_policies(POLICIES.items())
 

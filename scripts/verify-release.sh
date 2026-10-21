@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="0.2.2"
+VERSION="0.3.0+dev.0"
 
 find_python() {
   local candidates=()
@@ -40,7 +40,7 @@ ${PYTHON_BIN} - <<'PY'
 from pathlib import Path
 import tomllib
 
-version = "0.2.2"
+version = "0.3.0+dev.0"
 root = Path(".")
 pyproject = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
 assert pyproject["project"]["version"] == version, pyproject["project"]["version"]
@@ -56,7 +56,7 @@ for path in [
     "SECURITY.md",
 ]:
     text = (root / path).read_text(encoding="utf-8")
-    assert "0.2.2" in text, f"missing release version in {path}"
+    assert "0.3.0+dev.0" in text, f"missing release version in {path}"
     assert "0.1.1.dev0" not in text, f"stale dev version in {path}"
 print("PASS: version surfaces synchronized")
 PY
@@ -81,8 +81,8 @@ from pathlib import Path
 import hashlib
 
 dist = Path("dist")
-wheel = dist / "civicplan-0.2.2-py3-none-any.whl"
-sdist = dist / "civicplan-0.2.2.tar.gz"
+wheel = dist / "civicplan-0.3.0+dev.0-py3-none-any.whl"
+sdist = dist / "civicplan-0.3.0+dev.0.tar.gz"
 assert wheel.exists(), f"missing {wheel}"
 assert sdist.exists(), f"missing {sdist}"
 lines = []
@@ -90,7 +90,21 @@ for path in [wheel, sdist]:
     digest = hashlib.sha256(path.read_bytes()).hexdigest()
     lines.append(f"{digest}  {path.name}\n")
 (dist / "SHA256SUMS.txt").write_text("".join(lines), encoding="utf-8")
-print("PASS: build artifacts and SHA256SUMS.txt created")
+import tarfile
+import zipfile
+required = (
+    "civicplan/migrations/env.py",
+    "civicplan/migrations/versions/civicplan_0001_sources.py",
+    "civicplan/source_schema.py",
+    "civicplan/source_bundle.py",
+    "civicplan/source_store.py",
+)
+with zipfile.ZipFile(wheel) as archive:
+    assert all(path in archive.namelist() for path in required)
+with tarfile.open(sdist) as archive:
+    names = archive.getnames()
+    assert all(any(name.endswith("/" + path) for name in names) for path in required)
+print("PASS: build artifacts, migration resources and SHA256SUMS.txt created")
 PY
 
 echo "VERIFY-RELEASE: PASSED"
