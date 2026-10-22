@@ -1,5 +1,8 @@
 # Townlight Planning
 
+The opt-in native development integration is described in
+[Planning P5](docs/PLANNING-P5.md). Historical releases and installer identity remain unchanged.
+
 Current state: **0.3.0+dev.1 P3/P4 development workflows**. This is unreleased
 source and analysis work, not an installed public beta. Townlight Planning uses
 the hash-pinned Townlight Core v1.2.1 release wheel. The previous v1.0.0 release

@@ -30,6 +30,25 @@ class PlanSourceRepository:
         if not ready(engine):
             raise SourcesUnavailable("Run python -m civicplan.migrations before importing Planning sources.")
 
+    def inventory(self, *, limit: int = 50, offset: int = 0) -> dict:
+        """Staff-only current source summaries, including pending/private imports.
+
+        The caller must authenticate staff. Original bytes, excerpts and history
+        are separate reads; stable ordering makes paging independent of timestamps.
+        """
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError("Use limit 1-100 and offset 0-100000.")
+        columns = [revisions.c[name] for name in (
+            "plan_id", "revision_id", "title", "plan_type", "status", "visibility",
+            "dataset_kind", "source_date", "adopted_on", "effective_on", "bundle_sha256",
+        )]
+        with self.engine.connect() as conn:
+            rows = conn.execute(sa.select(*columns).join(
+                plans, revisions.c.revision_id == plans.c.latest_revision_id,
+            ).order_by(revisions.c.plan_id).limit(limit + 1).offset(offset)).mappings().all()
+        return {"items": [dict(row) for row in rows[:limit]],
+                "next_offset": offset + limit if len(rows) > limit else None}
+
     def import_bundle(
         self, bundle: PlanBundle, *, actor_id: str, expected_previous_revision: str | None = None,
     ) -> dict:
