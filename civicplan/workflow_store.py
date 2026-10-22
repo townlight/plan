@@ -118,6 +118,21 @@ class WorkflowRepository:
                                .order_by(versions.c.created_at, versions.c.revision_id)).scalars().all()
         return [self.get(analysis_id, revision_id) for revision_id in ids]
 
+    def history_page(self, analysis_id, *, limit=50, offset=0):
+        """Bounded staff revision summaries without private analysis bodies."""
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError('Use limit 1-100 and offset 0-100000.')
+        with self.engine.connect() as conn:
+            rows = conn.execute(sa.select(versions).where(versions.c.analysis_id == analysis_id)
+                                .order_by(versions.c.created_at, versions.c.revision_id)
+                                .limit(limit + 1).offset(offset)).mappings().all()
+        items = []
+        for row in rows[:limit]:
+            if sha(canonical(row['payload'])) != row['sha256']:
+                raise ValueError('Stored analysis integrity failed.')
+            items.append({k: row[k] for k in ('analysis_id', 'revision_id', 'sha256', 'created_at', 'actor_id')})
+        return {'items': items, 'next_offset': offset + limit if len(rows) > limit else None}
+
     def inventory(self, *, limit=50, offset=0):
         """Bounded staff summaries, without proposal text or private notes."""
         if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:

@@ -69,6 +69,16 @@ def test_staff_inventories_page_current_heads_without_private_text(context):
     with sources.engine.connect() as conn:
         actors = conn.execute(sa.select(versions.c.actor_id).order_by(versions.c.created_at)).scalars().all()
     assert actors == ['account-a', 'account-b']
+    history = workflow.history_page(first['analysis_id'], limit=1)
+    assert history['next_offset'] == 1
+    assert history['items'][0]['actor_id'] == 'account-a'
+    assert 'PRIVATE' not in json.dumps(history) and 'CONFIDENTIAL' not in json.dumps(history)
+    assert workflow.history_page(first['analysis_id'], limit=1, offset=1)['items'][0]['actor_id'] == 'account-b'
+    sources.import_bundle(PlanBundle.model_validate(bundle(change_note='Historical amendment')),
+                          actor_id='b', expected_previous_revision=ref['revision_id'])
+    history = sources.history_page(ref['plan_id'], limit=1)
+    assert history['next_offset'] == 1 and history['items'][0]['revision_id'] == ref['revision_id']
+    assert sources.history_page(ref['plan_id'], limit=1, offset=1)['next_offset'] is None
     for invalid in ({'limit': 0}, {'limit': 101}, {'offset': -1}, {'offset': 100001}):
         with pytest.raises(ValueError):
             sources.inventory(**invalid)
@@ -76,6 +86,10 @@ def test_staff_inventories_page_current_heads_without_private_text(context):
             workflow.inventory(**invalid)
         with pytest.raises(ValueError):
             workflow.snapshot_inventory(**invalid)
+        with pytest.raises(ValueError):
+            workflow.history_page(first['analysis_id'], **invalid)
+        with pytest.raises(ValueError):
+            sources.history_page(ref['plan_id'], **invalid)
 
 
 def test_snapshot_preview_is_write_free_exact_and_permission_rechecked(context):

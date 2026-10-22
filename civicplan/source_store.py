@@ -117,6 +117,17 @@ class PlanSourceRepository:
                 ))
         return {"revision_id": revision_id, "bundle_sha256": digest, "created": True}
 
+    def history_page(self, plan_id: str, *, limit=50, offset=0) -> dict:
+        """Bounded staff revision metadata; full audit verification stays explicit."""
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError('Use limit 1-100 and offset 0-100000.')
+        with self.engine.connect() as connection:
+            rows = connection.execute(sa.select(revisions).where(
+                revisions.c.plan_id == plan_id,
+            ).order_by(revisions.c.sequence).limit(limit + 1).offset(offset)).mappings().all()
+        return {'items': [dict(row) for row in rows[:limit]],
+                'next_offset': offset + limit if len(rows) > limit else None}
+
     def history(self, plan_id: str, *, staff: bool = False) -> list[dict]:
         with self.engine.connect() as connection:
             query = sa.select(revisions).where(revisions.c.plan_id == plan_id).order_by(revisions.c.sequence)
