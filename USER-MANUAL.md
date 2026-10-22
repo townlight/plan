@@ -1,3 +1,10 @@
+Opt-in staff beta preparation: **0.3.0** for the Townlight desktop
+1.5.0-beta.1 composition. This package identity is prepared and unreleased;
+no module release, signed installer or public download is created here. P5/P6
+provide native and unsigned installed evidence; final signed-byte acceptance
+remains pending. The desktop interface and explicit static sample are unchanged.
+Historical v0.2.2 and all other release assets remain preserved.
+
 # Townlight Planning operator manual
 
 Current state: **0.3.0+dev.1 P3/P4 development workflows**. The previous v1.0.0 release

@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_package_development_version() -> None:
-    assert civicplan.__version__ == "0.3.0+dev.1"
+    assert civicplan.__version__ == "0.3.0"
 
 
 def test_pyproject_uses_published_civiccore_release_wheel() -> None:
@@ -41,8 +41,8 @@ def test_root_endpoint_states_runtime_boundary() -> None:
     payload = response.json()
 
     assert payload["name"] == "CivicPlan"
-    assert payload["version"] == "0.3.0+dev.1"
-    assert payload["status"] == "P3/P4 development workflows; not an installed public beta"
+    assert payload["version"] == "0.3.0"
+    assert payload["status"] == "Opt-in staff beta preparation; not a published installer"
     assert "staff-only local source-bundle imports" in payload["message"]
     assert "versioned policies" in payload["message"]
     assert "does not make official planning determinations" in payload["message"]
@@ -56,7 +56,7 @@ def test_health_endpoint_reports_versions() -> None:
 
     assert payload["status"] == "ok"
     assert payload["service"] == "civicplan"
-    assert payload["version"] == "0.3.0+dev.1"
+    assert payload["version"] == "0.3.0"
     assert payload["civiccore_version"] == "1.2.1"
 
 
@@ -76,7 +76,7 @@ def test_documentation_gate_blocks_stale_product_release_claims() -> None:
     assert "v0.2.0 recovery release" in script
     assert "published v0.2.0 recovery label" in script
     assert "current product release" in script
-    assert "0.3.0+dev.1 P3/P4 development workflows" in script
+    assert "Opt-in staff beta preparation: **0.3.0**" in script
 
 
 def test_current_docs_mark_corrective_demotion_without_overclaim() -> None:
