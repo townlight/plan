@@ -1,7 +1,7 @@
 # Townlight Planning
 
-Current state: **0.3.0+dev.0 P1/P2 development foundation**. This is unreleased
-source-administration work, not an installed public beta. Townlight Planning uses
+Current state: **0.3.0+dev.1 P3/P4 development workflows**. This is unreleased
+source and analysis work, not an installed public beta. Townlight Planning uses
 the hash-pinned Townlight Core v1.2.1 release wheel. The previous v1.0.0 release
 was published in error; published v0.2.2 remains a corrective demotion state and
 is preserved with its original tag and assets.
@@ -12,9 +12,12 @@ Original documents and SHA256 hashes, goal/objective/policy structure, source an
 adoption dates, adoption evidence, visibility, revisions and chained audit events
 are durable. Corrections append a new revision; they never overwrite evidence.
 
-This does not make official planning determinations. Cited staff analysis,
-connected Zoning/Meetings/Records workflows, an operational desktop UI and a
-Planning installer profile remain P3-P6 work. The signed Townlight 1.4 installer
+P3 adds a shared versioned policy service and editable, source-pinned staff
+analysis revisions. P4 adds reviewed immutable snapshots and permission-checked
+Meetings/Zoning providers, a Records source contract and existing Access advice.
+This does not make official planning determinations. Native identity, operational
+desktop UI and Planning profile activation remain P5; installed acceptance, signing
+and publication remain P6. The signed Townlight 1.4 installer
 is unchanged and does not enable Planning.
 
 ## Development and source administration
@@ -50,20 +53,23 @@ native authenticated identity; browser clients must never receive this key.
 
 Public foundation lookup/navigation includes only adopted, effective, explicitly
 public municipal policies. Private, pending, future and demo records are not
-current public policy. Exact policy-ID lookup has no sample fallback. Broader
-question interpretation and conflict review remain P3 work.
+current public policy. Deterministic lookup, questions, cross-plan synthesis and
+consistency review use these same versioned sources. Unsupported queries return
+no supported policy; overlapping excerpts create a staff review task. No model is
+required. Source dates, locations, anchors and hashes accompany policy excerpts.
 
 Metadata-only `/policies/ingest` is retained as an actionable transition response;
 it cannot create an apparently adopted municipal policy without original files.
 Legacy staff analyses remain readable behind the existing staff gate. Municipal
-analysis/export/Meetings/Zoning context stubs return actionable unavailable
-responses until implemented. Sample helpers are available only when explicitly
+analysis has append-only edits, considerations and reviewer/date records; reviewed
+snapshots export actual policy/evidence bytes. Connected evidence is selected
+through trusted runtime providers and rechecked on read/export. Links grant no access. Sample helpers are available only when explicitly
 setting `CIVICPLAN_DEMO_MODE=1` with no database configured. `/civicplan` remains
 an explicitly labeled static sample page.
 
 See [the source-bundle contract and P1/P2 evidence](docs/PLANNING-P1-P2.md) and
 [the operator manual](USER-MANUAL.md). No signing, publication or historical
-release modification is part of P1/P2.
+release modification is part of P3/P4. See [the P3/P4 workflow contract](docs/PLANNING-P3-P4.md) for API composition and scope.
 
 ## Verification
 

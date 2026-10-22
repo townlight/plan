@@ -1,12 +1,12 @@
 # Townlight Planning operator manual
 
-Current state: **0.3.0+dev.0 P1/P2 development foundation**. The previous v1.0.0 release
+Current state: **0.3.0+dev.1 P3/P4 development workflows**. The previous v1.0.0 release
 was published in error. Published v0.2.2 and its historical evidence are preserved.
 This does not make official planning determinations and is not an installed public beta.
 The signed Townlight 1.4 installer remains unchanged.
 
-P1/P2 is for local source administration behind the existing trusted staff boundary.
-It is not a resident portal, staff-analysis product or installer upgrade.
+Source and analysis administration use the existing trusted staff service boundary.
+This is an unreleased API increment; a native municipal workflow remains P5.
 
 1. Back up the intended database. Configure CIVICPLAN_POLICY_DB_URL for the
    existing local PostgreSQL service and run `python -m civicplan.migrations`.
@@ -31,7 +31,9 @@ same revision without duplicating history or resetting the current revision.
 Pending amendments do not replace adopted policy. Future-effective revisions do
 not apply early. Supersession is a separate evidenced revision; old citations
 remain available in history. A new visibility value applies to that revision;
-this phase does not provide a publication/revocation manager.
+a later effective staff-only revision also excludes earlier snapshots from the
+public provider. Historical bytes remain preserved for authorized staff. Pending
+private revisions do not revoke an adopted public revision.
 
 Only explicitly public, effective, adopted municipal policies appear in public
 foundation lookup/navigation. Demo records and private/pending versions do not.
@@ -47,5 +49,29 @@ metadata are rejected; no partial import is committed.
 
 For explicit isolated sample evaluation only, unset CIVICPLAN_POLICY_DB_URL and
 set CIVICPLAN_DEMO_MODE=1. The /civicplan page remains a labeled static sample.
-Staff analysis, actual exports and connected product workflows remain unshipped.
+Use POST /analyses to select exact plan/revision/policy IDs and save a model-free
+draft. Add supporting/conflicting/uncertain considerations and staff edits. Read
+the latest revision, then submit POST /analyses/{id}/revisions with
+expected_previous_revision. A reviewed revision requires analysis text, reviewer
+label, review date and review notes. These labels are recorded evidence, not
+authenticated individual identity.
+
+Select public Meetings/Zoning evidence with POST /connections/search; attach its
+source ID, hash and relation in linked_sources. Providers are trusted composition
+code, never URLs supplied in a request. No provider means unavailable, not sample
+content. Zoning and enforceable Code remain distinct from adopted planning policy.
+
+POST /analyses/{id}/snapshots pins the reviewed revision. Public snapshots require
+audience=public plus a separately edited public_summary; private proposal, staff
+notes and internal review notes are omitted. GET /snapshots/{id}/export downloads
+the actual canonical JSON with X-Content-SHA256. Later edits/amendments preserve
+existing snapshots. Current source permissions are checked again on every read
+and export. /snapshots/{id}/access-advice uses existing deterministic Access
+advice without replacing the original or claiming accessibility certification.
+
+In the explicit development composition, Records staff select the public snapshot
+through its existing human-controlled attachment/review/approval/export workflow.
+Records rechecks Planning evidence on retrieval, export preparation/completion and
+fulfillment. No Planning profile, desktop controls or installer activation is
+provided in P3/P4. See docs/PLANNING-P3-P4.md.
 No source attachment automatically approves or publishes a municipal decision.

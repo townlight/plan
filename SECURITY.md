@@ -1,4 +1,4 @@
-# Current P1/P2 security boundary — 0.3.0+dev.0
+# Current P3/P4 security boundary - 0.3.0+dev.1
 
 Source administration uses the existing trusted staff role/key gate. It records
 a service actor, not an authenticated human. Reviewer labels are evidence, not
@@ -9,6 +9,11 @@ paths. Source limits, original-byte hashes, structured evidence and append-only
 storage apply. Private/pending/demo source records are excluded from current
 public policy. Explicit migrations preserve existing records. This development
 foundation is not a claim of public-use or installed product readiness.
+
+Snapshots require recorded human review. Public exports use explicitly selected
+public summaries and recheck source permissions, including linked evidence.
+Records attachment grants no additional source permission; unavailable providers
+block retrieval/export/fulfillment. Access advice preserves original content.
 
 ## Historical scaffold security guidance
 

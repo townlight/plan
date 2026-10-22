@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0+dev.1] - Unreleased
+
+- P3: one versioned policy service for navigation, deterministic cited lookup, questions, cross-plan context and consistency review; durable editable staff-analysis revisions with source pins, considerations and recorded review.
+- P4: permission-checked injected Meetings/Zoning providers, immutable reviewed snapshots with actual evidence and source hashes, public-summary selection, Records provider contract and existing Access advice.
+- Additive workflow migration preserves P1/P2 and legacy evidence. Native identity/UI/profile activation remains P5; signing/publication remains P6. Historical releases and signed 1.4 installer unchanged.
+
 ## [0.3.0+dev.0] - Unreleased
 
 - P1/P2 source foundation: Core 1.2.1 hash-pinned compatibility, explicit Planning migrations, original source bundles, immutable revisions, adoption evidence, visibility and Core hash-chained audit.
