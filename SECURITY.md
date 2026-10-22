@@ -1,4 +1,14 @@
-# Current P3/P4 security boundary - 0.3.0+dev.1
+# Staff beta preparation security boundary — 0.3.0
+
+The native P5/P6 composition authenticates local staff through existing sessions
+and mapped SQL identities; a caller-selected actor or service key does not grant
+native staff access. Keep service endpoints loopback-only. Public summaries,
+reviewed immutable snapshots, permission checks, revocation, original sources and
+audit history retain their existing controls. The standalone static sample and
+older service-key boundary described below are not the native staff workflow.
+No final signed installer or public release is certified by this metadata update.
+
+# Historical P3/P4 security boundary - 0.3.0+dev.1
 
 Source administration uses the existing trusted staff role/key gate. It records
 a service actor, not an authenticated human. Reviewer labels are evidence, not

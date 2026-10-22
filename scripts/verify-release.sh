@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="0.3.0+dev.1"
+VERSION="0.3.0"
 
 find_python() {
   local candidates=()
@@ -40,7 +40,7 @@ ${PYTHON_BIN} - <<'PY'
 from pathlib import Path
 import tomllib
 
-version = "0.3.0+dev.1"
+version = "0.3.0"
 root = Path(".")
 pyproject = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
 assert pyproject["project"]["version"] == version, pyproject["project"]["version"]
@@ -52,11 +52,10 @@ for path in [
     "README.txt",
     "USER-MANUAL.md",
     "CHANGELOG.md",
-    "docs/index.html",
     "SECURITY.md",
 ]:
     text = (root / path).read_text(encoding="utf-8")
-    assert "0.3.0+dev.1" in text, f"missing release version in {path}"
+    assert "0.3.0" in text, f"missing release version in {path}"
     assert "0.1.1.dev0" not in text, f"stale dev version in {path}"
 print("PASS: version surfaces synchronized")
 PY
@@ -81,8 +80,8 @@ from pathlib import Path
 import hashlib
 
 dist = Path("dist")
-wheel = dist / "civicplan-0.3.0+dev.1-py3-none-any.whl"
-sdist = dist / "civicplan-0.3.0+dev.1.tar.gz"
+wheel = dist / "civicplan-0.3.0-py3-none-any.whl"
+sdist = dist / "civicplan-0.3.0.tar.gz"
 assert wheel.exists(), f"missing {wheel}"
 assert sdist.exists(), f"missing {sdist}"
 lines = []

@@ -131,12 +131,12 @@ def root() -> dict[str, str]:
     return {
         "name": "CivicPlan",
         "version": __version__,
-        "status": "P3/P4 development workflows; not an installed public beta",
+        "status": "Opt-in staff beta preparation; not a published installer",
         "message": (
-            "Townlight Planning 0.3.0+dev.1 provides staff-only local source-bundle imports, "
+            "Townlight Planning 0.3.0 provides staff-only local source-bundle imports, "
             "versioned policies, staff-reviewed analyses, permission-checked connections and immutable snapshots. "
             "The previous v1.0.0 release was published in error. "
-            "It does not make official planning determinations; installed workflows remain unshipped."
+            "It does not make official planning determinations; signed beta delivery remains pending."
         ),
         "next_step": "Run explicit migrations, then import a staff-verified local source bundle.",
     }

@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0] - Unreleased staff beta preparation
+
+- Assign a distinct bundled package identity to the opt-in Townlight Planning
+  desktop 1.5.0-beta.1 preparation. This is not a module publication or a stable
+  public-readiness claim. Core remains hash-pinned to 1.2.1.
+- P5 native integration and P6 unsigned installer acceptance provide supporting
+  evidence. Final signed-byte acceptance and delivery remain pending. The desktop
+  interface and explicit static sample are unchanged.
+- Preserve every historical release, source record, compatibility identifier and
+  the signed Townlight 1.4 installer. No signing, tags or publication in this step.
+
 ## [0.3.0+dev.1] - Unreleased
 
 - P3: one versioned policy service for navigation, deterministic cited lookup, questions, cross-plan context and consistency review; durable editable staff-analysis revisions with source pins, considerations and recorded review.
