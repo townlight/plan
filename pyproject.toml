@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "civicplan"
-version = "0.3.0+dev.0"
+version = "0.3.0+dev.1"
 description = "Townlight Planning runtime foundation for comprehensive-plan policy lookup and cited planning analysis support."
 readme = "README.md"
 requires-python = ">=3.11"

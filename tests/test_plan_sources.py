@@ -208,12 +208,15 @@ def test_staff_api_import_history_download_and_public_boundary(engine, monkeypat
     assert missing.status_code == 404
     no_answer = client.post("/api/v1/civicplan/questions/answer", json={"question": "xyz"}).json()
     assert no_answer["status"] == "no_supported_policy" and not no_answer["citations"]
-    assert client.post("/api/v1/civicplan/staff-analysis/draft", json={
+    analysis = client.post("/api/v1/civicplan/staff-analysis/draft", json={
         "project_name": "Proposal", "proposal": "housing", "policy_id": "H-1",
-    }, headers=STAFF).status_code == 503
+    }, headers=STAFF)
+    assert analysis.status_code == 200
+    stored = client.get("/api/v1/civicplan/analyses/" + analysis.json()["analysis_id"], headers=STAFF).json()
+    assert stored["payload"]["selected_policies"][0]["revision_id"] == rid
     second = {"bundle": bundle(plan_id="private", visibility="staff")}
     assert client.post("/api/v1/civicplan/source-imports", json=second, headers=STAFF).status_code == 200
-    assert len(client.get("/api/v1/civicplan/plans/navigator").json()["plans"][0]["policies"]) == 1
+    assert len(client.get("/api/v1/civicplan/plans/navigator").json()["plans"][0]["goals"][0]["objectives"][0]["policies"]) == 1
 
 
 def test_api_requires_explicit_migration_and_does_not_seed(engine, monkeypatch):
@@ -286,10 +289,11 @@ def test_default_unconfigured_app_never_loads_samples(monkeypatch):
     monkeypatch.delenv("CIVICPLAN_POLICY_DB_URL", raising=False)
     monkeypatch.delenv("CIVICPLAN_DEMO_MODE", raising=False)
     client = TestClient(app)
-    assert client.get("/api/v1/civicplan/plans/navigator").json()["plans"] == []
-    response = client.post("/api/v1/civicplan/questions/answer", json={"question": "housing"}).json()
-    assert response["status"] == "no_supported_policy" and response["citations"] == []
-    assert client.post("/api/v1/civicplan/export", json={"title": "real", "policy_id": "housing"}).status_code == 503
+    for response in (client.get("/api/v1/civicplan/plans/navigator"),
+                     client.post("/api/v1/civicplan/questions/answer", json={"question": "housing"})):
+        assert response.status_code == 503 and "CIVICPLAN_POLICY_DB_URL" in response.text
+        assert "Comprehensive Plan, Housing Element" not in response.text
+    assert client.post("/api/v1/civicplan/export", json={"title": "real", "policy_id": "housing"}).status_code == 403
 
 
 def test_database_failure_is_actionable_without_secret_or_sample(monkeypatch):

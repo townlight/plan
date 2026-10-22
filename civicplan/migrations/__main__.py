@@ -12,7 +12,7 @@ def main():
         upgrade(engine)
         if not ready(engine):
             raise SystemExit("Planning migration readiness failed.")
-        print("Planning schema civicplan_0001 ready; legacy records preserved.")
+        print("Planning schema civicplan_0002 ready; legacy records preserved.")
     finally:
         engine.dispose()
 

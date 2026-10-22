@@ -1,6 +1,7 @@
 """FastAPI runtime foundation for Townlight Planning."""
 
 import os
+from contextlib import contextmanager
 from typing import Annotated
 
 from civiccore import __version__ as CIVICCORE_VERSION
@@ -30,6 +31,12 @@ from civicplan.records_export import build_policy_export
 from civicplan.staff_analysis import draft_staff_analysis
 from civicplan.source_api import router as source_router, repository as source_repository
 
+from civicplan.workflow_api import router as workflow_router, audience, call
+from civicplan.policy_service import PolicyService
+from civicplan.workflow_models import AnalysisInput
+from civicplan.workflow_store import WorkflowRepository
+from fastapi import Depends
+
 
 app = FastAPI(
     title='Townlight Planning',
@@ -38,6 +45,7 @@ app = FastAPI(
 )
 
 app.include_router(source_router)
+app.include_router(workflow_router)
 
 
 @app.exception_handler(SQLAlchemyError)
@@ -82,6 +90,7 @@ class PolicyExportRequest(BaseModel):
     title: str = Field(min_length=1, max_length=500)
     policy_id: str = Field(min_length=1, max_length=160)
     format: str = Field(default="markdown", min_length=1, max_length=40)
+    snapshot_id: str | None = Field(default=None, min_length=36, max_length=36)
 
 
 class PolicyIngestRequest(BaseModel):
@@ -122,10 +131,10 @@ def root() -> dict[str, str]:
     return {
         "name": "CivicPlan",
         "version": __version__,
-        "status": "P1/P2 development foundation; not an installed public beta",
+        "status": "P3/P4 development workflows; not an installed public beta",
         "message": (
-            "Townlight Planning 0.3.0+dev.0 provides staff-only local source-bundle imports, "
-            "versioned policies, adoption evidence, explicit migrations and append-only history. "
+            "Townlight Planning 0.3.0+dev.1 provides staff-only local source-bundle imports, "
+            "versioned policies, staff-reviewed analyses, permission-checked connections and immutable snapshots. "
             "The previous v1.0.0 release was published in error. "
             "It does not make official planning determinations; installed workflows remain unshipped."
         ),
@@ -187,7 +196,15 @@ def public_civicplan_page() -> str:
 
 
 @app.post("/api/v1/civicplan/policies/lookup")
-def policy_lookup(request: PolicyLookupRequest) -> dict[str, object]:
+def policy_lookup(request: PolicyLookupRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            result = PolicyService(repo).answer(request.topic, staff=is_staff, plan_type=request.plan_type)
+            if not result['sources']:
+                raise HTTPException(404, 'No supported adopted policy found; inspect imported sources.')
+            if result['status'] == 'needs_review':
+                return result
+            return {**result['sources'][0], 'review_required': True}
     result = _lookup_plan_policy(topic=request.topic, plan_type=request.plan_type)
     return result.__dict__
 
@@ -206,13 +223,19 @@ def ingest_policy(
 
 
 @app.get("/api/v1/civicplan/plans/navigator")
-def plans_navigator(plan_type: str | None = None) -> dict[str, object]:
+def plans_navigator(plan_type: str | None = None, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            return PolicyService(repo).navigator(staff=is_staff, plan_type=plan_type)
     policies = _list_plan_policies(plan_type=plan_type)
     return plan_navigator(policies)
 
 
 @app.post("/api/v1/civicplan/questions/answer")
-def plan_question_answer(request: PlanQuestionRequest) -> dict[str, object]:
+def plan_question_answer(request: PlanQuestionRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            return PolicyService(repo).answer(request.question, staff=is_staff, plan_type=request.plan_type)
     policies = _list_plan_policies(plan_type=request.plan_type)
     result = answer_plan_question(
         question=request.question,
@@ -223,12 +246,24 @@ def plan_question_answer(request: PlanQuestionRequest) -> dict[str, object]:
 
 
 @app.post("/api/v1/civicplan/plans/synthesis")
-def plan_synthesis(request: PlanSynthesisRequest) -> dict[str, object]:
+def plan_synthesis(request: PlanSynthesisRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            return PolicyService(repo).answer(request.topic, staff=is_staff)
     return synthesize_plan_context(topic=request.topic, policies=_list_plan_policies())
 
 
 @app.get("/api/v1/civicplan/amendments/history")
-def plan_amendment_history(plan_type: str | None = None) -> dict[str, object]:
+def plan_amendment_history(plan_type: str | None = None, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        from civicplan.source_schema import plans
+        import sqlalchemy as sa
+        with _sources() as repo:
+            with repo.engine.connect() as conn:
+                ids = conn.execute(sa.select(plans.c.plan_id)).scalars().all()
+            items = [r for plan_id in ids for r in repo.history(plan_id, staff=is_staff)
+                     if plan_type is None or r['plan_type'] == plan_type]
+            return {'items': items, 'review_required': True}
     _require_demo_workflow()
     return {
         "items": [amendment.__dict__ for amendment in amendment_history(plan_type=plan_type)],
@@ -252,7 +287,12 @@ def plan_progress_targets(policy_id: str | None = None) -> dict[str, object]:
 
 
 @app.post("/api/v1/civicplan/context/civicclerk")
-def civicclerk_context(request: CivicClerkContextRequest) -> dict[str, object]:
+def civicclerk_context(request: CivicClerkContextRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            return {**PolicyService(repo).answer(request.topic, staff=is_staff),
+                    'agenda_item': request.agenda_item, 'external_context_status': 'not_linked',
+                    'boundary': 'Planning policy only. Select permitted Meetings evidence on an analysis to establish a linked source.'}
     _require_demo_workflow()
     return civicclerk_staff_report_context(
         agenda_item=request.agenda_item,
@@ -282,7 +322,12 @@ def integration_mock(request: IntegrationMockRequest) -> dict[str, object]:
 
 
 @app.post("/api/v1/civicplan/context/zoning")
-def zoning_policy_context(request: ZoningPolicyContextRequest) -> dict[str, object]:
+def zoning_policy_context(request: ZoningPolicyContextRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            return {**PolicyService(repo).answer(_zoning_context_topic(request), staff=is_staff, plan_type=request.plan_type),
+                    'external_context_status': 'not_linked',
+                    'boundary': 'Planning policy is distinct from enforceable Code and parcel-specific zoning. Select a permitted Zoning snapshot on an analysis.'}
     _require_demo_workflow()
     policy, source = _lookup_plan_policy_with_source(
         topic=_zoning_context_topic(request),
@@ -306,7 +351,14 @@ def zoning_policy_context(request: ZoningPolicyContextRequest) -> dict[str, obje
 
 
 @app.post("/api/v1/civicplan/consistency/check")
-def consistency_check(request: ConsistencyRequest) -> dict[str, object]:
+def consistency_check(request: ConsistencyRequest, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        with _sources() as repo:
+            answer = PolicyService(repo).answer(request.policy_id, staff=is_staff, plan_type=None)
+            return {**answer, 'status': 'review_required' if answer['sources'] else 'no_supported_policy',
+                    'considerations': [{'policy': {k: p[k] for k in ('plan_id', 'revision_id', 'policy_id')},
+                                        'stance': 'uncertain', 'note': 'Staff must compare proposal facts with this policy.'}
+                                       for p in answer['sources']]}
     _require_demo_workflow()
     result = check_policy_consistency(proposal=request.proposal, policy_id=request.policy_id)
     return result.__dict__
@@ -318,8 +370,15 @@ def staff_analysis(
     x_civicplan_role: Annotated[str | None, Header()] = None,
     x_civicplan_staff_key: Annotated[str | None, Header()] = None,
 ) -> dict[str, object]:
-    if _policy_database_url() is not None:
+    if not _demo_mode():
         _require_staff_role(x_civicplan_role, x_civicplan_staff_key)
+        with _sources() as repo:
+            answer = PolicyService(repo).answer(request.policy_id, staff=True)
+            if not answer['sources']:
+                raise HTTPException(404, 'No supported adopted policy found.')
+            selected = [{k: p[k] for k in ('plan_id', 'revision_id', 'policy_id')} for p in answer['sources']]
+            data = AnalysisInput(project_name=request.project_name, proposal=request.proposal, selected_policies=selected)
+            return call(WorkflowRepository(repo).save, data, 'trusted-staff-key')
     _require_demo_workflow()
 
     result = draft_staff_analysis(
@@ -335,6 +394,7 @@ def staff_analysis(
 @app.get("/api/v1/civicplan/staff-analysis/{analysis_id}")
 def get_staff_analysis(
     analysis_id: str,
+    native_request: Request,
     x_civicplan_role: Annotated[str | None, Header()] = None,
     x_civicplan_staff_key: Annotated[str | None, Header()] = None,
 ) -> dict[str, object]:
@@ -347,6 +407,10 @@ def get_staff_analysis(
             },
         )
     _require_staff_role(x_civicplan_role, x_civicplan_staff_key)
+    with _sources() as source:
+        new_record = call(WorkflowRepository(source, getattr(native_request.app.state, 'planning_providers', {})).get, analysis_id)
+        if new_record is not None:
+            return new_record
     stored = _get_policy_repository().get_staff_analysis(analysis_id)
     if stored is None:
         raise HTTPException(
@@ -360,7 +424,18 @@ def get_staff_analysis(
 
 
 @app.post("/api/v1/civicplan/export")
-def policy_export(request: PolicyExportRequest) -> dict[str, object]:
+def policy_export(request: PolicyExportRequest, native_request: Request, is_staff=Depends(audience)) -> dict[str, object]:
+    if not _demo_mode():
+        if not is_staff:
+            raise HTTPException(403, 'Staff authentication is required to export analysis snapshots.')
+        if not request.snapshot_id:
+            raise HTTPException(422, 'Select a reviewed immutable snapshot; a policy ID alone is not an export.')
+        with _sources() as repo:
+            workflow = WorkflowRepository(repo, getattr(native_request.app.state, 'planning_providers', {}))
+            result = call(workflow.document, request.snapshot_id, staff=True)
+            if result is None:
+                raise HTTPException(404, 'Snapshot not found.')
+            return result
     _require_demo_workflow()
     result = build_policy_export(title=request.title, policy_id=request.policy_id, format=request.format)
     return result.__dict__
@@ -400,8 +475,8 @@ def _demo_mode() -> bool:
 def _require_demo_workflow() -> None:
     if not _demo_mode():
         raise HTTPException(503, detail={
-            "message": "This workflow is not implemented for municipal sources in P1/P2.",
-            "fix": "Use source administration; staff-analysis and connected workflows arrive in P3/P4. "
+            "message": "Progress-target tracking is deferred beyond P3/P4.",
+            "fix": "Use source-backed analysis and snapshot APIs. "
                    "Set CIVICPLAN_DEMO_MODE=1 only for explicit isolated sample evaluation without a database.",
         })
 
@@ -468,3 +543,12 @@ def _stored_staff_analysis_response(stored: StoredStaffAnalysis) -> dict[str, ob
         "disclaimer": stored.disclaimer,
         "created_at": stored.created_at.isoformat(),
     }
+
+
+@contextmanager
+def _sources():
+    generator = source_repository()
+    try:
+        yield next(generator)
+    finally:
+        generator.close()

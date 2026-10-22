@@ -41,7 +41,7 @@ def test_municipal_staff_analysis_does_not_use_sample_policy(monkeypatch, tmp_pa
         "project_name": "Actual proposal", "proposal": "Housing near services", "policy_id": "real-policy",
     }, headers={"X-CivicPlan-Role": "staff", "X-CivicPlan-Staff-Key": "test-staff-key"})
     assert response.status_code == 503
-    assert "P3/P4" in response.text
+    assert "migrations" in response.text
 
 
 def test_persisted_staff_analysis_requires_staff_role(monkeypatch, tmp_path) -> None:
@@ -99,7 +99,7 @@ def test_zoning_context_does_not_substitute_sample_for_municipal_data(monkeypatc
     monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", f"sqlite:///{tmp_path / 'municipal.db'}")
     response = client.post("/api/v1/civicplan/context/zoning", json={"topic": "accessory dwelling unit"})
     assert response.status_code == 503
-    assert "P3/P4" in response.text
+    assert "migrations" in response.text
 
 
 def test_staff_analysis_lookup_requires_configured_database() -> None:

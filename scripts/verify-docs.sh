@@ -75,7 +75,7 @@ for file in "${current_files[@]}"; do
 done
 
 required_markers=(
-  "0.3.0+dev.0 P1/P2 development foundation"
+  "0.3.0+dev.1 P3/P4 development workflows"
   "Townlight Core v1.2.1 release wheel"
 )
 
