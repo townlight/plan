@@ -118,12 +118,64 @@ class WorkflowRepository:
                                .order_by(versions.c.created_at, versions.c.revision_id)).scalars().all()
         return [self.get(analysis_id, revision_id) for revision_id in ids]
 
-    def snapshot(self, analysis_id, expected_revision, visibility, actor):
-        if visibility not in ('public', 'staff_only') or not actor.strip():
-            raise ValueError('Valid snapshot visibility and authenticated actor required.')
+    def history_page(self, analysis_id, *, limit=50, offset=0):
+        """Bounded staff revision summaries without private analysis bodies."""
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError('Use limit 1-100 and offset 0-100000.')
+        with self.engine.connect() as conn:
+            rows = conn.execute(sa.select(versions).where(versions.c.analysis_id == analysis_id)
+                                .order_by(versions.c.created_at, versions.c.revision_id)
+                                .limit(limit + 1).offset(offset)).mappings().all()
+        items = []
+        for row in rows[:limit]:
+            if sha(canonical(row['payload'])) != row['sha256']:
+                raise ValueError('Stored analysis integrity failed.')
+            items.append({k: row[k] for k in ('analysis_id', 'revision_id', 'sha256', 'created_at', 'actor_id')})
+        return {'items': items, 'next_offset': offset + limit if len(rows) > limit else None}
+
+    def inventory(self, *, limit=50, offset=0):
+        """Bounded staff summaries, without proposal text or private notes."""
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError('Use limit 1-100 and offset 0-100000.')
+        with self.engine.connect() as conn:
+            rows = conn.execute(sa.select(versions).join(
+                analyses, versions.c.revision_id == analyses.c.latest_revision_id,
+            ).order_by(versions.c.analysis_id).limit(limit + 1).offset(offset)).mappings().all()
+        items = []
+        for row in rows[:limit]:
+            if sha(canonical(row['payload'])) != row['sha256']:
+                raise ValueError('Stored analysis integrity failed.')
+            items.append({**{k: row[k] for k in ('analysis_id', 'revision_id', 'sha256', 'created_at')},
+                          **{k: row['payload'][k] for k in ('project_name', 'review_state', 'audience')}})
+        return {'items': items, 'next_offset': offset + limit if len(rows) > limit else None}
+
+    def snapshot_inventory(self, *, limit=50, offset=0, staff=False):
+        """Permission-rechecked snapshots; unavailable rows are never cached content."""
+        if not 1 <= limit <= 100 or not 0 <= offset <= 100_000:
+            raise ValueError('Use limit 1-100 and offset 0-100000.')
+        query = sa.select(snapshots.c.snapshot_id).order_by(snapshots.c.snapshot_id)
+        if not staff:
+            query = query.where(snapshots.c.visibility == 'public')
+        with self.engine.connect() as conn:
+            ids = conn.execute(query.limit(limit + 1).offset(offset)).scalars().all()
+        items = []
+        for snapshot_id in ids[:limit]:
+            try:
+                document = self.document(snapshot_id, staff=staff)
+            except (ValueError, ConnectionUnavailable):
+                continue
+            if document:
+                items.append(document)
+        return {'items': items, 'next_offset': offset + limit if len(ids) > limit else None}
+
+    def preview_snapshot(self, analysis_id, expected_revision, visibility):
+        if visibility not in ('public', 'staff_only'):
+            raise ValueError('Valid snapshot visibility required.')
         analysis = self.get(analysis_id, expected_revision)
         if analysis is None:
             raise ValueError('Analysis revision not found.')
+        if not analysis['is_latest']:
+            raise SourceConflict('Analysis changed; review the current revision before previewing a snapshot.')
         payload = analysis['payload']
         if payload['review_state'] != 'reviewed':
             raise ValueError('Staff review is required before a snapshot.')
@@ -142,6 +194,14 @@ class WorkflowRepository:
         text = canonical(result)
         digest = sha(text)
         snapshot_id = str(uuid5(NAMESPACE_URL, f'townlight:planning:snapshot:{expected_revision}:{visibility}:{digest}'))
+        return {'snapshot_id': snapshot_id, 'analysis_revision_id': expected_revision,
+                'visibility': visibility, 'text': text, 'sha256': digest}
+
+    def snapshot(self, analysis_id, expected_revision, visibility, actor):
+        if not actor.strip():
+            raise ValueError('Authenticated actor required.')
+        preview = self.preview_snapshot(analysis_id, expected_revision, visibility)
+        snapshot_id, text, digest = (preview[k] for k in ('snapshot_id', 'text', 'sha256'))
         with self.engine.begin() as conn:
             self._lock(conn, analysis_id)
             head = conn.execute(sa.select(analyses).where(analyses.c.analysis_id == analysis_id)).mappings().one()

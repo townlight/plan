@@ -53,6 +53,64 @@ def reviewed(ref, **changes):
     return draft(ref, **data)
 
 
+def test_staff_inventories_page_current_heads_without_private_text(context):
+    sources, workflow, ref, _ = context
+    sources.import_bundle(PlanBundle.model_validate(bundle(plan_id='private-plan', visibility='staff')), actor_id='a')
+    page = sources.inventory(limit=1)
+    assert len(page['items']) == 1 and page['next_offset'] == 1
+    assert len(sources.inventory(limit=1, offset=1)['items']) == 1
+    assert sources.inventory(offset=2)['items'] == []
+    first = workflow.save(draft(ref), 'account-a')
+    second = workflow.save(reviewed(ref, expected_previous_revision=first['revision_id']), 'account-b', first['analysis_id'])
+    item = workflow.inventory()['items'][0]
+    assert item['revision_id'] == second['revision_id']
+    assert item['review_state'] == 'reviewed'
+    assert 'PRIVATE' not in json.dumps(item) and 'CONFIDENTIAL' not in json.dumps(item)
+    with sources.engine.connect() as conn:
+        actors = conn.execute(sa.select(versions.c.actor_id).order_by(versions.c.created_at)).scalars().all()
+    assert actors == ['account-a', 'account-b']
+    history = workflow.history_page(first['analysis_id'], limit=1)
+    assert history['next_offset'] == 1
+    assert history['items'][0]['actor_id'] == 'account-a'
+    assert 'PRIVATE' not in json.dumps(history) and 'CONFIDENTIAL' not in json.dumps(history)
+    assert workflow.history_page(first['analysis_id'], limit=1, offset=1)['items'][0]['actor_id'] == 'account-b'
+    sources.import_bundle(PlanBundle.model_validate(bundle(change_note='Historical amendment')),
+                          actor_id='b', expected_previous_revision=ref['revision_id'])
+    history = sources.history_page(ref['plan_id'], limit=1)
+    assert history['next_offset'] == 1 and history['items'][0]['revision_id'] == ref['revision_id']
+    assert sources.history_page(ref['plan_id'], limit=1, offset=1)['next_offset'] is None
+    for invalid in ({'limit': 0}, {'limit': 101}, {'offset': -1}, {'offset': 100001}):
+        with pytest.raises(ValueError):
+            sources.inventory(**invalid)
+        with pytest.raises(ValueError):
+            workflow.inventory(**invalid)
+        with pytest.raises(ValueError):
+            workflow.snapshot_inventory(**invalid)
+        with pytest.raises(ValueError):
+            workflow.history_page(first['analysis_id'], **invalid)
+        with pytest.raises(ValueError):
+            sources.history_page(ref['plan_id'], **invalid)
+
+
+def test_snapshot_preview_is_write_free_exact_and_permission_rechecked(context):
+    sources, workflow, ref, _ = context
+    saved = workflow.save(reviewed(ref), 'account-a')
+    preview = workflow.preview_snapshot(saved['analysis_id'], saved['revision_id'], 'public')
+    assert workflow.audit(saved['analysis_id'])['count'] == 1
+    assert workflow.snapshot_inventory(staff=True)['items'] == []
+    snapshot = workflow.snapshot(saved['analysis_id'], saved['revision_id'], 'public', 'account-a')
+    assert snapshot['text'] == preview['text'] and snapshot['sha256'] == preview['sha256']
+    workflow.snapshot(saved['analysis_id'], saved['revision_id'], 'staff_only', 'account-a')
+    assert len(workflow.snapshot_inventory()['items']) == 1
+    assert len(workflow.snapshot_inventory(staff=True)['items']) == 2
+    workflow.save(draft(ref, expected_previous_revision=saved['revision_id']), 'account-b', saved['analysis_id'])
+    with pytest.raises(SourceConflict):
+        workflow.preview_snapshot(saved['analysis_id'], saved['revision_id'], 'public')
+    private = bundle(visibility='staff', change_note='Public permission revoked')
+    sources.import_bundle(PlanBundle.model_validate(private), actor_id='account-b', expected_previous_revision=ref['revision_id'])
+    assert workflow.snapshot_inventory()['items'] == []
+
+
 def test_all_consumers_use_imported_version_and_never_general_sample(context):
     sources, workflow, ref, client = context
     for endpoint, payload in (
