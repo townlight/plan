@@ -1,3 +1,28 @@
+# Townlight Planning
+
+**Policy sources that remain connected to staff analysis.**
+
+Planning makes adopted policies usable in staff analysis. It separates source policies, staff analysis, review and exact snapshots; it does not make a land-use recommendation or adopt a plan amendment for the city.
+
+## Use this product
+
+- [Current user manual](USER-MANUAL.md): installed workflow, roles, sources, review, export, recovery and limits.
+- [Product landing page](https://townlight.github.io/products/planning/).
+- [Overall eight-product manual](https://github.com/townlight/townlight/blob/main/USER-MANUAL.md) and [feature/integration assessment](https://github.com/townlight/townlight/blob/main/docs/assessment/feature-and-integration-review.md).
+- [Signed composition and acceptance](https://github.com/townlight/townlight/releases/tag/townlight-records-meetings-code-zoning-planning-v1.5.1): Signed Planning 1.5.1, fresh-install scope.
+
+Planning selects Meetings/Zoning evidence and supplies permitted snapshots to Records. Its staff analysis is not automatic writeback into those products.
+
+## Release scope
+
+The accepted 1.5.1 scope is fresh installation; historical-version upgrades are unverified. Source sample amendment/progress endpoints are not a municipal amendment adoption workflow or durable progress-tracking system. Do not treat the standalone sample public page as the native municipal workspace.
+
+Documentation reviewed 2026-10-26. Installed acceptance, source/API implementation and future requirements are different evidence. Code is AGPL-3.0-only with the repository’s public institution exception where applicable; documentation is CC BY 4.0. See the repository license files.
+
+## Historical repository reference
+
+The earlier README below is retained for package history and contributor commands. Older maturity/version statements describe that historical reference and are superseded by the current operating guide and linked release evidence.
+
 Opt-in staff beta preparation: **0.3.0** for the Townlight desktop
 1.5.0-beta.1 composition. This package identity is prepared and unreleased;
 no module release, signed installer or public download is created here. P5/P6
@@ -6,6 +31,9 @@ remains pending. The desktop interface and explicit static sample are unchanged.
 Historical v0.2.2 and all other release assets remain preserved.
 
 # Townlight Planning
+
+The opt-in native development integration is described in
+[Planning P5](docs/PLANNING-P5.md). Historical releases and installer identity remain unchanged.
 
 Historical development baseline: **0.3.0+dev.1 P3/P4 development workflows**. This is unreleased
 source and analysis work, not an installed public beta. Townlight Planning uses
