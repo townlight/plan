@@ -6,6 +6,8 @@ from typing import Annotated
 
 from civiccore import __version__ as CIVICCORE_VERSION
 from civiccore.auth import staff_key_gate
+from civicplan.municipal_api import router as municipal_router
+
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -16,17 +18,16 @@ from civicplan import __version__
 from civicplan.consistency import check_policy_consistency
 from civicplan.integration_mocks import CivicPlanIntegrationMockLayer, IntegrationError
 from civicplan.plan_workflows import (
-    amendment_history,
     answer_plan_question,
     civicclerk_staff_report_context,
     plan_navigator,
-    progress_targets,
     synthesize_plan_context,
 )
 from civicplan.persistence import PlanPolicyRepository, StoredStaffAnalysis
 from civicplan.policy_lookup import PlanPolicy
 from civicplan.policy_lookup import lookup_plan_policy
-from civicplan.public_ui import render_public_lookup_page
+from civicplan.public_explore import explore, resolve_public_policy
+from civicplan.public_explore_ui import render_explorer, render_unavailable
 from civicplan.records_export import build_policy_export
 from civicplan.staff_analysis import draft_staff_analysis
 from civicplan.source_api import router as source_router, repository as source_repository
@@ -46,6 +47,7 @@ app = FastAPI(
 
 app.include_router(source_router)
 app.include_router(workflow_router)
+app.include_router(municipal_router)
 
 
 @app.exception_handler(SQLAlchemyError)
@@ -189,10 +191,66 @@ async def validation_exception_handler(
 
 
 @app.get("/civicplan", response_class=HTMLResponse)
-def public_civicplan_page() -> str:
-    """Return the public sample plan-policy lookup UI."""
+def public_civicplan_page(
+    q: str = "", goal: str = "", topic: str = "", plan_type: str = "", clear: str = "", neighborhood: str = ""
+) -> str:
+    """Explore the adopted plan sources this deployment actually holds.
 
-    return render_public_lookup_page()
+    Public readers get only adopted, effective, public municipal revisions. When
+    no plan database is configured the page says so instead of showing sample text.
+    """
+
+    if clear:
+        q = goal = topic = plan_type = neighborhood = ""
+    if _policy_database_url() is None:
+        return render_unavailable(
+            "No plan source database is configured for this deployment, so there are "
+            "no adopted plan policies to explore yet.")
+    try:
+        with _sources() as repo:
+            exploration = explore(PolicyService(repo), query=q, goal=goal, topic=topic,
+                                  plan_type=plan_type, neighborhood=neighborhood, staff=False)
+    except Exception:  # noqa: BLE001 - any source failure must not become sample text
+        return render_unavailable(
+            "The adopted plan sources could not be read just now. Nothing is shown "
+            "rather than stale or sample plan text.")
+    return render_explorer(exploration)
+
+
+@app.get("/api/v1/civicplan/public/plan-explore")
+def public_plan_explore(q: str = "", goal: str = "", topic: str = "",
+                        plan_type: str = "", neighborhood: str = "") -> dict[str, object]:
+    """The same persisted-source exploration as the page, as JSON."""
+
+    if _policy_database_url() is None:
+        raise HTTPException(503, "No plan source database is configured for this deployment.")
+    with _sources() as repo:
+        exploration = explore(PolicyService(repo), query=q, goal=goal, topic=topic,
+                              plan_type=plan_type, neighborhood=neighborhood, staff=False)
+    return {"query": exploration.query, "plan_type": exploration.plan_type,
+            "goal": exploration.goal, "topic": exploration.topic, "neighborhood": exploration.neighborhood,
+            "total": exploration.total, "plans": exploration.plans,
+            "facets": exploration.facets, "empty_reason": exploration.empty_reason,
+            "review_required": True, "disclaimer": exploration.disclaimer}
+
+
+@app.get("/api/v1/civicplan/public/policy/{revision_id}/{policy_id}")
+def public_policy_citation(revision_id: str, policy_id: str) -> dict[str, object]:
+    """One cited policy for a public reader, or a refusal.
+
+    A staff-only, pending, superseded or non-effective revision is refused here by
+    the service; naming its id does not reach it.
+    """
+
+    if _policy_database_url() is None:
+        raise HTTPException(503, "No plan source database is configured for this deployment.")
+    with _sources() as repo:
+        service = PolicyService(repo)
+        try:
+            policy = resolve_public_policy(service, revision_id, policy_id)
+        except ValueError as exc:
+            raise HTTPException(404, str(exc)) from None
+        return {**policy, 'review_required': True}
 
 
 @app.post("/api/v1/civicplan/policies/lookup")
@@ -251,39 +309,6 @@ def plan_synthesis(request: PlanSynthesisRequest, is_staff=Depends(audience)) ->
         with _sources() as repo:
             return PolicyService(repo).answer(request.topic, staff=is_staff)
     return synthesize_plan_context(topic=request.topic, policies=_list_plan_policies())
-
-
-@app.get("/api/v1/civicplan/amendments/history")
-def plan_amendment_history(plan_type: str | None = None, is_staff=Depends(audience)) -> dict[str, object]:
-    if not _demo_mode():
-        from civicplan.source_schema import plans
-        import sqlalchemy as sa
-        with _sources() as repo:
-            with repo.engine.connect() as conn:
-                ids = conn.execute(sa.select(plans.c.plan_id)).scalars().all()
-            items = [r for plan_id in ids for r in repo.history(plan_id, staff=is_staff)
-                     if plan_type is None or r['plan_type'] == plan_type]
-            return {'items': items, 'review_required': True}
-    _require_demo_workflow()
-    return {
-        "items": [amendment.__dict__ for amendment in amendment_history(plan_type=plan_type)],
-        "boundary": "Pending amendments are not treated as adopted plan text.",
-    }
-
-
-@app.get("/api/v1/civicplan/progress/targets")
-def plan_progress_targets(policy_id: str | None = None) -> dict[str, object]:
-    _require_demo_workflow()
-    return {
-        "items": [
-            {
-                **target.__dict__,
-                "updated_at": target.updated_at.isoformat(),
-            }
-            for target in progress_targets(policy_id=policy_id)
-        ],
-        "boundary": "Progress statuses are planning-support evidence, not official findings.",
-    }
 
 
 @app.post("/api/v1/civicplan/context/civicclerk")

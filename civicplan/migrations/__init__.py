@@ -7,7 +7,7 @@ from alembic.config import Config
 from alembic.runtime.migration import MigrationContext
 import sqlalchemy as sa
 
-HEAD = "civicplan_0002"
+HEAD = "civicplan_0004"
 
 
 def source_engine(url: str) -> sa.Engine:
@@ -37,11 +37,12 @@ def upgrade(engine: sa.Engine) -> None:
 def ready(engine: sa.Engine) -> bool:
     from civicplan.source_schema import metadata
     from civicplan.workflow_schema import metadata as workflow_metadata
+    from civicplan.municipal import metadata as municipal_metadata
     schema = "civicplan" if engine.dialect.name == "postgresql" else None
     with engine.connect() as connection:
         inspector = sa.inspect(connection)
         if not all(inspector.has_table(t.name, schema=schema)
-                   for m in (metadata, workflow_metadata) for t in m.tables.values()):
+                   for m in (metadata, workflow_metadata, municipal_metadata) for t in m.tables.values()):
             return False
         return MigrationContext.configure(connection, opts={
             "version_table": "alembic_version_civicplan", "version_table_schema": schema,

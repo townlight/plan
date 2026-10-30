@@ -1,0 +1,187 @@
+# Townlight Planning — User manual
+
+> Private candidate update: **0.4.0.dev1**, paired with private Core1.3.0.dev1, now adds persisted initiative/progress and amendment lifecycle work. See [municipal workflow instructions and limits](docs/municipal-beta.md). Nothing is installed or published. Historical release descriptions below remain historical evidence.
+
+Current operating guide · reviewed 2026-10-26 · Signed Planning 1.5.1, fresh-install scope.
+
+[Product page](https://townlight.github.io/products/planning/) · [Overall manual](https://github.com/townlight/townlight/blob/main/USER-MANUAL.md) · [Requirements assessment](https://github.com/townlight/townlight/blob/main/docs/assessment/feature-and-integration-review.md)
+
+## Purpose and audience
+
+Planning makes adopted policies usable in staff analysis. It separates source policies, staff analysis, review and exact snapshots; it does not make a land-use recommendation or adopt a plan amendment for the city.
+
+Primary operators: **Planning staff and authorized reviewers**. [Release and acceptance notes](https://github.com/townlight/townlight/releases/tag/townlight-records-meetings-code-zoning-planning-v1.5.1).
+
+## Before starting
+
+Use the explicit product composition in the installed Townlight desktop. Sign in with the required local staff account, confirm System Health readiness and take a backup before maintenance. If a workspace is absent, inspect the profile and release identity before importing data. Optional AI is not needed for the accepted deterministic workflow. The procedures below use real saved sources; sample/demo web pages are not substitutes.
+
+## Complete the workflow
+
+### 1. Enable the workspace
+
+In the signed Planning composition explicitly choose the retained Townlight Planning development preview selection. Records remains the default. The historical internal label does not mean the 1.5.1 installer is unpublished. Complete the explicit runtime activation and backed-up migration controls.
+
+### 2. Import policies
+
+Open Policy library and wait for Policy library loaded. Select the complete local source bundle, preview jurisdiction, adoption/source dates, policy IDs and original hashes, then confirm import. Preserve the original and prior revisions. Pending material must not be presented as adopted policy.
+
+### 3. Start or reopen an analysis
+
+Planning opens on Analyses. Select the project or start an analysis. The project filter covers the loaded page only; use Next page for more saved analyses. Enter proposal, staff analysis and private notes in Analysis.
+
+### 4. Select policies and evidence
+
+Use Policies & evidence for versioned policies, applicability notes and permitted Meetings/Zoning sources. Consider supporting, conflicting and uncertain policy context. Source selection includes expected hashes; saving rechecks integrity and permissions.
+
+### 5. Save an immutable revision
+
+Use Save draft. Drafts are not autosaved to disk. Save before sign-out or closing. A conflict retains edits for reconciliation; reopen the current revision and reconcile deliberately rather than resubmitting against a guessed new revision.
+
+### 6. Record a review
+
+Use Review & export, edit the intended audience, public summary and review notes, and save. Confirm review and choose Record review of saved draft. Identity/date come from the authenticated backend. Editing a reviewed analysis creates a later draft and invalidates the old preview.
+
+### 7. Create a snapshot
+
+Preview the saved reviewed revision for the chosen audience, inspect the exact returned text and then Create reviewed snapshot. Public snapshots exclude private notes and full staff analysis under the public contract. Staff snapshots may contain private material. Export from Reviewed snapshots verifies the expected SHA256.
+
+### 8. Connect the result
+
+Explicitly select the permitted public snapshot in Records. Creating or exporting a snapshot does not publish it, approve a Records response or adopt policy. Retain the original source, analysis revision, review and snapshot relationship.
+
+## How this product connects
+
+Planning selects Meetings/Zoning evidence and supplies permitted snapshots to Records. Its staff analysis is not automatic writeback into those products.
+
+## Boundaries and known gaps
+
+The accepted 1.5.1 scope is fresh installation; historical-version upgrades are unverified. Source sample amendment/progress endpoints are not a municipal amendment adoption workflow or durable progress-tracking system. Do not treat the standalone sample public page as the native municipal workspace.
+
+## Shared operating rules
+
+Use the installed native desktop for the accepted workflow. Standalone package web pages, sample endpoints and developer API examples are different surfaces. A local Resident/Public view is not an internet deployment. Confirm the selected composition before looking for a workspace.
+
+1. Keep named staff accounts and least privilege. Administrators manage setup; ordinary staff use their authorized workspace. Do not put credentials, unredacted evidence or resident data into public issues.
+2. Preserve originals and their hashes. Import preview and confirmation are distinct actions. Treat fictional fixtures as fictional; they are not municipal authority.
+3. Save before navigating away, closing or signing out. Unsaved drafts are not a durable record. On a conflict, reopen and reconcile; on an unknown result, inspect the saved record before repeating a write.
+4. Review the exact revision and audience. A private packet and a public copy are different artifacts. Public text is explicitly edited/reviewed; changing a filename does not sanitize private content.
+5. Keep source permission, version and hash checks. If a provider is stopped or a source becomes restricted, retain the draft, restore authorized access and deliberately reselect evidence. Never bypass the check or substitute a sample.
+6. Approval, attachment, export and publication are separate actions. No cross-product attachment is an automatic records response, official permit, legal determination or enforcement decision.
+
+## Installation, maintenance and recovery
+
+Choose a release from the overall manual; do not infer a supported upgrade from a higher version number. Verify its published checksum, publisher signature and acceptance notes before installing. The default download remains the signed 1.4 beta, and Records-only remains its default selection. Planning 1.5.1 has a fresh-install boundary; Permitting and Inspections use separately identified products.
+
+Complete Setup and normal runtime activation for the selected composition. Optional local AI can be deferred. Use System Health to distinguish stopped, starting, ready and failed dependencies. Wait for readiness before opening a dependent workspace. Use documented Retry controls after recovery; do not repeat business writes to refresh a stale screen.
+
+Back up through the canonical desktop controls before migration or maintenance. Keep the coherent data, document and profile backup and its receipt in protected storage. A source export is not a full backup. Stop dependent services before PostgreSQL maintenance. Restore through the supported controls rather than editing SQL or restoring historical JSON into the active runtime. Uninstall can retain data; backup before uninstalling and inspect the chosen removal options. Never assume uninstall means data deletion.
+
+For an error, retain the message, time, selected profile, installed version and operation; inspect System Health and relevant logs. Use a redacted support bundle. Do not delete the profile, run an arbitrary downgrade or repair prerequisites as a first response. If an installer requests a restart, save work and obtain the operator’s explicit restart decision before proceeding.
+
+## Evidence and scope
+
+This manual reuses the accepted installed, required-CI and signed-delivery evidence. It does not turn source inspection into a new installed test. Recovery evidence is reused only within its recorded candidate/profile boundaries; no universal upgrade, hardware, accessibility or production deployment certification is implied. The [overall manual](https://github.com/townlight/townlight/blob/main/USER-MANUAL.md) gives release identities and shared operations. The [feature and integration assessment](https://github.com/townlight/townlight/blob/main/docs/assessment/feature-and-integration-review.md) separates implementation, explicit deferral, missing capability and unverified acceptance.
+
+
+## Maintainer and API reference
+
+The following source contracts support these instructions. The historical reference below retains older API/setup details for their original version; it does not override this operating guide or the release acceptance.
+
+- [civicplan/source_store.py](https://github.com/townlight/plan/tree/main/civicplan/source_store.py)
+- [civicplan/workflow_store.py](https://github.com/townlight/plan/tree/main/civicplan/workflow_store.py)
+- [civicplan/workflow_models.py](https://github.com/townlight/plan/tree/main/civicplan/workflow_models.py)
+- [civicplan/plan_workflows.py](https://github.com/townlight/plan/tree/main/civicplan/plan_workflows.py)
+- [civicplan/records_export.py](https://github.com/townlight/plan/tree/main/civicplan/records_export.py)
+
+
+---
+
+## Historical package/API reference
+
+The material below is retained from the previous manual for historical and developer reference. Version, unreleased, sample, planned and installation claims below describe that earlier document, not current desktop release status. Use the current guide above for operation. Existing detailed API reference remains useful only for the matching package/version.
+
+Opt-in staff beta preparation: **0.3.0** for the Townlight desktop
+1.5.0-beta.1 composition. This package identity is prepared and unreleased;
+no module release, signed installer or public download is created here. P5/P6
+provide native and unsigned installed evidence; final signed-byte acceptance
+remains pending. The desktop interface and explicit static sample are unchanged.
+Historical v0.2.2 and all other release assets remain preserved.
+
+# Townlight Planning operator manual
+
+Current state: **0.3.0+dev.1 P3/P4 development workflows**. The previous v1.0.0 release
+was published in error. Published v0.2.2 and its historical evidence are preserved.
+This does not make official planning determinations and is not an installed public beta.
+The signed Townlight 1.4 installer remains unchanged.
+
+Source and analysis administration use the existing trusted staff service boundary.
+This is an unreleased API increment; a native municipal workflow remains P5.
+
+1. Back up the intended database. Configure CIVICPLAN_POLICY_DB_URL for the
+   existing local PostgreSQL service and run `python -m civicplan.migrations`.
+   Keep credentials out of logs and source files. No source request runs migrations.
+2. Prepare a version-1 JSON bundle using the contract in docs/PLANNING-P1-P2.md.
+   Include original document bytes as base64 and independently computed SHA256s,
+   staff-verified policy excerpts/anchors, source dates and explicit visibility.
+3. For adopted plans, record adoption/effective dates and supporting evidence.
+   A manually recorded source is valid; meeting minutes are not a mandatory
+   prerequisite. A meeting reference is preserved evidence, not a verified live link.
+4. Submit it to POST /api/v1/civicplan/source-imports from the trusted staff workflow.
+   Include the existing staff role/key headers. Do not put the key into a browser.
+5. Read the returned revision and download its original source. Check its hash
+   against the file you imported. Inspect the history/audit endpoint.
+6. For an amendment or correction, read the latest history and include its revision
+   ID as expected_previous_revision. Explain the change. A stale revision returns
+   409; refresh and reconcile rather than retrying a blind overwrite.
+
+Each revision preserves its original bytes, policies, adoption state/evidence,
+visibility, actor and reviewer label. A repeated identical bundle returns the
+same revision without duplicating history or resetting the current revision.
+Pending amendments do not replace adopted policy. Future-effective revisions do
+not apply early. Supersession is a separate evidenced revision; old citations
+remain available in history. A new visibility value applies to that revision;
+a later effective staff-only revision also excludes earlier snapshots from the
+public provider. Historical bytes remain preserved for authorized staff. Pending
+private revisions do not revoke an adopted public revision.
+
+Only explicitly public, effective, adopted municipal policies appear in public
+foundation lookup/navigation. Demo records and private/pending versions do not.
+No configured database implicitly loads fictional policies. Legacy records are
+preserved but require staff reimport with original sources and evidence before
+becoming authoritative municipal policies.
+
+PDF and DOCX files are preserved without executing or extracting them. Staff
+provide verified excerpts and anchors. UTF-8 text/Markdown excerpts must occur
+in their referenced original source. OCR, automatic interpretation and live
+vendor imports are deferred. Invalid hashes, paths, references or adoption
+metadata are rejected; no partial import is committed.
+
+For explicit isolated sample evaluation only, unset CIVICPLAN_POLICY_DB_URL and
+set CIVICPLAN_DEMO_MODE=1. The /civicplan page remains a labeled static sample.
+Use POST /analyses to select exact plan/revision/policy IDs and save a model-free
+draft. Add supporting/conflicting/uncertain considerations and staff edits. Read
+the latest revision, then submit POST /analyses/{id}/revisions with
+expected_previous_revision. A reviewed revision requires analysis text, reviewer
+label, review date and review notes. These labels are recorded evidence, not
+authenticated individual identity.
+
+Select public Meetings/Zoning evidence with POST /connections/search; attach its
+source ID, hash and relation in linked_sources. Providers are trusted composition
+code, never URLs supplied in a request. No provider means unavailable, not sample
+content. Zoning and enforceable Code remain distinct from adopted planning policy.
+
+POST /analyses/{id}/snapshots pins the reviewed revision. Public snapshots require
+audience=public plus a separately edited public_summary; private proposal, staff
+notes and internal review notes are omitted. GET /snapshots/{id}/export downloads
+the actual canonical JSON with X-Content-SHA256. Later edits/amendments preserve
+existing snapshots. Current source permissions are checked again on every read
+and export. /snapshots/{id}/access-advice uses existing deterministic Access
+advice without replacing the original or claiming accessibility certification.
+
+In the explicit development composition, Records staff select the public snapshot
+through its existing human-controlled attachment/review/approval/export workflow.
+Records rechecks Planning evidence on retrieval, export preparation/completion and
+fulfillment. No Planning profile, desktop controls or installer activation is
+provided in P3/P4. See docs/PLANNING-P3-P4.md.
+No source attachment automatically approves or publishes a municipal decision.

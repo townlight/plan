@@ -13,25 +13,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def test_package_development_version() -> None:
-    assert civicplan.__version__ == "0.3.0"
+    assert civicplan.__version__ == "0.4.0.dev1"
 
 
-def test_pyproject_uses_published_civiccore_release_wheel() -> None:
+def test_private_candidate_pins_tested_core_wheel() -> None:
     data = tomllib.loads((ROOT / "pyproject.toml").read_text(encoding="utf-8"))
-    dependencies = data["project"]["dependencies"]
-
-    assert data["tool"]["hatch"]["metadata"]["allow-direct-references"] is True
-    assert (
-        "civiccore @ https://github.com/townlight/core/releases/download/"
-        "v1.2.1/civiccore-1.2.1-py3-none-any.whl#sha256=8dde29408e206048bde63ec14156a8e6329382af4d16b12710d12aa5c27f3f59"
-    ) in dependencies
-    assert "civiccore==1.0.0" not in dependencies
+    assert "civiccore @ https://github.com/townlight/core/archive/68eaf17240ca1af7886f044881ca1be2b2b63e51.zip" in data["project"]["dependencies"]
+    assert data["project"]["version"] == civicplan.__version__
 
 
 def test_ci_workflows_use_current_civiccore_release_wheel() -> None:
     for path in [ROOT / ".github" / "workflows" / "verify.yml", ROOT / ".github" / "workflows" / "release.yml"]:
         text = path.read_text(encoding="utf-8")
-        assert "v1.2.1/civiccore-1.2.1-py3-none-any.whl" in text, path
+        assert "https://github.com/townlight/core/archive/68eaf17240ca1af7886f044881ca1be2b2b63e51.zip" in text, path
         assert "v1.0.1/civiccore-1.0.1-py3-none-any.whl" not in text, path
 
 
@@ -41,7 +35,7 @@ def test_root_endpoint_states_runtime_boundary() -> None:
     payload = response.json()
 
     assert payload["name"] == "CivicPlan"
-    assert payload["version"] == "0.3.0"
+    assert payload["version"] == "0.4.0.dev1"
     assert payload["status"] == "Opt-in staff beta preparation; not a published installer"
     assert "staff-only local source-bundle imports" in payload["message"]
     assert "versioned policies" in payload["message"]
@@ -56,8 +50,8 @@ def test_health_endpoint_reports_versions() -> None:
 
     assert payload["status"] == "ok"
     assert payload["service"] == "civicplan"
-    assert payload["version"] == "0.3.0"
-    assert payload["civiccore_version"] == "1.2.1"
+    assert payload["version"] == "0.4.0.dev1"
+    assert payload["civiccore_version"] == "1.3.0.dev1"
 
 
 def test_release_gate_prefers_native_unix_python_before_windows_launcher() -> None:
@@ -76,7 +70,7 @@ def test_documentation_gate_blocks_stale_product_release_claims() -> None:
     assert "v0.2.0 recovery release" in script
     assert "published v0.2.0 recovery label" in script
     assert "current product release" in script
-    assert "Opt-in staff beta preparation: **0.3.0**" in script
+    assert "Townlight Beta 1" in script
 
 
 def test_current_docs_mark_corrective_demotion_without_overclaim() -> None:
@@ -90,10 +84,11 @@ def test_current_docs_mark_corrective_demotion_without_overclaim() -> None:
 
     for path, text in docs.items():
         lowered = " ".join(text.lower().split())
-        assert "0.3.0+dev.1 p3/p4 development workflows" in lowered, path
-        assert "previous v1.0.0 release was published in error" in lowered, path
+        assert "townlight beta 1" in lowered, path
+        assert "0.4.0.dev1" in lowered, path
         assert "demoted recovery label" not in lowered, path
-        assert "official planning determinations" in lowered, path
+        assert "review" in lowered, path
+        assert "agpl-3.0" in lowered, path
 
 
 @pytest.fixture(autouse=True)

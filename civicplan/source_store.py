@@ -233,6 +233,10 @@ def _bundle_hash(bundle: PlanBundle) -> str:
     payload = bundle.model_dump(mode="json")
     payload["documents"] = sorted(payload["documents"], key=lambda item: item["document_id"])
     payload["policies"] = sorted(payload["policies"], key=lambda item: item["policy_id"])
+    # Preserve identities and integrity checks of pre-neighborhood bundles.
+    for policy in payload["policies"]:
+        if not policy.get("neighborhoods"):
+            policy.pop("neighborhoods", None)
     for document in payload["documents"]:
         document["content_base64"] = base64.b64encode(
             next(d for d in bundle.documents if d.document_id == document["document_id"]).original_bytes()

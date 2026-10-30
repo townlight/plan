@@ -51,6 +51,7 @@ policies = sa.Table(
     sa.Column("goal", sa.String(500), nullable=False),
     sa.Column("objective", sa.String(500), nullable=False),
     sa.Column("topic_key", sa.String(160), nullable=False),
+    sa.Column("neighborhoods", sa.JSON, nullable=False, server_default=sa.text("'[]'")),
     sa.Column("title", sa.String(500), nullable=False),
     sa.Column("citation", sa.String(500), nullable=False),
     sa.Column("anchor", sa.String(500), nullable=False),
