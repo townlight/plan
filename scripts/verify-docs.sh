@@ -75,8 +75,8 @@ for file in "${current_files[@]}"; do
 done
 
 required_markers=(
-  "Opt-in staff beta preparation: **0.3.0**"
-  "Townlight Core v1.2.1 release wheel"
+  "Townlight Beta 1"
+  "0.4.0.dev1"
 )
 
 for marker in "${required_markers[@]}"; do

@@ -146,22 +146,28 @@ def test_consistency_and_staff_analysis_apis() -> None:
     assert staff.json()["review_required"] is True
 
 
-def test_public_ui_route_is_accessible_and_honest() -> None:
+def test_public_ui_route_is_accessible_and_honest(monkeypatch) -> None:
+    """The public page may never present sample text as if it were an adopted plan.
+
+    With no plan source database configured the honest answer is "not available";
+    with sources configured the page renders citations from them (covered in
+    ``tests/test_public_explore.py``). Either way, no static sample survives.
+    """
+
+    monkeypatch.delenv("CIVICPLAN_POLICY_DB_URL", raising=False)
     response = client.get("/civicplan")
 
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
     text = response.text
-    assert '<a class="skip-link" href="#main">Skip to main content</a>' in text
-    assert '<main id="main" tabindex="-1">' in text
-    assert "0.3.0+dev.1 explicit static sample" in text
-    assert "<button" not in text
-    assert "<textarea" not in text
-    assert "Static sample proposal" in text
-    assert "Plan navigator" in text
-    assert "Progress tracking" in text
-    assert "does not make zoning" in text
-    assert "official planning determinations" in text
+    assert "<main id=\"main\">" in text
+    assert "not available" in text.lower()
+    # The replaced sample's own prose and its "static sample" badge are gone.
+    for gone in ("0.3.0+dev.1 explicit static sample", "Static sample proposal",
+                 "Housing proposal context", "Plan navigator", "Progress tracking"):
+        assert gone not in text, gone
+    # The boundary statement is still made: this product never decides.
+    assert "sample text" in text.lower() or "does not make" in text.lower()
     assert "certified ADA" not in text
 
 

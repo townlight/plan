@@ -44,23 +44,12 @@ def test_plan_question_answer_and_synthesis_are_cited_and_review_required() -> N
     assert synthesis.json()["citations"]
 
 
-def test_amendment_history_distinguishes_pending_from_adopted() -> None:
-    response = client.get("/api/v1/civicplan/amendments/history")
-
-    assert response.status_code == 200
-    statuses = {item["adoption_status"] for item in response.json()["items"]}
-    assert {"adopted", "pending"} <= statuses
-    assert "Pending amendments are not treated as adopted" in response.json()["boundary"]
-
-
-def test_progress_targets_return_evidence_and_boundary() -> None:
-    response = client.get("/api/v1/civicplan/progress/targets?policy_id=parks-plan-1.2")
-
-    assert response.status_code == 200
-    payload = response.json()
-    assert payload["items"][0]["policy_id"] == "parks-plan-1.2"
-    assert payload["items"][0]["evidence"]
-    assert "not official findings" in payload["boundary"]
+def test_municipal_tracking_does_not_expose_sample_or_staff_state_publicly(monkeypatch) -> None:
+    monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-staff-key")
+    # Municipal tracking now has persistent, staff-only routes, even in demo mode.
+    # Real lifecycle/history assertions live in test_municipal.py.
+    for path in ("amendments/history", "progress/targets"):
+        assert client.get("/api/v1/civicplan/" + path).status_code in (401, 403)
 
 
 def test_civicclerk_context_is_draft_only_and_cited() -> None:

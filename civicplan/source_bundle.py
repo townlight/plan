@@ -65,6 +65,7 @@ class SourcePolicy(BundleModel):
     goal: str = Field(min_length=1, max_length=500)
     objective: str = Field(min_length=1, max_length=500)
     topic_key: str = Field(min_length=1, max_length=160)
+    neighborhoods: list[str] = Field(default_factory=list, max_length=100)
     title: str = Field(min_length=1, max_length=500)
     citation: str = Field(min_length=1, max_length=500)
     anchor: str = Field(min_length=1, max_length=500)
@@ -118,6 +119,10 @@ class PlanBundle(BundleModel):
                 raise ValueError("Every document reference must resolve within the bundle.")
         for policy in self.policies:
             doc = docs[policy.document_id]
+            if any(not name.strip() or len(name) > 255 for name in policy.neighborhoods):
+                raise ValueError("Neighborhood names must contain 1 to 255 characters.")
+            if len({name.strip().casefold() for name in policy.neighborhoods}) != len(policy.neighborhoods):
+                raise ValueError("Neighborhood names must be unique for each policy.")
             if doc.media_type.startswith("text/") and policy.excerpt not in doc.original_bytes().decode("utf-8"):
                 raise ValueError("Policy excerpt must occur in its referenced UTF-8 source.")
         return self

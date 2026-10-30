@@ -16,7 +16,7 @@
 - Public-facing warnings must be actionable and explain the fix path.
 - Townlight Planning depends on Townlight Core; Townlight Core must never depend on Townlight Planning.
 - Townlight Planning may reference CivicZone/CivicClerk concepts only through released contracts or deterministic sample data in v0.1.0.
-- Code is AGPL-3.0-only, with the TownLight Public Institution Exception for qualifying deployments. Docs are CC BY 4.0.
+- Code is AGPL-3.0-only. Docs are CC BY 4.0.
 
 ## Placeholder Package Warning
 

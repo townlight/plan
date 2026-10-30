@@ -1,3 +1,5 @@
+Townlight Beta 1 source component: **0.4.0.dev1**, paired with Core **1.3.0.dev1**. Use the signed suite MSI and current manual for beta installation; earlier entries below retain their original scope.
+
 # Staff beta preparation security boundary — 0.3.0
 
 The native P5/P6 composition authenticates local staff through existing sessions

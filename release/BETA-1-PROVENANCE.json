@@ -1,0 +1,1644 @@
+{
+  "edition": "Townlight Beta 1",
+  "base_commit": "f99b34bcaff694f4448bb41946037347f2b89d1a",
+  "installer_sha256": "98bcdef11ebdf5c767f620c904ff49f85115fde3b5c23f62703b111e645aaf86",
+  "owned_source_sha256": "84a23e1297e42d17b16cfc9e51b2dd78bc46414c0de8ad7ebd2466c1a409d06b",
+  "documentation_sha256": "a928bb1c40fec7ef6f223c7b77bc9fe7837e4cfffcebf35bb3309cc5549284e6",
+  "release": "https://github.com/townlight/townlight/releases/tag/townlight-beta-1",
+  "archive_files": [
+    {
+      "archive": "products/plan/.github/ISSUE_TEMPLATE/bug_report.md",
+      "repo": "plan",
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "sha256": "c0c8f1be33d966cfdabb7447f315f02e1e9debb6744e04df474439229518068f",
+      "status": "same",
+      "publication_sha256": "c0c8f1be33d966cfdabb7447f315f02e1e9debb6744e04df474439229518068f"
+    },
+    {
+      "archive": "products/plan/.github/ISSUE_TEMPLATE/config.yml",
+      "repo": "plan",
+      "path": ".github/ISSUE_TEMPLATE/config.yml",
+      "sha256": "c2504dec34769c51e30616543bf784887a7519bd672fee9bad3d70ae9f946247",
+      "status": "same",
+      "publication_sha256": "18aaba0a72247e0cab789008552c1c1d87015ce2740e48bf9d5ac756a5b2359b"
+    },
+    {
+      "archive": "products/plan/.github/ISSUE_TEMPLATE/feature_request.md",
+      "repo": "plan",
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "sha256": "7fe7e95610856817dc583cea858816f64738581341c98f7e6f5d82a752f24ca4",
+      "status": "same",
+      "publication_sha256": "7fe7e95610856817dc583cea858816f64738581341c98f7e6f5d82a752f24ca4"
+    },
+    {
+      "archive": "products/plan/.github/PULL_REQUEST_TEMPLATE.md",
+      "repo": "plan",
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "sha256": "0feab4e42a28bec96f93e4a10ce67455761a6e2a2f157febf9baa093b4e92e06",
+      "status": "same",
+      "publication_sha256": "0feab4e42a28bec96f93e4a10ce67455761a6e2a2f157febf9baa093b4e92e06"
+    },
+    {
+      "archive": "products/plan/.github/workflows/release.yml",
+      "repo": "plan",
+      "path": ".github/workflows/release.yml",
+      "sha256": "58887900e3b9d45c2308f365a98c2e6b40f7454db1c1c769ae53d5cfbdc957e3",
+      "status": "same",
+      "publication_sha256": "e5036f6ba0959de5367912bfc0b27c640a3c271cbd3290aa3e6269fc1e225bac"
+    },
+    {
+      "archive": "products/plan/.github/workflows/verify.yml",
+      "repo": "plan",
+      "path": ".github/workflows/verify.yml",
+      "sha256": "72d1a913137afd10a2a931afa60e68014eff8172e5e74efe381dd8a16493495f",
+      "status": "same",
+      "publication_sha256": "8821651bfc64e15f08f09455d00afb982852b87c3011c4016f9be46d11fe360b"
+    },
+    {
+      "archive": "products/plan/.pipelines/action-classification.yaml",
+      "repo": "plan",
+      "path": ".pipelines/action-classification.yaml",
+      "sha256": "c4dbc23ed19cace8ea0fffeb6e875e57ad70473f8ae98842a5bbd67117ea29a2",
+      "status": "same",
+      "publication_sha256": "662b7d9ea2aff8d76ce59dcab4205c06d429f7787d9239a3edd904ff46a73ecf"
+    },
+    {
+      "archive": "products/plan/.pipelines/bugfix.yaml",
+      "repo": "plan",
+      "path": ".pipelines/bugfix.yaml",
+      "sha256": "e8cfdb75b879050f9f3e0216090bd29b01cc1d811694913b42186b82c6d7db90",
+      "status": "same",
+      "publication_sha256": "12ef4f5091975d4d0bb10188fd662984dca861f4f4ab73fbeaa20a279014b2ab"
+    },
+    {
+      "archive": "products/plan/.pipelines/directive-template.yaml",
+      "repo": "plan",
+      "path": ".pipelines/directive-template.yaml",
+      "sha256": "5d88863c06bbe252cbda98548b650d23f5db96b175aa5a5ee7c70637472fbe9b",
+      "status": "same",
+      "publication_sha256": "bff99943a054c1cbba47cd1fca43ce5ded344bf2ad4e0881a6b5e192226e47fe"
+    },
+    {
+      "archive": "products/plan/.pipelines/feature.yaml",
+      "repo": "plan",
+      "path": ".pipelines/feature.yaml",
+      "sha256": "4dbf62d79b76d8da9fe1cd46134b2fabf59aea3a87b0be9bc50025ed2a365275",
+      "status": "same",
+      "publication_sha256": "8ecbf791e71c1294ec0ead57f4d6f664e7729860f7e58d10085fb0a1c977c505"
+    },
+    {
+      "archive": "products/plan/.pipelines/manifest-template.yaml",
+      "repo": "plan",
+      "path": ".pipelines/manifest-template.yaml",
+      "sha256": "cae7ac4960f3a25f41ae020af2fd8ac261d1a5c57b80e1c46269ce80932bdcbd",
+      "status": "same",
+      "publication_sha256": "16436e50e88e27baf2f7e8a99b47137c38aa3af69b8c8c646eeeade3b6ec7a05"
+    },
+    {
+      "archive": "products/plan/.pipelines/module-release.yaml",
+      "repo": "plan",
+      "path": ".pipelines/module-release.yaml",
+      "sha256": "6e47ab3eb62b2a2c26043eb7503a0a323358f718d5a4bc0155fe94a10f55452f",
+      "status": "same",
+      "publication_sha256": "9a51ae3725614ffd1dc9c4ef7718e71e92172fd845897e57abd6aef3bccf96f4"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/critic.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/critic.md",
+      "sha256": "0cfd6ef39a8be04fe400daaebcaf00ee54887cdf178216970d3ecac7b80a3098",
+      "status": "same",
+      "publication_sha256": "0cfd6ef39a8be04fe400daaebcaf00ee54887cdf178216970d3ecac7b80a3098"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/cross-agent-auditor.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/cross-agent-auditor.md",
+      "sha256": "55c24c157a8e71ab91114ea9e33088a2f22a4be5abca924f38b685450db0674b",
+      "status": "same",
+      "publication_sha256": "55c24c157a8e71ab91114ea9e33088a2f22a4be5abca924f38b685450db0674b"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/drift-detector.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/drift-detector.md",
+      "sha256": "9c7688ea906772770383a8f566df0538c3d1372b7bbc9b62662fe67ca09a8dc9",
+      "status": "same",
+      "publication_sha256": "9c7688ea906772770383a8f566df0538c3d1372b7bbc9b62662fe67ca09a8dc9"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/executor.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/executor.md",
+      "sha256": "0776e61baf0d2e40e9bc6a5ba49e51b9447f191b463d2ad3356160a56a47a716",
+      "status": "same",
+      "publication_sha256": "0776e61baf0d2e40e9bc6a5ba49e51b9447f191b463d2ad3356160a56a47a716"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/implementer-pre-push.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/implementer-pre-push.md",
+      "sha256": "6cebb132a38676537819e37715a490e4e6ef497d91f83b9ba9907af0e195de2f",
+      "status": "same",
+      "publication_sha256": "6cebb132a38676537819e37715a490e4e6ef497d91f83b9ba9907af0e195de2f"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/judge.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/judge.md",
+      "sha256": "f376f448cbefd8f5cd9f93db0e99be2afd6dfcfa0e35f614a600114b438e334c",
+      "status": "same",
+      "publication_sha256": "f376f448cbefd8f5cd9f93db0e99be2afd6dfcfa0e35f614a600114b438e334c"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/local-rehearsal.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/local-rehearsal.md",
+      "sha256": "bef30664f4663ca1aad7d1d28cdd9c3b169da3da8bc98896673879ee916b0764",
+      "status": "same",
+      "publication_sha256": "bef30664f4663ca1aad7d1d28cdd9c3b169da3da8bc98896673879ee916b0764"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/manager.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/manager.md",
+      "sha256": "5422b9582a48552673509e01c61fc4e2a140e4c837533975be9db132612b3cdb",
+      "status": "same",
+      "publication_sha256": "5422b9582a48552673509e01c61fc4e2a140e4c837533975be9db132612b3cdb"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/planner.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/planner.md",
+      "sha256": "416b1b0ea4cebc19e4776215d903ad444dd5bbcd3449ea7ab77135af48b009b2",
+      "status": "same",
+      "publication_sha256": "416b1b0ea4cebc19e4776215d903ad444dd5bbcd3449ea7ab77135af48b009b2"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/preflight-auditor.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/preflight-auditor.md",
+      "sha256": "c5f16c06631b2815adccfcf9baf07096aa0289547393ccc01b34315a1636f182",
+      "status": "same",
+      "publication_sha256": "c5f16c06631b2815adccfcf9baf07096aa0289547393ccc01b34315a1636f182"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/researcher.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/researcher.md",
+      "sha256": "de71ee77daf7a28cf1044cd54883efc0b4312d6c9bd4d5081c915879527ed21d",
+      "status": "same",
+      "publication_sha256": "de71ee77daf7a28cf1044cd54883efc0b4312d6c9bd4d5081c915879527ed21d"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/test-writer.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/test-writer.md",
+      "sha256": "e9ce3e4f0fa89041786cfa8a3b694ca50917f2ed6570df591f6e4343415bc02f",
+      "status": "same",
+      "publication_sha256": "e9ce3e4f0fa89041786cfa8a3b694ca50917f2ed6570df591f6e4343415bc02f"
+    },
+    {
+      "archive": "products/plan/.pipelines/roles/verifier.md",
+      "repo": "plan",
+      "path": ".pipelines/roles/verifier.md",
+      "sha256": "f30177313c45c0a57c1de203c045567fa06ad48927e0dec44f93498b52ed1e90",
+      "status": "same",
+      "publication_sha256": "f30177313c45c0a57c1de203c045567fa06ad48927e0dec44f93498b52ed1e90"
+    },
+    {
+      "archive": "products/plan/.pipelines/scope-lock-template.yaml",
+      "repo": "plan",
+      "path": ".pipelines/scope-lock-template.yaml",
+      "sha256": "c94aaee7da8bffcad68d77e8448998a7cd3c921e9e2713689c18d520f1db753e",
+      "status": "same",
+      "publication_sha256": "8720839903dc32d5f09e5567e99e75639453b810c71c5533cbe868e184e8b9e3"
+    },
+    {
+      "archive": "products/plan/.pipelines/self-classification-rules.md",
+      "repo": "plan",
+      "path": ".pipelines/self-classification-rules.md",
+      "sha256": "a1b5e293e4def3a5a1b1df9db82ed32941689a7b630f64b420fbe38e69adef23",
+      "status": "same",
+      "publication_sha256": "a1b5e293e4def3a5a1b1df9db82ed32941689a7b630f64b420fbe38e69adef23"
+    },
+    {
+      "archive": "products/plan/.pipelines/templates/5-lens-self-audit-template.md",
+      "repo": "plan",
+      "path": ".pipelines/templates/5-lens-self-audit-template.md",
+      "sha256": "a8b0ca1496883b1943959eadd7683e5c3a6ec49d091d1869730d22ae54e19812",
+      "status": "same",
+      "publication_sha256": "a8b0ca1496883b1943959eadd7683e5c3a6ec49d091d1869730d22ae54e19812"
+    },
+    {
+      "archive": "products/plan/.pipelines/templates/AGENTS.md",
+      "repo": "plan",
+      "path": ".pipelines/templates/AGENTS.md",
+      "sha256": "9074a44f5b17cc01039c0a4547c7808bb3ebcb3c64c39ac584d7a151aa7253f3",
+      "status": "same",
+      "publication_sha256": "9074a44f5b17cc01039c0a4547c7808bb3ebcb3c64c39ac584d7a151aa7253f3"
+    },
+    {
+      "archive": "products/plan/.pipelines/templates/audit-gate-template.md",
+      "repo": "plan",
+      "path": ".pipelines/templates/audit-gate-template.md",
+      "sha256": "77f4d7fe63a0cf1ad557dae27f398b723dfbc3cd7269a86d071073080d34a20b",
+      "status": "same",
+      "publication_sha256": "77f4d7fe63a0cf1ad557dae27f398b723dfbc3cd7269a86d071073080d34a20b"
+    },
+    {
+      "archive": "products/plan/.pipelines/templates/audit-protocol-template.md",
+      "repo": "plan",
+      "path": ".pipelines/templates/audit-protocol-template.md",
+      "sha256": "7cc7b81ff5842052ecdb1770210cdf85504286b604e20ebc10e9b157e7725b05",
+      "status": "same",
+      "publication_sha256": "7cc7b81ff5842052ecdb1770210cdf85504286b604e20ebc10e9b157e7725b05"
+    },
+    {
+      "archive": "products/plan/.pipelines/templates/workflow-cost-directives.md",
+      "repo": "plan",
+      "path": ".pipelines/templates/workflow-cost-directives.md",
+      "sha256": "362019a12e3f48d7e873a78ff829fbf206227edb0d3033f9d28e5d553e0904d1",
+      "status": "same",
+      "publication_sha256": "362019a12e3f48d7e873a78ff829fbf206227edb0d3033f9d28e5d553e0904d1"
+    },
+    {
+      "archive": "products/plan/AGENTS.md",
+      "repo": "plan",
+      "path": "AGENTS.md",
+      "sha256": "c1eb51850471afc6b6060a6a28029e8b01969b8d7b4b4df5ca0ae5710947a08b",
+      "status": "changed",
+      "publication_sha256": "82d0b414ed0adf24c7e881d1c3b0a22379357957d9c270c7198833865033d4f3"
+    },
+    {
+      "archive": "products/plan/CHANGELOG.md",
+      "repo": "plan",
+      "path": "CHANGELOG.md",
+      "sha256": "951675a372f7809b57a344fdceb8911629915fa63dcd3a75fde7364e97509832",
+      "status": "same",
+      "publication_sha256": "fb9068229eb6626aa83816d40aa3beec60ff2f753daa623d6bca78f511b33762"
+    },
+    {
+      "archive": "products/plan/CODE_OF_CONDUCT.md",
+      "repo": "plan",
+      "path": "CODE_OF_CONDUCT.md",
+      "sha256": "ae1f714e474348a007e3ce6da69f7b8549b862664d90a35e5aa87cdc485222a9",
+      "status": "same",
+      "publication_sha256": "ae1f714e474348a007e3ce6da69f7b8549b862664d90a35e5aa87cdc485222a9"
+    },
+    {
+      "archive": "products/plan/CONTRIBUTING.md",
+      "repo": "plan",
+      "path": "CONTRIBUTING.md",
+      "sha256": "6ef9547e0485aabcde49a57cdd54419b67f0e1daf12b7ae0939eede6b41f3a58",
+      "status": "changed",
+      "publication_sha256": "463002862f67c0ab0bc0b562c5ed3a4ffaa60e44e416645e79bb7fbc9d4029fe"
+    },
+    {
+      "archive": "products/plan/LICENSE",
+      "repo": "plan",
+      "path": "LICENSE",
+      "sha256": "e0eedba615d5cd1b986afb6c5b3a4b1ae33713e7e9dc74d19daec5e3221f9d2e",
+      "status": "same",
+      "publication_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    {
+      "archive": "products/plan/LICENSE-CODE",
+      "repo": "plan",
+      "path": "LICENSE-CODE",
+      "sha256": "ea964e0c07db63b534e87a519343dd4d9a8a94a634950a2f36b2922d7aeaca41",
+      "status": "changed",
+      "publication_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    {
+      "archive": "products/plan/LICENSE-DOCS",
+      "repo": "plan",
+      "path": "LICENSE-DOCS",
+      "sha256": "d07988f4be47912f75a73b44da8a9c0b602bf6c8ced69de858b848f379ecd973",
+      "status": "same",
+      "publication_sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0"
+    },
+    {
+      "archive": "products/plan/MILESTONE_0_7_DONE.md",
+      "repo": "plan",
+      "path": "MILESTONE_0_7_DONE.md",
+      "sha256": "2f843e6122a34b8b225e27cb10fc0649019425d8d5167e6b23075086dc696040",
+      "status": "same",
+      "publication_sha256": "2f843e6122a34b8b225e27cb10fc0649019425d8d5167e6b23075086dc696040"
+    },
+    {
+      "archive": "products/plan/PRODUCTION_DEPTH_POLICY_PERSISTENCE_DONE.md",
+      "repo": "plan",
+      "path": "PRODUCTION_DEPTH_POLICY_PERSISTENCE_DONE.md",
+      "sha256": "32b28faed90158a32ebba2305723a5c900a93a48e774315e743b1e5822f425b5",
+      "status": "same",
+      "publication_sha256": "32b28faed90158a32ebba2305723a5c900a93a48e774315e743b1e5822f425b5"
+    },
+    {
+      "archive": "products/plan/PRODUCTION_DEPTH_ZONE_CONTEXT_CONTRACT_DONE.md",
+      "repo": "plan",
+      "path": "PRODUCTION_DEPTH_ZONE_CONTEXT_CONTRACT_DONE.md",
+      "sha256": "62cafb13e8397e4eccf5f2618f9b63240080a4719595c73d3c8b2d746e4912da",
+      "status": "same",
+      "publication_sha256": "62cafb13e8397e4eccf5f2618f9b63240080a4719595c73d3c8b2d746e4912da"
+    },
+    {
+      "archive": "products/plan/README.md",
+      "repo": "plan",
+      "path": "README.md",
+      "sha256": "1b5c4c65063219afb59c27288326ee87161354e9c3c1b1df3d1d7c5724c5f3e5",
+      "status": "changed",
+      "publication_sha256": "fa8e3f2ac49b98ddd358c193062a9de54e176ecb40fa7d327aeebdc6e3de6ed7"
+    },
+    {
+      "archive": "products/plan/README.txt",
+      "repo": "plan",
+      "path": "README.txt",
+      "sha256": "1b5c4c65063219afb59c27288326ee87161354e9c3c1b1df3d1d7c5724c5f3e5",
+      "status": "changed",
+      "publication_sha256": "fa8e3f2ac49b98ddd358c193062a9de54e176ecb40fa7d327aeebdc6e3de6ed7"
+    },
+    {
+      "archive": "products/plan/SECURITY.md",
+      "repo": "plan",
+      "path": "SECURITY.md",
+      "sha256": "c4dbe6494cd863a3b1f939451569771b87fad5109792d92256d1d2779ea02daf",
+      "status": "same",
+      "publication_sha256": "2660821a8c23ab428ec2ad9fd15ff1c27b7b6c627b680a1ce530c8c8ebbb4b13"
+    },
+    {
+      "archive": "products/plan/SUPPORT.md",
+      "repo": "plan",
+      "path": "SUPPORT.md",
+      "sha256": "cbe8a989a1de2e71dbc4817e8f4613cecb3fc0e1c756b902e9865488662d7fbf",
+      "status": "same",
+      "publication_sha256": "cbe8a989a1de2e71dbc4817e8f4613cecb3fc0e1c756b902e9865488662d7fbf"
+    },
+    {
+      "archive": "products/plan/USER-MANUAL.md",
+      "repo": "plan",
+      "path": "USER-MANUAL.md",
+      "sha256": "5fc1c9f17858dc10b4d39856a53f7324ed6b3cfbaafd15daf8ded926459c80c0",
+      "status": "changed",
+      "publication_sha256": "4a63b97750e96a03f4c253620a5e2af038f30ac308f9b1af4ff871de5f19005b"
+    },
+    {
+      "archive": "products/plan/USER-MANUAL.txt",
+      "repo": "plan",
+      "path": "USER-MANUAL.txt",
+      "sha256": "5fc1c9f17858dc10b4d39856a53f7324ed6b3cfbaafd15daf8ded926459c80c0",
+      "status": "changed",
+      "publication_sha256": "4a63b97750e96a03f4c253620a5e2af038f30ac308f9b1af4ff871de5f19005b"
+    },
+    {
+      "archive": "products/plan/_patch_public_explore.py",
+      "repo": "plan",
+      "path": "_patch_public_explore.py",
+      "sha256": "e5ef5d890e7b2e662e8334bb20d739d32edacaf3212950c739e9d94bd9aed589",
+      "status": "new",
+      "publication_sha256": "e5ef5d890e7b2e662e8334bb20d739d32edacaf3212950c739e9d94bd9aed589"
+    },
+    {
+      "archive": "products/plan/accept_plan_public.py",
+      "repo": "plan",
+      "path": "accept_plan_public.py",
+      "sha256": "48f16e726affe58bb04a6b33612fe908a652b081647ac58e640c2dd5df5fe223",
+      "status": "new",
+      "publication_sha256": "92686181112a72b271a2777f8ca1c2247bec5d2c38773abee83139273fe5df4c"
+    },
+    {
+      "archive": "products/plan/accept_plan_public_seed.py",
+      "repo": "plan",
+      "path": "accept_plan_public_seed.py",
+      "sha256": "649ecef14a84469801bd8b579f2e10c8a4b12f63036fb5e1b23c654b5fcd6478",
+      "status": "new",
+      "publication_sha256": "649ecef14a84469801bd8b579f2e10c8a4b12f63036fb5e1b23c654b5fcd6478"
+    },
+    {
+      "archive": "products/plan/browser-plan-explore.cjs",
+      "repo": "plan",
+      "path": "browser-plan-explore.cjs",
+      "sha256": "9fabe7d385297eb004dfd7d8d19836758f2d8948e83abd12e73fb989b6101a15",
+      "status": "new",
+      "publication_sha256": "9fabe7d385297eb004dfd7d8d19836758f2d8948e83abd12e73fb989b6101a15"
+    },
+    {
+      "archive": "products/plan/civicplan/__init__.py",
+      "repo": "plan",
+      "path": "civicplan/__init__.py",
+      "sha256": "d6a014eba48a6bdcdaea2a444cfcaa743cd2ba33cec6d63ea5e450266ad71c82",
+      "status": "changed",
+      "publication_sha256": "4e3225ac5f983070d6ae9897bfbd41afa1d7c6e993e1e6a5a48fbc39c5fe69c6"
+    },
+    {
+      "archive": "products/plan/civicplan/connections.py",
+      "repo": "plan",
+      "path": "civicplan/connections.py",
+      "sha256": "649c8474e787fca1e30a11f153d2f776283204b5dc8053b7e88fbc325cdcf944",
+      "status": "same",
+      "publication_sha256": "649c8474e787fca1e30a11f153d2f776283204b5dc8053b7e88fbc325cdcf944"
+    },
+    {
+      "archive": "products/plan/civicplan/consistency.py",
+      "repo": "plan",
+      "path": "civicplan/consistency.py",
+      "sha256": "d18ef439391d859f0d1a020356edaf91d2441333eacf36036d03d1b7ea467210",
+      "status": "same",
+      "publication_sha256": "d18ef439391d859f0d1a020356edaf91d2441333eacf36036d03d1b7ea467210"
+    },
+    {
+      "archive": "products/plan/civicplan/integration_mocks.py",
+      "repo": "plan",
+      "path": "civicplan/integration_mocks.py",
+      "sha256": "09c350c13fe4e14c3f385549021f57c09341c8dbe110b18e6e4739cf70ac6254",
+      "status": "same",
+      "publication_sha256": "09c350c13fe4e14c3f385549021f57c09341c8dbe110b18e6e4739cf70ac6254"
+    },
+    {
+      "archive": "products/plan/civicplan/main.py",
+      "repo": "plan",
+      "path": "civicplan/main.py",
+      "sha256": "34aaae27da4bc8f34570849cc446a134efb78c004294425ac62ef2c80abb1adf",
+      "status": "changed",
+      "publication_sha256": "56c180acfbba1f1c7b274ce6074aa12ee94b12237aba9f65ccb859af8d6b5200"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/__init__.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/__init__.py",
+      "sha256": "daf5e64cefda400a5db1023d952e41bef6f7954db19406d63ea84770c82dccd9",
+      "status": "changed",
+      "publication_sha256": "2fe6deefbd9cdd6ad6055815b2db1fd63139b5ad9de822b53db8c759f4a30acf"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/__main__.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/__main__.py",
+      "sha256": "321e543984ca92e2540d1f4d9eca54658dc608987b95bc5abc61b651b4305fd6",
+      "status": "same",
+      "publication_sha256": "321e543984ca92e2540d1f4d9eca54658dc608987b95bc5abc61b651b4305fd6"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/env.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/env.py",
+      "sha256": "832a41b6c40d14da47178b486650eba98bff574a66652e3b614cc782db04f8df",
+      "status": "same",
+      "publication_sha256": "832a41b6c40d14da47178b486650eba98bff574a66652e3b614cc782db04f8df"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/versions/civicplan_0001_sources.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0001_sources.py",
+      "sha256": "807e5a18d1fa295d482f3963f7799f244f046ab98297bfc33cbd17131fb44d17",
+      "status": "same",
+      "publication_sha256": "807e5a18d1fa295d482f3963f7799f244f046ab98297bfc33cbd17131fb44d17"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/versions/civicplan_0002_workflows.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0002_workflows.py",
+      "sha256": "7c6fcdfe4a1fa33c9289cef975a25f4b0f6746471c380226c14520f8a5f09dbf",
+      "status": "same",
+      "publication_sha256": "7c6fcdfe4a1fa33c9289cef975a25f4b0f6746471c380226c14520f8a5f09dbf"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/versions/civicplan_0003_municipal.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0003_municipal.py",
+      "sha256": "64735db3119b22b54a232e0a4486657a91b5304e4a253b14ce7cae1acb204681",
+      "status": "new",
+      "publication_sha256": "64735db3119b22b54a232e0a4486657a91b5304e4a253b14ce7cae1acb204681"
+    },
+    {
+      "archive": "products/plan/civicplan/migrations/versions/civicplan_0004_neighborhoods.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0004_neighborhoods.py",
+      "sha256": "006f8f8f9859da76189efee9035d1f89c65e0b27172b5df9e316e1aa173434f8",
+      "status": "new",
+      "publication_sha256": "006f8f8f9859da76189efee9035d1f89c65e0b27172b5df9e316e1aa173434f8"
+    },
+    {
+      "archive": "products/plan/civicplan/municipal.py",
+      "repo": "plan",
+      "path": "civicplan/municipal.py",
+      "sha256": "dbd5bd841f3f90d2ab7256eafb30ed8b7ba6036bd3921e23595d7df6715b8555",
+      "status": "new",
+      "publication_sha256": "d1300615073ffaa9644eab1696a928eb3765f4ce58f8bc3ee8846af545cb09ab"
+    },
+    {
+      "archive": "products/plan/civicplan/municipal_api.py",
+      "repo": "plan",
+      "path": "civicplan/municipal_api.py",
+      "sha256": "b71876bd1b6f354f7a9ad8d06f19d8ae7c071a0315f19421d3ff4df07bb8dc1f",
+      "status": "new",
+      "publication_sha256": "b71876bd1b6f354f7a9ad8d06f19d8ae7c071a0315f19421d3ff4df07bb8dc1f"
+    },
+    {
+      "archive": "products/plan/civicplan/persistence.py",
+      "repo": "plan",
+      "path": "civicplan/persistence.py",
+      "sha256": "30d920165ab9b4f9675a0d61dd887587823b6c075ef160e3a56670db95d2cc7e",
+      "status": "same",
+      "publication_sha256": "30d920165ab9b4f9675a0d61dd887587823b6c075ef160e3a56670db95d2cc7e"
+    },
+    {
+      "archive": "products/plan/civicplan/plan_workflows.py",
+      "repo": "plan",
+      "path": "civicplan/plan_workflows.py",
+      "sha256": "e69084e3608fa33bbc6ab140d4570efa3850cb04317000b407c5a5f5ca635115",
+      "status": "same",
+      "publication_sha256": "e69084e3608fa33bbc6ab140d4570efa3850cb04317000b407c5a5f5ca635115"
+    },
+    {
+      "archive": "products/plan/civicplan/policy_lookup.py",
+      "repo": "plan",
+      "path": "civicplan/policy_lookup.py",
+      "sha256": "eef53ba621332d75f069f00ddcac34c19bca42d469a697fd22555eb3d11c68b2",
+      "status": "same",
+      "publication_sha256": "eef53ba621332d75f069f00ddcac34c19bca42d469a697fd22555eb3d11c68b2"
+    },
+    {
+      "archive": "products/plan/civicplan/policy_service.py",
+      "repo": "plan",
+      "path": "civicplan/policy_service.py",
+      "sha256": "c5e5461fadea4b32cba43366e1c9795ecb4cd8212db30734f5eadd24a9144808",
+      "status": "same",
+      "publication_sha256": "c5e5461fadea4b32cba43366e1c9795ecb4cd8212db30734f5eadd24a9144808"
+    },
+    {
+      "archive": "products/plan/civicplan/public_explore.py",
+      "repo": "plan",
+      "path": "civicplan/public_explore.py",
+      "sha256": "c5cbb2de92661538857e52b25f2e0bc4e7cd4f5c9d91eb0fa7d0518b28374720",
+      "status": "new",
+      "publication_sha256": "4d2bb70199d23602473a7efad22e48360471ad78ce1928d65113e35f64b37df5"
+    },
+    {
+      "archive": "products/plan/civicplan/public_explore_ui.py",
+      "repo": "plan",
+      "path": "civicplan/public_explore_ui.py",
+      "sha256": "bd137701e16391a4ee820c4c88b5db583944491d5fc487ff7580b1083e944e5d",
+      "status": "new",
+      "publication_sha256": "4657fe2e770af860d218d4e136e309a9241baef7edc276068e68048447c9a1d2"
+    },
+    {
+      "archive": "products/plan/civicplan/public_ui.py",
+      "repo": "plan",
+      "path": "civicplan/public_ui.py",
+      "sha256": "8551ce36f854a4a7fc4573a20b73dbb0b6f01d7b60b7267d8c73b5f21f246ccc",
+      "status": "same",
+      "publication_sha256": "8551ce36f854a4a7fc4573a20b73dbb0b6f01d7b60b7267d8c73b5f21f246ccc"
+    },
+    {
+      "archive": "products/plan/civicplan/records_export.py",
+      "repo": "plan",
+      "path": "civicplan/records_export.py",
+      "sha256": "6894fb9450f5d0177ebf86babcd489be1a789a714ce2c3c825c7afd5ed51bb23",
+      "status": "same",
+      "publication_sha256": "6894fb9450f5d0177ebf86babcd489be1a789a714ce2c3c825c7afd5ed51bb23"
+    },
+    {
+      "archive": "products/plan/civicplan/source_api.py",
+      "repo": "plan",
+      "path": "civicplan/source_api.py",
+      "sha256": "4af39debaf4f9cbb219c294ddfeaea642495d45e492e62852049372e296f1df4",
+      "status": "same",
+      "publication_sha256": "4af39debaf4f9cbb219c294ddfeaea642495d45e492e62852049372e296f1df4"
+    },
+    {
+      "archive": "products/plan/civicplan/source_bundle.py",
+      "repo": "plan",
+      "path": "civicplan/source_bundle.py",
+      "sha256": "f6547516067e27697dfcd6ba80de6e2ca03d1473370209aa354a5bf95b7db98a",
+      "status": "changed",
+      "publication_sha256": "f6547516067e27697dfcd6ba80de6e2ca03d1473370209aa354a5bf95b7db98a"
+    },
+    {
+      "archive": "products/plan/civicplan/source_schema.py",
+      "repo": "plan",
+      "path": "civicplan/source_schema.py",
+      "sha256": "1c429c22247cda2aaec5abe6807639177f035cae843993666dbf8b2824bbdbf1",
+      "status": "changed",
+      "publication_sha256": "1c429c22247cda2aaec5abe6807639177f035cae843993666dbf8b2824bbdbf1"
+    },
+    {
+      "archive": "products/plan/civicplan/source_store.py",
+      "repo": "plan",
+      "path": "civicplan/source_store.py",
+      "sha256": "97022c50baa5b7e81bcc12fccd6c2e429af35f163680542cbf99b65722905d82",
+      "status": "changed",
+      "publication_sha256": "97022c50baa5b7e81bcc12fccd6c2e429af35f163680542cbf99b65722905d82"
+    },
+    {
+      "archive": "products/plan/civicplan/staff_analysis.py",
+      "repo": "plan",
+      "path": "civicplan/staff_analysis.py",
+      "sha256": "71ab2f06804f1c01678f708c60a27714d7bd9b14444e1d2c8546cedb8ac1bd69",
+      "status": "same",
+      "publication_sha256": "71ab2f06804f1c01678f708c60a27714d7bd9b14444e1d2c8546cedb8ac1bd69"
+    },
+    {
+      "archive": "products/plan/civicplan/workflow_api.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_api.py",
+      "sha256": "6a48664442a3a8bae19a8cea7676e91f53ca3360f65e912dec666504862e792b",
+      "status": "same",
+      "publication_sha256": "6a48664442a3a8bae19a8cea7676e91f53ca3360f65e912dec666504862e792b"
+    },
+    {
+      "archive": "products/plan/civicplan/workflow_models.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_models.py",
+      "sha256": "d22e978fe778d7f4fdc3989a043370d9f6966b1e4920ed2c75698c73a8ee4e04",
+      "status": "same",
+      "publication_sha256": "d22e978fe778d7f4fdc3989a043370d9f6966b1e4920ed2c75698c73a8ee4e04"
+    },
+    {
+      "archive": "products/plan/civicplan/workflow_schema.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_schema.py",
+      "sha256": "11d864214fabc6d509351fdc7f3e3eb90a910a5db1a137f84a7a8efca5d0002e",
+      "status": "same",
+      "publication_sha256": "11d864214fabc6d509351fdc7f3e3eb90a910a5db1a137f84a7a8efca5d0002e"
+    },
+    {
+      "archive": "products/plan/civicplan/workflow_store.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_store.py",
+      "sha256": "4d4fec6d6c876997726ff1d8f2ff39302f44228fae748edc013739267d210741",
+      "status": "same",
+      "publication_sha256": "4d4fec6d6c876997726ff1d8f2ff39302f44228fae748edc013739267d210741"
+    },
+    {
+      "archive": "products/plan/docs/IMPLEMENTATION_PLAN.md",
+      "repo": "plan",
+      "path": "docs/IMPLEMENTATION_PLAN.md",
+      "sha256": "95bc476072baac1c179f0d351fd8bd0a10e5413ecb89ef93258f06a461b00375",
+      "status": "same",
+      "publication_sha256": "95bc476072baac1c179f0d351fd8bd0a10e5413ecb89ef93258f06a461b00375"
+    },
+    {
+      "archive": "products/plan/docs/MILESTONES.md",
+      "repo": "plan",
+      "path": "docs/MILESTONES.md",
+      "sha256": "c65fec4d6d0ae4dbcc9738f75b62e422654a1afe1afc5fff3f60b7512d0741b4",
+      "status": "same",
+      "publication_sha256": "c65fec4d6d0ae4dbcc9738f75b62e422654a1afe1afc5fff3f60b7512d0741b4"
+    },
+    {
+      "archive": "products/plan/docs/PLANNING-P1-P2.md",
+      "repo": "plan",
+      "path": "docs/PLANNING-P1-P2.md",
+      "sha256": "0279a29db973f2c959ddd2b64df1513bcbe4410e0b7028bb8bf584161f961eb7",
+      "status": "same",
+      "publication_sha256": "0279a29db973f2c959ddd2b64df1513bcbe4410e0b7028bb8bf584161f961eb7"
+    },
+    {
+      "archive": "products/plan/docs/PLANNING-P3-P4.md",
+      "repo": "plan",
+      "path": "docs/PLANNING-P3-P4.md",
+      "sha256": "d8b9543942046bc818ac692ea207947624ae6cb41f6a4572c2d62ad909d95efa",
+      "status": "same",
+      "publication_sha256": "d8b9543942046bc818ac692ea207947624ae6cb41f6a4572c2d62ad909d95efa"
+    },
+    {
+      "archive": "products/plan/docs/PLANNING-P5.md",
+      "repo": "plan",
+      "path": "docs/PLANNING-P5.md",
+      "sha256": "5fb6c64e6eab81225ea06de6dfdfcbc5bd868e93e074a6e1fae4834e8f8bbc2a",
+      "status": "same",
+      "publication_sha256": "5fb6c64e6eab81225ea06de6dfdfcbc5bd868e93e074a6e1fae4834e8f8bbc2a"
+    },
+    {
+      "archive": "products/plan/docs/RECONCILIATION.md",
+      "repo": "plan",
+      "path": "docs/RECONCILIATION.md",
+      "sha256": "45c163f2ac546790783d748ad303fdd64ed22651b4c44c8a63f6996f15a75dad",
+      "status": "same",
+      "publication_sha256": "45c163f2ac546790783d748ad303fdd64ed22651b4c44c8a63f6996f15a75dad"
+    },
+    {
+      "archive": "products/plan/docs/audits/civicplan-audit-full-2026-05-07.md",
+      "repo": "plan",
+      "path": "docs/audits/civicplan-audit-full-2026-05-07.md",
+      "sha256": "e4be0cd02360f728c4db14e946438cff7b7febac528e12cecf158bec61efc190",
+      "status": "same",
+      "publication_sha256": "e4be0cd02360f728c4db14e946438cff7b7febac528e12cecf158bec61efc190"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-desktop.png",
+      "sha256": "8287dbb7ca0994283d37640d0d642bc83cb59248e2d656bd2503b1fa5bb9b481",
+      "status": "same",
+      "publication_sha256": "8287dbb7ca0994283d37640d0d642bc83cb59248e2d656bd2503b1fa5bb9b481"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-mobile.png",
+      "sha256": "ddd9f502675c3390b27d8a96b399a8c2b6ad8aed7a5a5470f4ed3188264913ad",
+      "status": "same",
+      "publication_sha256": "ddd9f502675c3390b27d8a96b399a8c2b6ad8aed7a5a5470f4ed3188264913ad"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-public-ui-v0.1.1-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-public-ui-v0.1.1-desktop.png",
+      "sha256": "b7329d8d06edb24de2ea602e35239d0eb9069106d4eadedee2968f508c58d993",
+      "status": "same",
+      "publication_sha256": "b7329d8d06edb24de2ea602e35239d0eb9069106d4eadedee2968f508c58d993"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-public-ui-v0.1.1-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-public-ui-v0.1.1-mobile.png",
+      "sha256": "07f51f27bc338eb7b67adff7bc4294e2f774bea61745ba5b2fce29311da25b44",
+      "status": "same",
+      "publication_sha256": "07f51f27bc338eb7b67adff7bc4294e2f774bea61745ba5b2fce29311da25b44"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-release-recovery-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-release-recovery-desktop.png",
+      "sha256": "f3f86be0133871f512337976d5d7e1ea705b7585630f8a9783a0206317bf8c90",
+      "status": "same",
+      "publication_sha256": "f3f86be0133871f512337976d5d7e1ea705b7585630f8a9783a0206317bf8c90"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-release-recovery-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-release-recovery-mobile.png",
+      "sha256": "f1df7897c07b3bb69854576df4a4092ec349a0366c91666d6f06192125f370b1",
+      "status": "same",
+      "publication_sha256": "f1df7897c07b3bb69854576df4a4092ec349a0366c91666d6f06192125f370b1"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-release-recovery-summary.md",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-release-recovery-summary.md",
+      "sha256": "53f18e66efa82c43bff69f3b5ad537f69cbdc90cf733573ae46ec0207d246870",
+      "status": "same",
+      "publication_sha256": "53f18e66efa82c43bff69f3b5ad537f69cbdc90cf733573ae46ec0207d246870"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.1-alignment-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.1-alignment-desktop.png",
+      "sha256": "08e743aa58943be46dbaa0d6e04070762c59948f1d6d124e07fa09e6473df14c",
+      "status": "same",
+      "publication_sha256": "08e743aa58943be46dbaa0d6e04070762c59948f1d6d124e07fa09e6473df14c"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.1-alignment-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.1-alignment-mobile.png",
+      "sha256": "99d5067ffb257949a0e8976729577a0d4cf77c16b72aa72c9ba589ce22087487",
+      "status": "same",
+      "publication_sha256": "99d5067ffb257949a0e8976729577a0d4cf77c16b72aa72c9ba589ce22087487"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.1-alignment-summary.md",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.1-alignment-summary.md",
+      "sha256": "392e8beeed610b428db27c4fdba0226b991238d544f5a00b31e0793a02eb963f",
+      "status": "same",
+      "publication_sha256": "392e8beeed610b428db27c4fdba0226b991238d544f5a00b31e0793a02eb963f"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.2-zone-context-docs-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.2-zone-context-docs-desktop.png",
+      "sha256": "cdbc8e30e9139cdb09bceced901782a92bb52905511dc32488af9df35ebe06ce",
+      "status": "same",
+      "publication_sha256": "cdbc8e30e9139cdb09bceced901782a92bb52905511dc32488af9df35ebe06ce"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.2-zone-context-docs-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.2-zone-context-docs-mobile.png",
+      "sha256": "ba016c843abac64d1b09f1560db5ca24e322cad4def9aaf6ac7349da15006f79",
+      "status": "same",
+      "publication_sha256": "ba016c843abac64d1b09f1560db5ca24e322cad4def9aaf6ac7349da15006f79"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.2-zone-context-public-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.2-zone-context-public-desktop.png",
+      "sha256": "c4a0291befb863a79adbf6a960aca1dcbe860407edfb04b8a55abbe831a71ca6",
+      "status": "same",
+      "publication_sha256": "c4a0291befb863a79adbf6a960aca1dcbe860407edfb04b8a55abbe831a71ca6"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.2-zone-context-public-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.2-zone-context-public-mobile.png",
+      "sha256": "7cef23818fdaebe89c073128cbe56d1b477bbb24315d966deb721fb291be61a4",
+      "status": "same",
+      "publication_sha256": "7cef23818fdaebe89c073128cbe56d1b477bbb24315d966deb721fb291be61a4"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-civicplan-v0.1.2-zone-context-summary.md",
+      "repo": "plan",
+      "path": "docs/browser-qa-civicplan-v0.1.2-zone-context-summary.md",
+      "sha256": "1002d971ec32b096e25b5006f44acc966d4bf085a8d5736cdcb38f61d75397c9",
+      "status": "same",
+      "publication_sha256": "1002d971ec32b096e25b5006f44acc966d4bf085a8d5736cdcb38f61d75397c9"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-docs-index-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-docs-index-desktop.png",
+      "sha256": "4560ba1a2c13725e86194f0e6a74eec846a7d2ca4c6cc21b58e569690e98164c",
+      "status": "same",
+      "publication_sha256": "4560ba1a2c13725e86194f0e6a74eec846a7d2ca4c6cc21b58e569690e98164c"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-docs-index-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-docs-index-mobile.png",
+      "sha256": "9881d99cd1da82a170abfa7e96f7c507807d4674b6619f04a66db3a4d5d4fea9",
+      "status": "same",
+      "publication_sha256": "9881d99cd1da82a170abfa7e96f7c507807d4674b6619f04a66db3a4d5d4fea9"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-production-depth-policy-persistence-desktop.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-production-depth-policy-persistence-desktop.png",
+      "sha256": "b5e6c2ad4102bfb3aa5c9a894ddeefbc57fdbf6846396df6dd7cac4f605f8647",
+      "status": "same",
+      "publication_sha256": "b5e6c2ad4102bfb3aa5c9a894ddeefbc57fdbf6846396df6dd7cac4f605f8647"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-production-depth-policy-persistence-mobile.png",
+      "repo": "plan",
+      "path": "docs/browser-qa-production-depth-policy-persistence-mobile.png",
+      "sha256": "7626652f2eb8b9e56708508f897d1921363aec505eae8d0b63c05a017d6b9f89",
+      "status": "same",
+      "publication_sha256": "7626652f2eb8b9e56708508f897d1921363aec505eae8d0b63c05a017d6b9f89"
+    },
+    {
+      "archive": "products/plan/docs/browser-qa-production-depth-policy-persistence-summary.md",
+      "repo": "plan",
+      "path": "docs/browser-qa-production-depth-policy-persistence-summary.md",
+      "sha256": "938185288ea9b271c667b5d58ad865a5a47ce74dc112d7f1c601d810858d2dc0",
+      "status": "same",
+      "publication_sha256": "938185288ea9b271c667b5d58ad865a5a47ce74dc112d7f1c601d810858d2dc0"
+    },
+    {
+      "archive": "products/plan/docs/github-discussions-seed.md",
+      "repo": "plan",
+      "path": "docs/github-discussions-seed.md",
+      "sha256": "9ac2ff370361e3cef9c259b98d802d4c32f99f9511addba3396764eda4b346ff",
+      "status": "same",
+      "publication_sha256": "9ac2ff370361e3cef9c259b98d802d4c32f99f9511addba3396764eda4b346ff"
+    },
+    {
+      "archive": "products/plan/docs/index.html",
+      "repo": "plan",
+      "path": "docs/index.html",
+      "sha256": "594e37001235a75d053f2bdc3c4607d7dbe91a6222ee66f2966e8c6cc39f2a8f",
+      "status": "same",
+      "publication_sha256": "6552313aec168f6aa77d9e1eba9dab140cac510a9de059834f345326e27f9546"
+    },
+    {
+      "archive": "products/plan/docs/licensing/README.md",
+      "repo": "plan",
+      "path": "docs/licensing/README.md",
+      "sha256": "31f03641dce7f8ac15ae03715dd93f5f5357543204232d0beefe0f73fcc678ba",
+      "status": "new",
+      "publication_sha256": "df2b5eb76d649fbe3792ccbfa3ea7615f2c417294793a399f6e76fd98e2bd295"
+    },
+    {
+      "archive": "products/plan/docs/licensing/history/Public-Institution-Exception-1.0.md",
+      "repo": "plan",
+      "path": "docs/licensing/history/Public-Institution-Exception-1.0.md",
+      "sha256": "8af2a3f7cbc186b31e10fecee3522854d524277c460646ba5544cc8e9acecfef",
+      "status": "new",
+      "publication_sha256": "8af2a3f7cbc186b31e10fecee3522854d524277c460646ba5544cc8e9acecfef"
+    },
+    {
+      "archive": "products/plan/docs/municipal-beta.md",
+      "repo": "plan",
+      "path": "docs/municipal-beta.md",
+      "sha256": "e6010dbee5ddaf5a95166e465de6da371fc9bc99cad1009076eabebaf34ac0d4",
+      "status": "new",
+      "publication_sha256": "d3291de709b4fffb63d5266da5d103f3b4bbdfd6979a56d70de344e201160d37"
+    },
+    {
+      "archive": "products/plan/docs/qa/civicplan-v1-browser-qa.md",
+      "repo": "plan",
+      "path": "docs/qa/civicplan-v1-browser-qa.md",
+      "sha256": "2b2d5991c117a3276182a5926722f9c17b443b3bdd48e1ec3cff407792393654",
+      "status": "same",
+      "publication_sha256": "2b2d5991c117a3276182a5926722f9c17b443b3bdd48e1ec3cff407792393654"
+    },
+    {
+      "archive": "products/plan/docs/qa/civicplan-v1-careful-coding.md",
+      "repo": "plan",
+      "path": "docs/qa/civicplan-v1-careful-coding.md",
+      "sha256": "b5bd98fcb4fcabaec13f71b1d1c0e97d06d488538ed32adf27e2566111d9b8b4",
+      "status": "same",
+      "publication_sha256": "b5bd98fcb4fcabaec13f71b1d1c0e97d06d488538ed32adf27e2566111d9b8b4"
+    },
+    {
+      "archive": "products/plan/docs/qa/civicplan-v1-public-desktop.png",
+      "repo": "plan",
+      "path": "docs/qa/civicplan-v1-public-desktop.png",
+      "sha256": "30bdccc7c57d7b0bfe390e3cb8b11676020b66f4cc94ec43c1e011d600cef742",
+      "status": "same",
+      "publication_sha256": "30bdccc7c57d7b0bfe390e3cb8b11676020b66f4cc94ec43c1e011d600cef742"
+    },
+    {
+      "archive": "products/plan/docs/qa/civicplan-v1-public-mobile.png",
+      "repo": "plan",
+      "path": "docs/qa/civicplan-v1-public-mobile.png",
+      "sha256": "b934e1e1d1ffcfc1f42c1f3c7539a4714808a9c02389d0a95b43079c91c77866",
+      "status": "same",
+      "publication_sha256": "b934e1e1d1ffcfc1f42c1f3c7539a4714808a9c02389d0a95b43079c91c77866"
+    },
+    {
+      "archive": "products/plan/docs/qa/civicplan-v1-release-gate-audit.md",
+      "repo": "plan",
+      "path": "docs/qa/civicplan-v1-release-gate-audit.md",
+      "sha256": "0c3102cc086b74f76c286c199cf39d191ff0e9d092909ff46b31b9547b298064",
+      "status": "same",
+      "publication_sha256": "0c3102cc086b74f76c286c199cf39d191ff0e9d092909ff46b31b9547b298064"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa.md",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa.md",
+      "sha256": "3e6b11678d22fba65472ca1b46299516e23ad1effab63a9be811fe0071a4a57d",
+      "status": "same",
+      "publication_sha256": "3e6b11678d22fba65472ca1b46299516e23ad1effab63a9be811fe0071a4a57d"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa/docs-desktop.png",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa/docs-desktop.png",
+      "sha256": "76f322614d2b33b5ebfd45115c535811da10e3d9fd2ee41c58817edb29f84493",
+      "status": "same",
+      "publication_sha256": "76f322614d2b33b5ebfd45115c535811da10e3d9fd2ee41c58817edb29f84493"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa/health-json.png",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa/health-json.png",
+      "sha256": "60423a0f02860bbaf6b25b4f80ca77e5cfc949234c824d78edcdeaa8cf116b5f",
+      "status": "same",
+      "publication_sha256": "60423a0f02860bbaf6b25b4f80ca77e5cfc949234c824d78edcdeaa8cf116b5f"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa/resident-desktop.png",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa/resident-desktop.png",
+      "sha256": "17058d9ae73b498fe2b901dffb62caddb59a5494b5ed291986ca6ba35c599284",
+      "status": "same",
+      "publication_sha256": "17058d9ae73b498fe2b901dffb62caddb59a5494b5ed291986ca6ba35c599284"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa/resident-mobile.png",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa/resident-mobile.png",
+      "sha256": "016ab78e0baaad278d0bdf04787e4bf526d57c42e68b148c4d136d516b30f20a",
+      "status": "same",
+      "publication_sha256": "016ab78e0baaad278d0bdf04787e4bf526d57c42e68b148c4d136d516b30f20a"
+    },
+    {
+      "archive": "products/plan/docs/qa/current-civicplan-release-qa/summary.json",
+      "repo": "plan",
+      "path": "docs/qa/current-civicplan-release-qa/summary.json",
+      "sha256": "18ebfa1ec266cc92dec1039392103aa73916d65269bc9da26e8eb329e1ef78c1",
+      "status": "same",
+      "publication_sha256": "a13849efeced83ef0691feeb9dc24cb448a8e7c271d96cd7dc0b8a15b38357d3"
+    },
+    {
+      "archive": "products/plan/docs/qa/demotion-browser-qa-2026-05-10/desktop-console.txt",
+      "repo": "plan",
+      "path": "docs/qa/demotion-browser-qa-2026-05-10/desktop-console.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "status": "same",
+      "publication_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "archive": "products/plan/docs/qa/demotion-browser-qa-2026-05-10/desktop.png",
+      "repo": "plan",
+      "path": "docs/qa/demotion-browser-qa-2026-05-10/desktop.png",
+      "sha256": "59f8906ce76a23a3720e874bab87786c0cc47f90fff809d3a4700c53c25d5b15",
+      "status": "same",
+      "publication_sha256": "59f8906ce76a23a3720e874bab87786c0cc47f90fff809d3a4700c53c25d5b15"
+    },
+    {
+      "archive": "products/plan/docs/qa/demotion-browser-qa-2026-05-10/mobile-console.txt",
+      "repo": "plan",
+      "path": "docs/qa/demotion-browser-qa-2026-05-10/mobile-console.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "status": "same",
+      "publication_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "archive": "products/plan/docs/qa/demotion-browser-qa-2026-05-10/mobile.png",
+      "repo": "plan",
+      "path": "docs/qa/demotion-browser-qa-2026-05-10/mobile.png",
+      "sha256": "9bc31c005a62e7278fbd5ba8e3e24ed257b999eaf8f1de88a03a5c77a972f485",
+      "status": "same",
+      "publication_sha256": "9bc31c005a62e7278fbd5ba8e3e24ed257b999eaf8f1de88a03a5c77a972f485"
+    },
+    {
+      "archive": "products/plan/docs/qa/demotion-browser-qa-2026-05-10/summary.md",
+      "repo": "plan",
+      "path": "docs/qa/demotion-browser-qa-2026-05-10/summary.md",
+      "sha256": "f6bd2e9e70cb39c81c00548fd1e86b2db18e15ae9ef1a8476fc063aad865a754",
+      "status": "same",
+      "publication_sha256": "f6bd2e9e70cb39c81c00548fd1e86b2db18e15ae9ef1a8476fc063aad865a754"
+    },
+    {
+      "archive": "products/plan/docs/release-integrity-correction-2026-05-21.md",
+      "repo": "plan",
+      "path": "docs/release-integrity-correction-2026-05-21.md",
+      "sha256": "b8039ebfff48319094bbb361dd835984dac0625c02e9ef9967fe1c274f726cb4",
+      "status": "same",
+      "publication_sha256": "b8039ebfff48319094bbb361dd835984dac0625c02e9ef9967fe1c274f726cb4"
+    },
+    {
+      "archive": "products/plan/docs/release-recovery-status.md",
+      "repo": "plan",
+      "path": "docs/release-recovery-status.md",
+      "sha256": "9e4bd2ec8bee1c533e8f0c0436720ba69149ca3b2646102f72f2ab00b51d2660",
+      "status": "same",
+      "publication_sha256": "9e4bd2ec8bee1c533e8f0c0436720ba69149ca3b2646102f72f2ab00b51d2660"
+    },
+    {
+      "archive": "products/plan/patch_empty_reason.py",
+      "repo": "plan",
+      "path": "patch_empty_reason.py",
+      "sha256": "6d0bc0905318ada8947cb7ef657776325b20df9b323cd61a1d9e5356e0753104",
+      "status": "new",
+      "publication_sha256": "6d0bc0905318ada8947cb7ef657776325b20df9b323cd61a1d9e5356e0753104"
+    },
+    {
+      "archive": "products/plan/patch_page_format.py",
+      "repo": "plan",
+      "path": "patch_page_format.py",
+      "sha256": "19fc0a886c832cdca60bc9817d06355e9f75ce9045b63c2dec4d2ca5ba73ca39",
+      "status": "new",
+      "publication_sha256": "19fc0a886c832cdca60bc9817d06355e9f75ce9045b63c2dec4d2ca5ba73ca39"
+    },
+    {
+      "archive": "products/plan/patch_public_ui_test.py",
+      "repo": "plan",
+      "path": "patch_public_ui_test.py",
+      "sha256": "ca01a56eb43a59b7491f81ac4c56df713285b524f7a724d3e2233eb8bb753cfb",
+      "status": "new",
+      "publication_sha256": "ca01a56eb43a59b7491f81ac4c56df713285b524f7a724d3e2233eb8bb753cfb"
+    },
+    {
+      "archive": "products/plan/pyproject.toml",
+      "repo": "plan",
+      "path": "pyproject.toml",
+      "sha256": "b7417741fd6ba3da499feef6bbbbab1a82fdea0e8f5fab997c9203e8d5e0e89e",
+      "status": "changed",
+      "publication_sha256": "0e57249e54b3d7dd9e19dfee341c96f032b20d476a49c6d496a905fe5c74afad"
+    },
+    {
+      "archive": "products/plan/scripts/check-civiccore-placeholder-imports.py",
+      "repo": "plan",
+      "path": "scripts/check-civiccore-placeholder-imports.py",
+      "sha256": "55ccccab0238ed0502ba9535c6d21fa6254dbfa730101aaa55e089cebd652351",
+      "status": "same",
+      "publication_sha256": "55ccccab0238ed0502ba9535c6d21fa6254dbfa730101aaa55e089cebd652351"
+    },
+    {
+      "archive": "products/plan/scripts/policy/__init__.py",
+      "repo": "plan",
+      "path": "scripts/policy/__init__.py",
+      "sha256": "fe860d71e3b5d8d82c3982f4ff4d49f7b9471b7d966444387e4524665a455c10",
+      "status": "same",
+      "publication_sha256": "fe860d71e3b5d8d82c3982f4ff4d49f7b9471b7d966444387e4524665a455c10"
+    },
+    {
+      "archive": "products/plan/scripts/policy/agent_decision_gate.py",
+      "repo": "plan",
+      "path": "scripts/policy/agent_decision_gate.py",
+      "sha256": "a5fb9a534853b90249e362a849ef571f60067db6081064ff517f71f62ad98b3c",
+      "status": "same",
+      "publication_sha256": "a5fb9a534853b90249e362a849ef571f60067db6081064ff517f71f62ad98b3c"
+    },
+    {
+      "archive": "products/plan/scripts/policy/auto_promote.py",
+      "repo": "plan",
+      "path": "scripts/policy/auto_promote.py",
+      "sha256": "587a683b1aa5b882331130e8b3efa1429961c29e3e3e0262540d4503202e013b",
+      "status": "same",
+      "publication_sha256": "587a683b1aa5b882331130e8b3efa1429961c29e3e3e0262540d4503202e013b"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_actions_budget.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_actions_budget.py",
+      "sha256": "a5a01878dc184c8ad9fce6c720ca7ebcb884bef9a4b8f8cd41798291e760b8b5",
+      "status": "same",
+      "publication_sha256": "a5a01878dc184c8ad9fce6c720ca7ebcb884bef9a4b8f8cd41798291e760b8b5"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_adr_gate.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_adr_gate.py",
+      "sha256": "ab35e8a93ac9e56cfffb4363a51009cba22e1324c2d647afbfa350cbff85c4f0",
+      "status": "same",
+      "publication_sha256": "ab35e8a93ac9e56cfffb4363a51009cba22e1324c2d647afbfa350cbff85c4f0"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_allowed_paths.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_allowed_paths.py",
+      "sha256": "8cfceb5c3cd96d11319fc5c90fa2159a05f4f1cdac6662051de35768da86780a",
+      "status": "same",
+      "publication_sha256": "8cfceb5c3cd96d11319fc5c90fa2159a05f4f1cdac6662051de35768da86780a"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_decision_ledger.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_decision_ledger.py",
+      "sha256": "5ec2383b3bbb22a8a38c12fe2483290fc7411b492ba7f7fa6bdab31b6ad765e0",
+      "status": "same",
+      "publication_sha256": "5ec2383b3bbb22a8a38c12fe2483290fc7411b492ba7f7fa6bdab31b6ad765e0"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_directive_conformance.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_directive_conformance.py",
+      "sha256": "fee2961c1f115f3b5157e92d76425be52a3b7c8a7b1b716d0f76d6cf228190b7",
+      "status": "same",
+      "publication_sha256": "fee2961c1f115f3b5157e92d76425be52a3b7c8a7b1b716d0f76d6cf228190b7"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_execute_readiness.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_execute_readiness.py",
+      "sha256": "135daf346b24b5732737ac861ac1738e6c8b7fec7cd6ff96547783695467047c",
+      "status": "same",
+      "publication_sha256": "135daf346b24b5732737ac861ac1738e6c8b7fec7cd6ff96547783695467047c"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_manifest_schema.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_manifest_schema.py",
+      "sha256": "4085d00b4bb6a08cea8e5b7ce2f14272d7fcdbb484f779bcd4d18b860de701a3",
+      "status": "same",
+      "publication_sha256": "4085d00b4bb6a08cea8e5b7ce2f14272d7fcdbb484f779bcd4d18b860de701a3"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_no_todos.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_no_todos.py",
+      "sha256": "3e4a4755c3b7cb22d8ba3795f9fe294d0dd39780dbd7731765937a61ffc55a1c",
+      "status": "same",
+      "publication_sha256": "3e4a4755c3b7cb22d8ba3795f9fe294d0dd39780dbd7731765937a61ffc55a1c"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_pipeline_control_loop.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_pipeline_control_loop.py",
+      "sha256": "933af34fc5140cd03670f7c01a3da9d053d14c31618a46d299380bb65ccf3cfb",
+      "status": "same",
+      "publication_sha256": "933af34fc5140cd03670f7c01a3da9d053d14c31618a46d299380bb65ccf3cfb"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_plan_against_directive.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_plan_against_directive.py",
+      "sha256": "2e811cd097da03f922b8a29b1916ced1b8059313d5edcd8e581cb98c420518d8",
+      "status": "same",
+      "publication_sha256": "2e811cd097da03f922b8a29b1916ced1b8059313d5edcd8e581cb98c420518d8"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_release_docs_consistency.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_release_docs_consistency.py",
+      "sha256": "fe00ef16e86e5aebb52035475933678b706be58fdd7690e475c63b793a6a1cc6",
+      "status": "same",
+      "publication_sha256": "fe00ef16e86e5aebb52035475933678b706be58fdd7690e475c63b793a6a1cc6"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_rung_file_ownership.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_rung_file_ownership.py",
+      "sha256": "aeb80fdc31bd0d06f309328a5d5ae15b0b668488213eaa15a4476286d553f79d",
+      "status": "same",
+      "publication_sha256": "aeb80fdc31bd0d06f309328a5d5ae15b0b668488213eaa15a4476286d553f79d"
+    },
+    {
+      "archive": "products/plan/scripts/policy/check_scope_lock.py",
+      "repo": "plan",
+      "path": "scripts/policy/check_scope_lock.py",
+      "sha256": "d64e6bd5a7ed3e14d14ff434390dea5fe5ead1fe92959694a8be325db0626992",
+      "status": "same",
+      "publication_sha256": "d64e6bd5a7ed3e14d14ff434390dea5fe5ead1fe92959694a8be325db0626992"
+    },
+    {
+      "archive": "products/plan/scripts/policy/directive_utils.py",
+      "repo": "plan",
+      "path": "scripts/policy/directive_utils.py",
+      "sha256": "115bb513bf32d8bb21a52566385010b1a878729fb3dff30365bbb40514a6287c",
+      "status": "same",
+      "publication_sha256": "115bb513bf32d8bb21a52566385010b1a878729fb3dff30365bbb40514a6287c"
+    },
+    {
+      "archive": "products/plan/scripts/policy/final_response_gate.py",
+      "repo": "plan",
+      "path": "scripts/policy/final_response_gate.py",
+      "sha256": "da1f55fe0fd8e92e8550c7503e69d5ec83064a2c70bc93194bc3aa56670cba0b",
+      "status": "same",
+      "publication_sha256": "da1f55fe0fd8e92e8550c7503e69d5ec83064a2c70bc93194bc3aa56670cba0b"
+    },
+    {
+      "archive": "products/plan/scripts/policy/pipeline_continue.py",
+      "repo": "plan",
+      "path": "scripts/policy/pipeline_continue.py",
+      "sha256": "f237a8ec107feef567bec214ec370ae837f09fd7033f4d543dd90d4fa0502dad",
+      "status": "same",
+      "publication_sha256": "f237a8ec107feef567bec214ec370ae837f09fd7033f4d543dd90d4fa0502dad"
+    },
+    {
+      "archive": "products/plan/scripts/policy/policy_utils.py",
+      "repo": "plan",
+      "path": "scripts/policy/policy_utils.py",
+      "sha256": "2bd468353ecdf0f93dabb06305b9b214a5c2be24c36c2133b782ca656fa2ed5b",
+      "status": "same",
+      "publication_sha256": "2bd468353ecdf0f93dabb06305b9b214a5c2be24c36c2133b782ca656fa2ed5b"
+    },
+    {
+      "archive": "products/plan/scripts/policy/preflight_infrastructure.py",
+      "repo": "plan",
+      "path": "scripts/policy/preflight_infrastructure.py",
+      "sha256": "ac6f7cfc76b9940db3e6d6ae5949ac1ce027a70480167024b46be6536f664e9e",
+      "status": "same",
+      "publication_sha256": "ac6f7cfc76b9940db3e6d6ae5949ac1ce027a70480167024b46be6536f664e9e"
+    },
+    {
+      "archive": "products/plan/scripts/policy/run_all.py",
+      "repo": "plan",
+      "path": "scripts/policy/run_all.py",
+      "sha256": "6ba9ab17d789d64067613f9271465416102bffd0d2424ff16bb18d37d625e3c4",
+      "status": "same",
+      "publication_sha256": "6ba9ab17d789d64067613f9271465416102bffd0d2424ff16bb18d37d625e3c4"
+    },
+    {
+      "archive": "products/plan/scripts/policy/scope_lock_utils.py",
+      "repo": "plan",
+      "path": "scripts/policy/scope_lock_utils.py",
+      "sha256": "37db3f91d0d220ce9960306bfd62526108c459ce69849067cd75b6206bc902a8",
+      "status": "same",
+      "publication_sha256": "37db3f91d0d220ce9960306bfd62526108c459ce69849067cd75b6206bc902a8"
+    },
+    {
+      "archive": "products/plan/scripts/policy/show_run_status.py",
+      "repo": "plan",
+      "path": "scripts/policy/show_run_status.py",
+      "sha256": "b43db683266a14393bb0e08210f4aeffcf51052f3c6f3b8f74e909897d0a40d6",
+      "status": "same",
+      "publication_sha256": "b43db683266a14393bb0e08210f4aeffcf51052f3c6f3b8f74e909897d0a40d6"
+    },
+    {
+      "archive": "products/plan/scripts/policy/stop_validator.py",
+      "repo": "plan",
+      "path": "scripts/policy/stop_validator.py",
+      "sha256": "b97613e1d82010658a33f9846380670e6ccf2ee4a51d7375d8bcc41ee3d65a41",
+      "status": "same",
+      "publication_sha256": "b97613e1d82010658a33f9846380670e6ccf2ee4a51d7375d8bcc41ee3d65a41"
+    },
+    {
+      "archive": "products/plan/scripts/policy/validate_manifest.py",
+      "repo": "plan",
+      "path": "scripts/policy/validate_manifest.py",
+      "sha256": "a941e7d6b221557395b70d5b8777d934545bcde19ce7cf2e865a474325892e6d",
+      "status": "same",
+      "publication_sha256": "a941e7d6b221557395b70d5b8777d934545bcde19ce7cf2e865a474325892e6d"
+    },
+    {
+      "archive": "products/plan/tests/source_fixtures.py",
+      "repo": "plan",
+      "path": "tests/source_fixtures.py",
+      "sha256": "f718ccf11860e2cc1000475bd27641e7790dfacb4670fef5a58fa6f5e5f000c3",
+      "status": "same",
+      "publication_sha256": "f718ccf11860e2cc1000475bd27641e7790dfacb4670fef5a58fa6f5e5f000c3"
+    },
+    {
+      "archive": "products/plan/tests/test_municipal.py",
+      "repo": "plan",
+      "path": "tests/test_municipal.py",
+      "sha256": "3d322101d60ed2682e59a07704d499235c31aa000d07196ea68b0cfac3037f72",
+      "status": "new",
+      "publication_sha256": "3d322101d60ed2682e59a07704d499235c31aa000d07196ea68b0cfac3037f72"
+    },
+    {
+      "archive": "products/plan/tests/test_plan_sources.py",
+      "repo": "plan",
+      "path": "tests/test_plan_sources.py",
+      "sha256": "3c7fbb2fe80efac45046209fd50925462e38c84382d36048162583187029cf87",
+      "status": "same",
+      "publication_sha256": "3c7fbb2fe80efac45046209fd50925462e38c84382d36048162583187029cf87"
+    },
+    {
+      "archive": "products/plan/tests/test_planning_foundation.py",
+      "repo": "plan",
+      "path": "tests/test_planning_foundation.py",
+      "sha256": "5e78e0df66b3ce2b2f72b85d794724d1890111442b654dedfa19a4594c38c2fc",
+      "status": "changed",
+      "publication_sha256": "61880420eee9590db58520d501039bdf20c50fa5dcced2279d50970d917d2f60"
+    },
+    {
+      "archive": "products/plan/tests/test_production_depth_policy_persistence.py",
+      "repo": "plan",
+      "path": "tests/test_production_depth_policy_persistence.py",
+      "sha256": "a3672672f6e32192adae08c7135e84433729e774d96d070d667c58efbdf5bed0",
+      "status": "same",
+      "publication_sha256": "a3672672f6e32192adae08c7135e84433729e774d96d070d667c58efbdf5bed0"
+    },
+    {
+      "archive": "products/plan/tests/test_public_explore.py",
+      "repo": "plan",
+      "path": "tests/test_public_explore.py",
+      "sha256": "82ea70e35d2042adff6b742c9954b903415494e40545120c81d99e32e326ab66",
+      "status": "new",
+      "publication_sha256": "9ade8e18748a315374e9fb8f6753bb43b1a9511e16f70c3def30432089e45031"
+    },
+    {
+      "archive": "products/plan/tests/test_runtime_foundation.py",
+      "repo": "plan",
+      "path": "tests/test_runtime_foundation.py",
+      "sha256": "91d6bcc2801d2ba43b41c94b5badd43d2159e7608a2b4686214f42c3837063d7",
+      "status": "changed",
+      "publication_sha256": "fbdabb52ba89cd8920f68b601afa0504a78649eb868162da79008c2e5e93c28f"
+    },
+    {
+      "archive": "products/plan/tests/test_source_workflows.py",
+      "repo": "plan",
+      "path": "tests/test_source_workflows.py",
+      "sha256": "eb2be789bdfb39bc55a1f784e298c337d1e7fd609d37fd46285920faf057cd65",
+      "status": "same",
+      "publication_sha256": "eb2be789bdfb39bc55a1f784e298c337d1e7fd609d37fd46285920faf057cd65"
+    },
+    {
+      "archive": "products/plan/tests/test_v1_plan_workflows.py",
+      "repo": "plan",
+      "path": "tests/test_v1_plan_workflows.py",
+      "sha256": "49fbd5161733be1dc40001df31ac56094c6aac035922a235b50e42562e102f69",
+      "status": "changed",
+      "publication_sha256": "3add734c8fa0cb2ceb9ad8cb2a9309689c87569aad7a75077199eade93ce66e9"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/__init__.py",
+      "repo": "plan",
+      "path": "civicplan/__init__.py",
+      "sha256": "d6a014eba48a6bdcdaea2a444cfcaa743cd2ba33cec6d63ea5e450266ad71c82",
+      "status": "changed",
+      "publication_sha256": "4e3225ac5f983070d6ae9897bfbd41afa1d7c6e993e1e6a5a48fbc39c5fe69c6"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/connections.py",
+      "repo": "plan",
+      "path": "civicplan/connections.py",
+      "sha256": "649c8474e787fca1e30a11f153d2f776283204b5dc8053b7e88fbc325cdcf944",
+      "status": "same",
+      "publication_sha256": "649c8474e787fca1e30a11f153d2f776283204b5dc8053b7e88fbc325cdcf944"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/consistency.py",
+      "repo": "plan",
+      "path": "civicplan/consistency.py",
+      "sha256": "d18ef439391d859f0d1a020356edaf91d2441333eacf36036d03d1b7ea467210",
+      "status": "same",
+      "publication_sha256": "d18ef439391d859f0d1a020356edaf91d2441333eacf36036d03d1b7ea467210"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/integration_mocks.py",
+      "repo": "plan",
+      "path": "civicplan/integration_mocks.py",
+      "sha256": "09c350c13fe4e14c3f385549021f57c09341c8dbe110b18e6e4739cf70ac6254",
+      "status": "same",
+      "publication_sha256": "09c350c13fe4e14c3f385549021f57c09341c8dbe110b18e6e4739cf70ac6254"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/main.py",
+      "repo": "plan",
+      "path": "civicplan/main.py",
+      "sha256": "34aaae27da4bc8f34570849cc446a134efb78c004294425ac62ef2c80abb1adf",
+      "status": "changed",
+      "publication_sha256": "56c180acfbba1f1c7b274ce6074aa12ee94b12237aba9f65ccb859af8d6b5200"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/__init__.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/__init__.py",
+      "sha256": "daf5e64cefda400a5db1023d952e41bef6f7954db19406d63ea84770c82dccd9",
+      "status": "changed",
+      "publication_sha256": "2fe6deefbd9cdd6ad6055815b2db1fd63139b5ad9de822b53db8c759f4a30acf"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/__main__.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/__main__.py",
+      "sha256": "321e543984ca92e2540d1f4d9eca54658dc608987b95bc5abc61b651b4305fd6",
+      "status": "same",
+      "publication_sha256": "321e543984ca92e2540d1f4d9eca54658dc608987b95bc5abc61b651b4305fd6"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/env.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/env.py",
+      "sha256": "832a41b6c40d14da47178b486650eba98bff574a66652e3b614cc782db04f8df",
+      "status": "same",
+      "publication_sha256": "832a41b6c40d14da47178b486650eba98bff574a66652e3b614cc782db04f8df"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/versions/civicplan_0001_sources.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0001_sources.py",
+      "sha256": "807e5a18d1fa295d482f3963f7799f244f046ab98297bfc33cbd17131fb44d17",
+      "status": "same",
+      "publication_sha256": "807e5a18d1fa295d482f3963f7799f244f046ab98297bfc33cbd17131fb44d17"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/versions/civicplan_0002_workflows.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0002_workflows.py",
+      "sha256": "7c6fcdfe4a1fa33c9289cef975a25f4b0f6746471c380226c14520f8a5f09dbf",
+      "status": "same",
+      "publication_sha256": "7c6fcdfe4a1fa33c9289cef975a25f4b0f6746471c380226c14520f8a5f09dbf"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/versions/civicplan_0003_municipal.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0003_municipal.py",
+      "sha256": "64735db3119b22b54a232e0a4486657a91b5304e4a253b14ce7cae1acb204681",
+      "status": "new",
+      "publication_sha256": "64735db3119b22b54a232e0a4486657a91b5304e4a253b14ce7cae1acb204681"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/migrations/versions/civicplan_0004_neighborhoods.py",
+      "repo": "plan",
+      "path": "civicplan/migrations/versions/civicplan_0004_neighborhoods.py",
+      "sha256": "006f8f8f9859da76189efee9035d1f89c65e0b27172b5df9e316e1aa173434f8",
+      "status": "new",
+      "publication_sha256": "006f8f8f9859da76189efee9035d1f89c65e0b27172b5df9e316e1aa173434f8"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/municipal.py",
+      "repo": "plan",
+      "path": "civicplan/municipal.py",
+      "sha256": "dbd5bd841f3f90d2ab7256eafb30ed8b7ba6036bd3921e23595d7df6715b8555",
+      "status": "new",
+      "publication_sha256": "d1300615073ffaa9644eab1696a928eb3765f4ce58f8bc3ee8846af545cb09ab"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/municipal_api.py",
+      "repo": "plan",
+      "path": "civicplan/municipal_api.py",
+      "sha256": "b71876bd1b6f354f7a9ad8d06f19d8ae7c071a0315f19421d3ff4df07bb8dc1f",
+      "status": "new",
+      "publication_sha256": "b71876bd1b6f354f7a9ad8d06f19d8ae7c071a0315f19421d3ff4df07bb8dc1f"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/persistence.py",
+      "repo": "plan",
+      "path": "civicplan/persistence.py",
+      "sha256": "30d920165ab9b4f9675a0d61dd887587823b6c075ef160e3a56670db95d2cc7e",
+      "status": "same",
+      "publication_sha256": "30d920165ab9b4f9675a0d61dd887587823b6c075ef160e3a56670db95d2cc7e"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/plan_workflows.py",
+      "repo": "plan",
+      "path": "civicplan/plan_workflows.py",
+      "sha256": "e69084e3608fa33bbc6ab140d4570efa3850cb04317000b407c5a5f5ca635115",
+      "status": "same",
+      "publication_sha256": "e69084e3608fa33bbc6ab140d4570efa3850cb04317000b407c5a5f5ca635115"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/policy_lookup.py",
+      "repo": "plan",
+      "path": "civicplan/policy_lookup.py",
+      "sha256": "eef53ba621332d75f069f00ddcac34c19bca42d469a697fd22555eb3d11c68b2",
+      "status": "same",
+      "publication_sha256": "eef53ba621332d75f069f00ddcac34c19bca42d469a697fd22555eb3d11c68b2"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/policy_service.py",
+      "repo": "plan",
+      "path": "civicplan/policy_service.py",
+      "sha256": "c5e5461fadea4b32cba43366e1c9795ecb4cd8212db30734f5eadd24a9144808",
+      "status": "same",
+      "publication_sha256": "c5e5461fadea4b32cba43366e1c9795ecb4cd8212db30734f5eadd24a9144808"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/public_explore.py",
+      "repo": "plan",
+      "path": "civicplan/public_explore.py",
+      "sha256": "c5cbb2de92661538857e52b25f2e0bc4e7cd4f5c9d91eb0fa7d0518b28374720",
+      "status": "new",
+      "publication_sha256": "4d2bb70199d23602473a7efad22e48360471ad78ce1928d65113e35f64b37df5"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/public_explore_ui.py",
+      "repo": "plan",
+      "path": "civicplan/public_explore_ui.py",
+      "sha256": "bd137701e16391a4ee820c4c88b5db583944491d5fc487ff7580b1083e944e5d",
+      "status": "new",
+      "publication_sha256": "4657fe2e770af860d218d4e136e309a9241baef7edc276068e68048447c9a1d2"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/public_ui.py",
+      "repo": "plan",
+      "path": "civicplan/public_ui.py",
+      "sha256": "8551ce36f854a4a7fc4573a20b73dbb0b6f01d7b60b7267d8c73b5f21f246ccc",
+      "status": "same",
+      "publication_sha256": "8551ce36f854a4a7fc4573a20b73dbb0b6f01d7b60b7267d8c73b5f21f246ccc"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/records_export.py",
+      "repo": "plan",
+      "path": "civicplan/records_export.py",
+      "sha256": "6894fb9450f5d0177ebf86babcd489be1a789a714ce2c3c825c7afd5ed51bb23",
+      "status": "same",
+      "publication_sha256": "6894fb9450f5d0177ebf86babcd489be1a789a714ce2c3c825c7afd5ed51bb23"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/source_api.py",
+      "repo": "plan",
+      "path": "civicplan/source_api.py",
+      "sha256": "4af39debaf4f9cbb219c294ddfeaea642495d45e492e62852049372e296f1df4",
+      "status": "same",
+      "publication_sha256": "4af39debaf4f9cbb219c294ddfeaea642495d45e492e62852049372e296f1df4"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/source_bundle.py",
+      "repo": "plan",
+      "path": "civicplan/source_bundle.py",
+      "sha256": "f6547516067e27697dfcd6ba80de6e2ca03d1473370209aa354a5bf95b7db98a",
+      "status": "changed",
+      "publication_sha256": "f6547516067e27697dfcd6ba80de6e2ca03d1473370209aa354a5bf95b7db98a"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/source_schema.py",
+      "repo": "plan",
+      "path": "civicplan/source_schema.py",
+      "sha256": "1c429c22247cda2aaec5abe6807639177f035cae843993666dbf8b2824bbdbf1",
+      "status": "changed",
+      "publication_sha256": "1c429c22247cda2aaec5abe6807639177f035cae843993666dbf8b2824bbdbf1"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/source_store.py",
+      "repo": "plan",
+      "path": "civicplan/source_store.py",
+      "sha256": "97022c50baa5b7e81bcc12fccd6c2e429af35f163680542cbf99b65722905d82",
+      "status": "changed",
+      "publication_sha256": "97022c50baa5b7e81bcc12fccd6c2e429af35f163680542cbf99b65722905d82"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/staff_analysis.py",
+      "repo": "plan",
+      "path": "civicplan/staff_analysis.py",
+      "sha256": "71ab2f06804f1c01678f708c60a27714d7bd9b14444e1d2c8546cedb8ac1bd69",
+      "status": "same",
+      "publication_sha256": "71ab2f06804f1c01678f708c60a27714d7bd9b14444e1d2c8546cedb8ac1bd69"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/workflow_api.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_api.py",
+      "sha256": "6a48664442a3a8bae19a8cea7676e91f53ca3360f65e912dec666504862e792b",
+      "status": "same",
+      "publication_sha256": "6a48664442a3a8bae19a8cea7676e91f53ca3360f65e912dec666504862e792b"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/workflow_models.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_models.py",
+      "sha256": "d22e978fe778d7f4fdc3989a043370d9f6966b1e4920ed2c75698c73a8ee4e04",
+      "status": "same",
+      "publication_sha256": "d22e978fe778d7f4fdc3989a043370d9f6966b1e4920ed2c75698c73a8ee4e04"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/workflow_schema.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_schema.py",
+      "sha256": "11d864214fabc6d509351fdc7f3e3eb90a910a5db1a137f84a7a8efca5d0002e",
+      "status": "same",
+      "publication_sha256": "11d864214fabc6d509351fdc7f3e3eb90a910a5db1a137f84a7a8efca5d0002e"
+    },
+    {
+      "archive": "installed-owned-source/civicplan/workflow_store.py",
+      "repo": "plan",
+      "path": "civicplan/workflow_store.py",
+      "sha256": "4d4fec6d6c876997726ff1d8f2ff39302f44228fae748edc013739267d210741",
+      "status": "same",
+      "publication_sha256": "4d4fec6d6c876997726ff1d8f2ff39302f44228fae748edc013739267d210741"
+    }
+  ],
+  "identity_note": "Publication commit integrates the already-built candidate; it is not claimed to be the original signing/build commit. Archive paths retain original byte hashes. Documentation entrypoints have a distribution addendum.",
+  "publication_note": "Original accepted bytes remain in the immutable source companion. Canonical sources normalize line endings. Release integration fixes remove a shadowed duplicate class, position imports for lint, format regression/acceptance tools and resolve the paired Core source dependency. Current audited manuals supersede build-time README copies. Each mapped file records both original and publication byte hashes."
+}
