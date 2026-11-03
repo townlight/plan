@@ -1,11 +1,11 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from civicplan.consistency import check_policy_consistency
-from civicplan.main import app
-from civicplan.policy_lookup import lookup_plan_policy
-from civicplan.records_export import build_policy_export
-from civicplan.staff_analysis import draft_staff_analysis
+from townlight_planning.consistency import check_policy_consistency
+from townlight_planning.main import app
+from townlight_planning.policy_lookup import lookup_plan_policy
+from townlight_planning.records_export import build_policy_export
+from townlight_planning.staff_analysis import draft_staff_analysis
 
 
 client = TestClient(app)
@@ -56,7 +56,7 @@ def test_policy_export_preserves_records_context() -> None:
 
 def test_policy_lookup_api_success_shape() -> None:
     response = client.post(
-        "/api/v1/civicplan/policies/lookup",
+        "/api/v1/townlight_planning/policies/lookup",
         json={"topic": "transportation safety near school", "plan_type": "transportation"},
     )
 
@@ -69,12 +69,12 @@ def test_policy_lookup_api_success_shape() -> None:
 
 def test_zoning_policy_context_api_returns_cited_review_required_contract() -> None:
     response = client.post(
-        "/api/v1/civicplan/context/zoning",
+        "/api/v1/townlight_planning/context/zoning",
         json={
             "topic": "missing middle housing near transit",
             "zone_code": "R-2",
             "use": "ADU",
-            "civiczone_context_id": "zone-question-123",
+            "townlight_zoning_context_id": "zone-question-123",
         },
     )
 
@@ -87,14 +87,14 @@ def test_zoning_policy_context_api_returns_cited_review_required_contract() -> N
     assert payload["relevance"]
     assert payload["review_required"] is True
     assert payload["source"] == "sample"
-    assert payload["civiczone_context_id"] == "zone-question-123"
+    assert payload["townlight_zoning_context_id"] == "zone-question-123"
     assert "not a zoning determination" in payload["boundary"]
     assert "legal advice" in payload["boundary"]
     assert "does not make land-use determinations" in payload["disclaimer"]
 
 
 def test_zoning_policy_context_validation_is_actionable() -> None:
-    response = client.post("/api/v1/civicplan/context/zoning", json={})
+    response = client.post("/api/v1/townlight_planning/context/zoning", json={})
 
     assert response.status_code == 422
     detail = response.json()["detail"]
@@ -104,7 +104,7 @@ def test_zoning_policy_context_validation_is_actionable() -> None:
 
 
 def test_existing_endpoint_validation_remains_endpoint_neutral() -> None:
-    response = client.post("/api/v1/civicplan/consistency/check", json={})
+    response = client.post("/api/v1/townlight_planning/consistency/check", json={})
 
     assert response.status_code == 422
     detail = response.json()["detail"]
@@ -116,7 +116,7 @@ def test_existing_endpoint_validation_remains_endpoint_neutral() -> None:
 
 def test_oversized_policy_lookup_validation_is_actionable() -> None:
     response = client.post(
-        "/api/v1/civicplan/policies/lookup",
+        "/api/v1/townlight_planning/policies/lookup",
         json={"topic": "x" * 501, "plan_type": "comprehensive"},
     )
 
@@ -128,11 +128,11 @@ def test_oversized_policy_lookup_validation_is_actionable() -> None:
 
 def test_consistency_and_staff_analysis_apis() -> None:
     consistency = client.post(
-        "/api/v1/civicplan/consistency/check",
+        "/api/v1/townlight_planning/consistency/check",
         json={"proposal": "Housing near transit and sidewalks.", "policy_id": "housing"},
     )
     staff = client.post(
-        "/api/v1/civicplan/staff-analysis/draft",
+        "/api/v1/townlight_planning/staff-analysis/draft",
         json={
             "project_name": "Maple Avenue Homes",
             "proposal": "Housing near transit and sidewalks.",
@@ -154,8 +154,8 @@ def test_public_ui_route_is_accessible_and_honest(monkeypatch) -> None:
     ``tests/test_public_explore.py``). Either way, no static sample survives.
     """
 
-    monkeypatch.delenv("CIVICPLAN_POLICY_DB_URL", raising=False)
-    response = client.get("/civicplan")
+    monkeypatch.delenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", raising=False)
+    response = client.get("/townlight_planning")
 
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
@@ -173,4 +173,4 @@ def test_public_ui_route_is_accessible_and_honest(monkeypatch) -> None:
 
 @pytest.fixture(autouse=True)
 def explicit_sample_mode(monkeypatch):
-    monkeypatch.setenv("CIVICPLAN_DEMO_MODE", "1")
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_DEMO_MODE", "1")

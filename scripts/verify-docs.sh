@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Historical evidence keeps its original identity. These are not current release claims.
 required=(
   "README.md"
   "README.txt"
@@ -29,15 +30,15 @@ required=(
   "PRODUCTION_DEPTH_POLICY_PERSISTENCE_DONE.md"
   "PRODUCTION_DEPTH_ZONE_CONTEXT_CONTRACT_DONE.md"
   "pyproject.toml"
-  "civicplan/__init__.py"
-  "civicplan/main.py"
-  "civicplan/policy_lookup.py"
-  "civicplan/consistency.py"
-  "civicplan/staff_analysis.py"
-  "civicplan/plan_workflows.py"
-  "civicplan/integration_mocks.py"
-  "civicplan/records_export.py"
-  "civicplan/public_ui.py"
+  "townlight_planning/__init__.py"
+  "townlight_planning/main.py"
+  "townlight_planning/policy_lookup.py"
+  "townlight_planning/consistency.py"
+  "townlight_planning/staff_analysis.py"
+  "townlight_planning/plan_workflows.py"
+  "townlight_planning/integration_mocks.py"
+  "townlight_planning/records_export.py"
+  "townlight_planning/public_ui.py"
 )
 
 echo "==> Required-artifact check"
@@ -76,7 +77,7 @@ done
 
 required_markers=(
   "Townlight Beta 1"
-  "0.4.0.dev1"
+  "0.4.0.dev2"
 )
 
 for marker in "${required_markers[@]}"; do

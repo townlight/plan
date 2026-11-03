@@ -12,9 +12,9 @@ import os
 import sys
 from pathlib import Path
 
-from civicplan.migrations import source_engine
-from civicplan.source_bundle import PlanBundle
-from civicplan.source_store import PlanSourceRepository
+from townlight_planning.migrations import source_engine
+from townlight_planning.source_bundle import PlanBundle
+from townlight_planning.source_store import PlanSourceRepository
 
 ROOT = Path(sys.argv[1]).resolve()
 
@@ -57,7 +57,7 @@ def policy(policy_id, document_id, goal, objective, topic, title, citation, anch
 
 
 def main():
-    engine = source_engine(os.environ['CIVICPLAN_POLICY_DB_URL'])
+    engine = source_engine(os.environ['TOWNLIGHT_PLANNING_POLICY_DB_URL'])
     repo = PlanSourceRepository(engine)
     try:
         imported = {}

@@ -8,7 +8,7 @@ empty result from a broken filter. Idempotent; retained as the record of this ed
 from pathlib import Path
 
 TASK = Path(__file__).resolve().parents[3]
-target = TASK / 'work/beta-products/plan/civicplan/public_explore.py'
+target = TASK / 'work/beta-products/plan/townlight_planning/public_explore.py'
 text = target.read_text(encoding='utf-8')
 old = """            reason = ('No adopted public policy matches this exploration. Try a '
                       'broader term, or clear the filters to see everything published.')"""

@@ -8,7 +8,7 @@ Idempotent; retained as the record of this edit.
 from pathlib import Path
 
 TASK = Path(__file__).resolve().parents[3]
-target = TASK / 'work/beta-products/plan/civicplan/public_explore_ui.py'
+target = TASK / 'work/beta-products/plan/townlight_planning/public_explore_ui.py'
 text = target.read_text(encoding='utf-8')
 start = text.index('    return """<!DOCTYPE html>')
 NEW = '''    template = """<!DOCTYPE html>
@@ -23,7 +23,7 @@ plan. Every result is a citation to a stored, adopted, currently effective plan
 revision, with its source document. This page explores and cites; it does not make
 planning, zoning or legal determinations.</p></header>
 <main id="main">
-<form class="explore" method="get" action="/civicplan">
+<form class="explore" method="get" action="/townlight_planning">
   <label for="q">Topic, neighborhood or keyword
     <input id="q" name="q" value="[[QUERY]]" maxlength="200"
            placeholder="e.g. missing middle housing, transit corridor"></label>

@@ -125,9 +125,9 @@ def main():
             cursor.execute('CREATE DATABASE planning_public OWNER plan_admin')
         admin.close()
         url = f'postgresql+psycopg2://plan_admin:{PASSWORD}@127.0.0.1:{pgport}/planning_public'
-        penv = {**env, 'CIVICPLAN_POLICY_DB_URL': url, 'CIVICPLAN_STAFF_API_KEY': 'plan-fixture-key'}
+        penv = {**env, 'TOWNLIGHT_PLANNING_POLICY_DB_URL': url, 'TOWNLIGHT_PLANNING_STAFF_API_KEY': 'plan-fixture-key'}
 
-        command('planning-migrate', [PYTHON, '-B', '-m', 'civicplan.migrations'], custom_env=penv)
+        command('planning-migrate', [PYTHON, '-B', '-m', 'townlight_planning.migrations'], custom_env=penv)
         passed('Planning source schema migrated in disposable PostgreSQL')
 
         command('planning-seed', [PYTHON, '-B', PLAN / 'accept_plan_public_seed.py', str(ROOT)],
@@ -135,13 +135,13 @@ def main():
         passed('two adopted public plans and one staff-only plan imported as persisted sources')
 
         planning = start('planning-http', [PYTHON, '-B', '-c',
-            'import uvicorn;from civicplan.main import app;'
+            'import uvicorn;from townlight_planning.main import app;'
             f'uvicorn.run(app,host="127.0.0.1",port={planport},log_level="warning")'],
             custom_env=penv)
         base = f'http://127.0.0.1:{planport}'
         ready(base + '/health', planning)
         with httpx.Client(base_url=base, timeout=30, trust_env=False) as client:
-            explore = client.get('/api/v1/civicplan/public/plan-explore')
+            explore = client.get('/api/v1/townlight_planning/public/plan-explore')
             if explore.status_code != 200:
                 raise RuntimeError('explore API failed: ' + explore.text[:400])
             payload = explore.json()
@@ -152,33 +152,33 @@ def main():
                 raise RuntimeError('a staff-only plan leaked into public exploration')
             passed('real HTTP public exploration returns persisted adopted public policies only')
 
-            query = client.get('/api/v1/civicplan/public/plan-explore',
+            query = client.get('/api/v1/townlight_planning/public/plan-explore',
                                params={'q': 'transit'})
             matched = query.json()
             if matched['total'] < 1 or 'transit' not in json.dumps(matched).casefold():
                 raise RuntimeError('keyword exploration did not match persisted text')
             passed('keyword exploration matches persisted plan text and cites it')
 
-            goal = client.get('/api/v1/civicplan/public/plan-explore',
+            goal = client.get('/api/v1/townlight_planning/public/plan-explore',
                               params={'goal': 'Housing choice'})
             if goal.json()['total'] < 1:
                 raise RuntimeError('goal filter did not use persisted goals')
             passed('goal filter resolves through persisted plan goals')
 
-            empty = client.get('/api/v1/civicplan/public/plan-explore',
+            empty = client.get('/api/v1/townlight_planning/public/plan-explore',
                                params={'q': 'heliport'}).json()
             if empty['total'] != 0 or not empty['empty_reason']:
                 raise RuntimeError('unsupported exploration did not fail explicitly')
             passed('an unsupported exploration returns an explicit empty state, not a guess')
 
             # Non-public denial: a staff-only revision id cannot be reached.
-            denied = client.get('/api/v1/civicplan/public/policy/'
+            denied = client.get('/api/v1/townlight_planning/public/policy/'
                                 f'{payload["plans"][0]["revision_id"]}/INTERNAL-1')
             if denied.status_code != 404:
                 raise RuntimeError('nonpublic policy was reachable: ' + denied.text[:200])
             passed('a non-public policy/revision is denied to the public surface (404)')
 
-            page = client.get('/civicplan')
+            page = client.get('/townlight_planning')
             if page.status_code != 200 or 'Fictional' not in page.text:
                 raise RuntimeError('public page did not render persisted sources')
             if 'Housing proposal context' in page.text:

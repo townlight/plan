@@ -1,6 +1,12 @@
-Townlight Beta 1 source component: **0.4.0.dev1**, paired with Core **1.3.0.dev1**. Use the signed suite MSI and current manual for beta installation; earlier entries below retain their original scope.
-
 # Changelog
+
+## [0.4.0.dev2] - Unreleased naming candidate
+
+- Rename the principal distribution/import to the Townlight Planning identities and pair with Townlight Core 1.3.0.dev2.
+- Update renamed cross-product consumers and fresh-install schema identities.
+- Fresh-install candidate only; no legacy database upgrade or import shim. Existing data and historical release identities are preserved.
+- Signed Windows installer acceptance and publication remain pending; source implementation is not installed verification.
+
 
 ## [0.3.0] - Unreleased staff beta preparation
 

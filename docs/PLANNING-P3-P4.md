@@ -1,7 +1,7 @@
 # Planning P3/P4 development workflows — 0.3.0+dev.1
 
-This increment retains P1/P2 original sources and adds migration civicplan_0002.
-Back up the database and run `python -m civicplan.migrations` explicitly. Neither
+This increment retains P1/P2 original sources and adds migration townlight_planning_0002.
+Back up the database and run `python -m townlight_planning.migrations` explicitly. Neither
 requests nor provider composition runs migrations or seeds municipal policy.
 
 All municipal policy consumers use PolicyService: navigation, exact/topic lookup,
@@ -14,7 +14,7 @@ This deterministic workflow needs no model or network provider.
 
 ## Staff review API
 
-All paths below are under `/api/v1/civicplan`. Staff operations require both
+All paths below are under `/api/v1/townlight_planning`. Staff operations require both
 existing role/key headers; the key identifies a trusted service, not a person.
 Native individual authentication and desktop integration remain P5.
 

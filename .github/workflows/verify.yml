@@ -70,8 +70,11 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
-      - name: Install CivicCore release wheel
-        run: python -m pip install https://github.com/townlight/core/archive/68eaf17240ca1af7886f044881ca1be2b2b63e51.zip
+          cache: pip
+      - name: Build and install exact candidate Core
+        run: |
+          python -m pip install build
+          python scripts/install-core-candidate.py
       - name: Install package
         run: python -m pip install -e ".[dev]"
       - name: Run release gate

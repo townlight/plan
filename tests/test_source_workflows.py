@@ -8,18 +8,18 @@ from fastapi.testclient import TestClient
 import pytest
 import sqlalchemy as sa
 
-from civicplan.main import app
-from civicplan.migrations import source_engine, upgrade
-from civicplan.policy_service import PolicyService
-from civicplan.source_bundle import PlanBundle
-from civicplan.source_store import PlanSourceRepository, SourceConflict
-from civicplan.workflow_models import AnalysisInput
-from civicplan.workflow_store import WorkflowRepository
-from civicplan.connections import ConnectionUnavailable
-from civicplan.workflow_schema import versions, snapshots, events
+from townlight_planning.main import app
+from townlight_planning.migrations import source_engine, upgrade
+from townlight_planning.policy_service import PolicyService
+from townlight_planning.source_bundle import PlanBundle
+from townlight_planning.source_store import PlanSourceRepository, SourceConflict
+from townlight_planning.workflow_models import AnalysisInput
+from townlight_planning.workflow_store import WorkflowRepository
+from townlight_planning.connections import ConnectionUnavailable
+from townlight_planning.workflow_schema import versions, snapshots, events
 from source_fixtures import bundle
 
-STAFF = {'X-CivicPlan-Role': 'staff', 'X-CivicPlan-Staff-Key': 'workflow-key'}
+STAFF = {'X-Townlight-Planning-Role': 'staff', 'X-Townlight-Planning-Staff-Key': 'workflow-key'}
 
 
 @pytest.fixture
@@ -30,8 +30,8 @@ def context(tmp_path, monkeypatch):
     sources = PlanSourceRepository(engine)
     imported = sources.import_bundle(PlanBundle.model_validate(bundle()), actor_id='import-staff')
     ref = {'plan_id': 'redstone-comprehensive', 'revision_id': imported['revision_id'], 'policy_id': 'H-1'}
-    monkeypatch.setenv('CIVICPLAN_POLICY_DB_URL', url)
-    monkeypatch.setenv('CIVICPLAN_STAFF_API_KEY', 'workflow-key')
+    monkeypatch.setenv('TOWNLIGHT_PLANNING_POLICY_DB_URL', url)
+    monkeypatch.setenv('TOWNLIGHT_PLANNING_STAFF_API_KEY', 'workflow-key')
     client = TestClient(app)
     yield sources, WorkflowRepository(sources), ref, client
     engine.dispose()
@@ -119,14 +119,14 @@ def test_all_consumers_use_imported_version_and_never_general_sample(context):
         ('plans/synthesis', {'topic': 'housing'}),
         ('consistency/check', {'proposal': 'housing', 'policy_id': 'H-1'}),
         ('context/zoning', {'topic': 'housing'}),
-        ('context/civicclerk', {'topic': 'housing', 'agenda_item': 'Fictional hearing'}),
+        ('context/townlight_meetings', {'topic': 'housing', 'agenda_item': 'Fictional hearing'}),
     ):
-        response = client.post('/api/v1/civicplan/' + endpoint, json=payload)
+        response = client.post('/api/v1/townlight_planning/' + endpoint, json=payload)
         assert response.status_code == 200, response.text
         assert ref['revision_id'] in response.text
         assert 'Fictional Plan, H-1' in response.text
         assert 'H-2.1' not in response.text
-    navigation = client.get('/api/v1/civicplan/plans/navigator').json()
+    navigation = client.get('/api/v1/townlight_planning/plans/navigator').json()
     policy = navigation['plans'][0]['goals'][0]['objectives'][0]['policies'][0]
     assert policy['source_sha256'] == bundle()['documents'][0]['sha256']
     assert client.get(policy['source_location']).content == PlanBundle.model_validate(bundle()).documents[0].original_bytes()
@@ -141,14 +141,14 @@ def test_conflicting_sources_are_a_review_task_and_private_policies_require_auth
     second = bundle('small-area', plan_id='different-plan')
     second['policies'][0]['excerpt'] = 'Fictional Redstone Valley plan.'
     sources.import_bundle(PlanBundle.model_validate(second), actor_id='staff')
-    result = client.post('/api/v1/civicplan/policies/search', json={'query': 'housing'}).json()
+    result = client.post('/api/v1/townlight_planning/policies/search', json={'query': 'housing'}).json()
     assert result['status'] == 'needs_review' and len(result['review_task']['source_references']) == 2
     private = bundle(plan_id='private-plan', visibility='staff')
     private['policies'][0]['policy_id'] = 'PRIVATE-ID'
     sources.import_bundle(PlanBundle.model_validate(private), actor_id='staff')
-    assert 'PRIVATE-ID' not in client.get('/api/v1/civicplan/plans/navigator').text
-    assert 'PRIVATE-ID' in client.get('/api/v1/civicplan/plans/navigator', headers=STAFF).text
-    assert client.get('/api/v1/civicplan/plans/navigator', headers={**STAFF, 'X-CivicPlan-Staff-Key': 'bad'}).status_code == 403
+    assert 'PRIVATE-ID' not in client.get('/api/v1/townlight_planning/plans/navigator').text
+    assert 'PRIVATE-ID' in client.get('/api/v1/townlight_planning/plans/navigator', headers=STAFF).text
+    assert client.get('/api/v1/townlight_planning/plans/navigator', headers={**STAFF, 'X-Townlight-Planning-Staff-Key': 'bad'}).status_code == 403
 
 
 def test_analysis_revisions_review_and_immutable_exports_survive_amendment(context):
@@ -167,7 +167,7 @@ def test_analysis_revisions_review_and_immutable_exports_survive_amendment(conte
     revision['policies'][0]['citation'] = 'Fictional amended policy citation'
     sources.import_bundle(PlanBundle.model_validate(revision), actor_id='staff', expected_previous_revision=ref['revision_id'])
     assert workflow.public_documents(source_id=public['source_id'])[0] == public
-    found = client.post('/api/v1/civicplan/questions/answer', json={'question': 'housing'}).json()
+    found = client.post('/api/v1/townlight_planning/questions/answer', json={'question': 'housing'}).json()
     assert found['sources'][0]['revision_id'] != ref['revision_id']
     assert found['citations'] == ['Fictional amended policy citation']
     assert workflow.get(first['analysis_id'], first['revision_id'])['payload']['review_state'] == 'draft'
@@ -196,15 +196,15 @@ def test_workflow_history_is_immutable(context, table):
 def test_api_review_export_and_authorization(context):
     sources, workflow, ref, client = context
     data = reviewed(ref).model_dump(mode='json')
-    assert client.post('/api/v1/civicplan/analyses', json=data).status_code == 403
-    assert client.post('/api/v1/civicplan/analyses', json={**data, 'actor_id': 'spoof'}, headers=STAFF).status_code == 422
-    saved = client.post('/api/v1/civicplan/analyses', json=data, headers=STAFF).json()
-    path = '/api/v1/civicplan/analyses/' + saved['analysis_id']
+    assert client.post('/api/v1/townlight_planning/analyses', json=data).status_code == 403
+    assert client.post('/api/v1/townlight_planning/analyses', json={**data, 'actor_id': 'spoof'}, headers=STAFF).status_code == 422
+    saved = client.post('/api/v1/townlight_planning/analyses', json=data, headers=STAFF).json()
+    path = '/api/v1/townlight_planning/analyses/' + saved['analysis_id']
     assert client.get(path).status_code == 403
     snapshot = client.post(path + '/snapshots', json={'expected_revision': saved['revision_id'], 'visibility': 'public'}, headers=STAFF)
     assert snapshot.status_code == 200, snapshot.text
     sid = snapshot.json()['version']
-    exported = client.get('/api/v1/civicplan/snapshots/' + sid + '/export', headers=STAFF)
+    exported = client.get('/api/v1/townlight_planning/snapshots/' + sid + '/export', headers=STAFF)
     assert exported.status_code == 200
     assert exported.headers['x-content-sha256'] == hashlib.sha256(exported.content).hexdigest()
     assert exported.json()['policy_sources'][0]['revision_id'] == ref['revision_id']
@@ -241,13 +241,13 @@ def test_future_sources_and_later_private_revision_do_not_grant_public_access(co
     future = bundle(change_note='Future adoption', effective_on='2099-01-01')
     imported = sources.import_bundle(PlanBundle.model_validate(future), actor_id='staff',
                                      expected_previous_revision=ref['revision_id'])
-    assert client.get('/api/v1/civicplan/policy-sources/' + imported['revision_id'] + '/documents/plan').status_code == 404
+    assert client.get('/api/v1/townlight_planning/policy-sources/' + imported['revision_id'] + '/documents/plan').status_code == 404
     assert workflow.public_documents(source_id=snapshot['source_id']) == [snapshot]
     private = bundle(change_note='Staff-only current revision', visibility='staff')
     sources.import_bundle(PlanBundle.model_validate(private), actor_id='staff',
                           expected_previous_revision=imported['revision_id'])
     assert workflow.public_documents(source_id=snapshot['source_id']) == []
-    assert client.get('/api/v1/civicplan/policy-sources/' + ref['revision_id'] + '/documents/plan').status_code == 404
+    assert client.get('/api/v1/townlight_planning/policy-sources/' + ref['revision_id'] + '/documents/plan').status_code == 404
     assert workflow.get(saved['analysis_id']) is not None
     assert workflow.audit(saved['analysis_id'])['ok']
 
