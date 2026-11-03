@@ -1,6 +1,6 @@
 # GitHub Discussions Seed Posts
 
-<a id="welcome-to-civicplan"></a>
+<a id="welcome-to-townlight_planning"></a>
 
 ## Welcome to Townlight Planning
 

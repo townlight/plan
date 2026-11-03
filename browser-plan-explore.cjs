@@ -29,7 +29,7 @@ function pass(name, detail) {
   const consoleErrors = [];
   page.on('console', (message) => { if (message.type() === 'error') consoleErrors.push(message.text()); });
   try {
-    const response = await page.goto(`${base}/civicplan`, { waitUntil: 'load' });
+    const response = await page.goto(`${base}/townlight_planning`, { waitUntil: 'load' });
     if (!response || !response.ok()) throw new Error(`page status ${response && response.status()}`);
     const body = await page.textContent('body');
     if (!/Fictional/i.test(body)) throw new Error('no persisted plan content on the page');

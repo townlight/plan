@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: AGPL-3.0-only
-"""One-shot edit: make /civicplan a live exploration of persisted plan sources.
+"""One-shot edit: make /townlight_planning a live exploration of persisted plan sources.
 
 Replaces the explicit static sample page with the server-rendered explorer and
 adds JSON endpoints over the same service (so the browser and API provably agree),
@@ -10,17 +10,17 @@ Idempotent; retained as the record of this edit.
 from pathlib import Path
 
 TASK = Path(__file__).resolve().parents[3]
-target = TASK / 'work/beta-products/plan/civicplan/main.py'
+target = TASK / 'work/beta-products/plan/townlight_planning/main.py'
 text = target.read_text(encoding='utf-8')
 
-OLD_ROUTE = '''@app.get("/civicplan", response_class=HTMLResponse)
-def public_civicplan_page() -> str:
+OLD_ROUTE = '''@app.get("/townlight_planning", response_class=HTMLResponse)
+def public_townlight_planning_page() -> str:
     """Return the public sample plan-policy lookup UI."""
 
     return render_public_lookup_page()'''
 
-NEW_ROUTE = '''@app.get("/civicplan", response_class=HTMLResponse)
-def public_civicplan_page(
+NEW_ROUTE = '''@app.get("/townlight_planning", response_class=HTMLResponse)
+def public_townlight_planning_page(
     q: str = "", goal: str = "", topic: str = "", plan_type: str = "", clear: str = ""
 ) -> str:
     """Explore the adopted plan sources this deployment actually holds.
@@ -46,7 +46,7 @@ def public_civicplan_page(
     return render_explorer(exploration)
 
 
-@app.get("/api/v1/civicplan/public/plan-explore")
+@app.get("/api/v1/townlight_planning/public/plan-explore")
 def public_plan_explore(q: str = "", goal: str = "", topic: str = "",
                         plan_type: str = "") -> dict[str, object]:
     """The same persisted-source exploration as the page, as JSON."""
@@ -63,7 +63,7 @@ def public_plan_explore(q: str = "", goal: str = "", topic: str = "",
             "review_required": True, "disclaimer": exploration.disclaimer}
 
 
-@app.get("/api/v1/civicplan/public/policy/{revision_id}/{policy_id}")
+@app.get("/api/v1/townlight_planning/public/policy/{revision_id}/{policy_id}")
 def public_policy_citation(revision_id: str, policy_id: str) -> dict[str, object]:
     """One cited policy for a public reader, or a refusal.
 
@@ -84,9 +84,9 @@ def public_policy_citation(revision_id: str, policy_id: str) -> dict[str, object
 if OLD_ROUTE in text and 'public_plan_explore' not in text:
     text = text.replace(OLD_ROUTE, NEW_ROUTE)
     text = text.replace(
-        'from civicplan.public_ui import render_public_lookup_page',
-        'from civicplan.public_explore import explore, resolve_public_policy\n'
-        'from civicplan.public_explore_ui import render_explorer, render_unavailable')
+        'from townlight_planning.public_ui import render_public_lookup_page',
+        'from townlight_planning.public_explore import explore, resolve_public_policy\n'
+        'from townlight_planning.public_explore_ui import render_explorer, render_unavailable')
     target.write_text(text, encoding='utf-8')
     print('patched', target)
 else:

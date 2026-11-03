@@ -1,4 +1,4 @@
-<a id="civicplan-milestones"></a>
+<a id="townlight_planning-milestones"></a>
 
 # Townlight Planning Milestones
 
@@ -24,7 +24,7 @@ Plan-policy export checklist and provenance notes.
 
 ## Milestone 6 - Public UI
 
-Accessible public sample page at `/civicplan`.
+Accessible public sample page at `/townlight_planning`.
 
 ## Milestone 7 - v0.1.0 Release
 

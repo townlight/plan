@@ -26,8 +26,8 @@ NEW = '''def test_public_ui_route_is_accessible_and_honest(monkeypatch) -> None:
     ``tests/test_public_explore.py``). Either way, no static sample survives.
     """
 
-    monkeypatch.delenv("CIVICPLAN_POLICY_DB_URL", raising=False)
-    response = client.get("/civicplan")
+    monkeypatch.delenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", raising=False)
+    response = client.get("/townlight_planning")
 
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]

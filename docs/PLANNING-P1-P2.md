@@ -21,7 +21,7 @@ The local +dev.0 version distinguishes this source foundation from published
 
 ## Import contract
 
-POST /api/v1/civicplan/source-imports accepts:
+POST /api/v1/townlight_planning/source-imports accepts:
 
 ```json
 {
@@ -103,8 +103,8 @@ not move the plan head backward. Stale edits receive 409 and must be reconciled.
 
 ## Persistence, migration and permission contracts
 
-Run python -m civicplan.migrations explicitly against a backed-up database.
-Planning owns its civicplan_0001 Alembic chain and new source tables in civicplan.
+Run python -m townlight_planning.migrations explicitly against a backed-up database.
+Planning owns its townlight_planning_0001 Alembic chain and new source tables in townlight_planning.
 The migration is additive/idempotent and leaves legacy policy/analysis rows
 unchanged. Legacy data is not silently certified as adopted, public or current;
 reimport with originals/evidence is required. No request implicitly runs DDL for

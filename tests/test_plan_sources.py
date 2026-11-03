@@ -9,15 +9,15 @@ from pydantic import ValidationError
 import pytest
 import sqlalchemy as sa
 
-from civicplan.main import app
-from civicplan.migrations import ready, source_engine, upgrade
-from civicplan.persistence import PlanPolicyRepository
-from civicplan.source_bundle import PlanBundle
-from civicplan.source_schema import documents, events, plans, revisions, policies, evidence
-from civicplan.source_store import PlanSourceRepository, SourceConflict, SourcesUnavailable
+from townlight_planning.main import app
+from townlight_planning.migrations import ready, source_engine, upgrade
+from townlight_planning.persistence import PlanPolicyRepository
+from townlight_planning.source_bundle import PlanBundle
+from townlight_planning.source_schema import documents, events, plans, revisions, policies, evidence
+from townlight_planning.source_store import PlanSourceRepository, SourceConflict, SourcesUnavailable
 from source_fixtures import bundle
 
-STAFF = {"X-CivicPlan-Role": "staff", "X-CivicPlan-Staff-Key": "test-key"}
+STAFF = {"X-Townlight-Planning-Role": "staff", "X-Townlight-Planning-Staff-Key": "test-key"}
 
 
 @pytest.mark.parametrize("document_id", ["folder/source", "folder\\source", "..", "source?download", "source#page"])
@@ -184,50 +184,50 @@ def test_invalid_bundles_fail_before_any_database_write(mutate):
 
 def test_staff_api_import_history_download_and_public_boundary(engine, monkeypatch):
     upgrade(engine)
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", str(engine.url))
-    monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-key")
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", str(engine.url))
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_STAFF_API_KEY", "test-key")
     client = TestClient(app)
     body = {"bundle": bundle()}
-    assert client.post("/api/v1/civicplan/source-imports", json=body).status_code == 403
-    wrong = {**STAFF, "X-CivicPlan-Staff-Key": "wrong"}
-    assert client.post("/api/v1/civicplan/source-imports", json=body, headers=wrong).status_code == 403
-    response = client.post("/api/v1/civicplan/source-imports", json=body, headers=STAFF)
+    assert client.post("/api/v1/townlight_planning/source-imports", json=body).status_code == 403
+    wrong = {**STAFF, "X-Townlight-Planning-Staff-Key": "wrong"}
+    assert client.post("/api/v1/townlight_planning/source-imports", json=body, headers=wrong).status_code == 403
+    response = client.post("/api/v1/townlight_planning/source-imports", json=body, headers=STAFF)
     assert response.status_code == 200, response.text
     rid = response.json()["revision_id"]
-    assert client.get(f"/api/v1/civicplan/source-revisions/{rid}").status_code == 403
-    original = client.get(f"/api/v1/civicplan/source-revisions/{rid}/documents/plan", headers=STAFF)
+    assert client.get(f"/api/v1/townlight_planning/source-revisions/{rid}").status_code == 403
+    original = client.get(f"/api/v1/townlight_planning/source-revisions/{rid}/documents/plan", headers=STAFF)
     assert original.content == base64.b64decode(body["bundle"]["documents"][0]["content_base64"])
     assert original.headers["x-content-sha256"] == hashlib.sha256(original.content).hexdigest()
-    history = client.get("/api/v1/civicplan/source-plans/redstone-comprehensive/history", headers=STAFF).json()
+    history = client.get("/api/v1/townlight_planning/source-plans/redstone-comprehensive/history", headers=STAFF).json()
     assert history["audit"]["events"][0]["actor_id"] == "trusted-staff-key"
     assert history["audit"]["ok"]
     # The foundation's public lookup only sees adopted public policies, never sample fallback.
-    found = client.post("/api/v1/civicplan/policies/lookup", json={"topic": "H-1"})
+    found = client.post("/api/v1/townlight_planning/policies/lookup", json={"topic": "H-1"})
     assert found.status_code == 200 and found.json()["citation"] == "Fictional Plan, H-1"
-    missing = client.post("/api/v1/civicplan/policies/lookup", json={"topic": "invented"})
+    missing = client.post("/api/v1/townlight_planning/policies/lookup", json={"topic": "invented"})
     assert missing.status_code == 404
-    no_answer = client.post("/api/v1/civicplan/questions/answer", json={"question": "xyz"}).json()
+    no_answer = client.post("/api/v1/townlight_planning/questions/answer", json={"question": "xyz"}).json()
     assert no_answer["status"] == "no_supported_policy" and not no_answer["citations"]
-    analysis = client.post("/api/v1/civicplan/staff-analysis/draft", json={
+    analysis = client.post("/api/v1/townlight_planning/staff-analysis/draft", json={
         "project_name": "Proposal", "proposal": "housing", "policy_id": "H-1",
     }, headers=STAFF)
     assert analysis.status_code == 200
-    stored = client.get("/api/v1/civicplan/analyses/" + analysis.json()["analysis_id"], headers=STAFF).json()
+    stored = client.get("/api/v1/townlight_planning/analyses/" + analysis.json()["analysis_id"], headers=STAFF).json()
     assert stored["payload"]["selected_policies"][0]["revision_id"] == rid
     second = {"bundle": bundle(plan_id="private", visibility="staff")}
-    assert client.post("/api/v1/civicplan/source-imports", json=second, headers=STAFF).status_code == 200
-    assert len(client.get("/api/v1/civicplan/plans/navigator").json()["plans"][0]["goals"][0]["objectives"][0]["policies"]) == 1
+    assert client.post("/api/v1/townlight_planning/source-imports", json=second, headers=STAFF).status_code == 200
+    assert len(client.get("/api/v1/townlight_planning/plans/navigator").json()["plans"][0]["goals"][0]["objectives"][0]["policies"]) == 1
 
 
 def test_api_requires_explicit_migration_and_does_not_seed(engine, monkeypatch):
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", str(engine.url))
-    monkeypatch.setenv("CIVICPLAN_STAFF_API_KEY", "test-key")
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", str(engine.url))
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_STAFF_API_KEY", "test-key")
     client = TestClient(app)
-    response = client.post("/api/v1/civicplan/source-imports", json={"bundle": bundle()}, headers=STAFF)
+    response = client.post("/api/v1/townlight_planning/source-imports", json={"bundle": bundle()}, headers=STAFF)
     assert response.status_code == 503 and "migrations" in response.text
     assert not sa.inspect(engine).get_table_names()
     upgrade(engine)
-    assert client.get("/api/v1/civicplan/plans/navigator").json()["plans"] == []
+    assert client.get("/api/v1/townlight_planning/plans/navigator").json()["plans"] == []
     assert PlanPolicyRepository(engine=engine).list_policies() == ()
 
 
@@ -246,13 +246,13 @@ def test_postgresql_sources_migrations_restart_and_immutability():
         )
         with engine.connect() as connection:
             before = connection.execute(sa.text(
-                "SELECT * FROM civicplan.plan_policy_records ORDER BY policy_id"
+                "SELECT * FROM townlight_planning.plan_policy_records ORDER BY policy_id"
             )).fetchall()
         upgrade(engine)
         upgrade(engine)
         with engine.connect() as connection:
             assert connection.execute(sa.text(
-                "SELECT * FROM civicplan.plan_policy_records ORDER BY policy_id"
+                "SELECT * FROM townlight_planning.plan_policy_records ORDER BY policy_id"
             )).fetchall() == before
         assert legacy.get_staff_analysis(legacy_record.analysis_id) == legacy_record
         repository = PlanSourceRepository(engine)
@@ -286,19 +286,19 @@ def test_integrity_detects_corrupted_source_after_storage_guard_bypass(repo, eng
 
 
 def test_default_unconfigured_app_never_loads_samples(monkeypatch):
-    monkeypatch.delenv("CIVICPLAN_POLICY_DB_URL", raising=False)
-    monkeypatch.delenv("CIVICPLAN_DEMO_MODE", raising=False)
+    monkeypatch.delenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", raising=False)
+    monkeypatch.delenv("TOWNLIGHT_PLANNING_DEMO_MODE", raising=False)
     client = TestClient(app)
-    for response in (client.get("/api/v1/civicplan/plans/navigator"),
-                     client.post("/api/v1/civicplan/questions/answer", json={"question": "housing"})):
-        assert response.status_code == 503 and "CIVICPLAN_POLICY_DB_URL" in response.text
+    for response in (client.get("/api/v1/townlight_planning/plans/navigator"),
+                     client.post("/api/v1/townlight_planning/questions/answer", json={"question": "housing"})):
+        assert response.status_code == 503 and "TOWNLIGHT_PLANNING_POLICY_DB_URL" in response.text
         assert "Comprehensive Plan, Housing Element" not in response.text
-    assert client.post("/api/v1/civicplan/export", json={"title": "real", "policy_id": "housing"}).status_code == 403
+    assert client.post("/api/v1/townlight_planning/export", json={"title": "real", "policy_id": "housing"}).status_code == 403
 
 
 def test_database_failure_is_actionable_without_secret_or_sample(monkeypatch):
-    monkeypatch.setenv("CIVICPLAN_POLICY_DB_URL", "postgresql+psycopg2://not-a-user:secret-never-returned@127.0.0.1:1/missing?connect_timeout=1")
-    response = TestClient(app).get("/api/v1/civicplan/plans/navigator")
+    monkeypatch.setenv("TOWNLIGHT_PLANNING_POLICY_DB_URL", "postgresql+psycopg2://not-a-user:secret-never-returned@127.0.0.1:1/missing?connect_timeout=1")
+    response = TestClient(app).get("/api/v1/townlight_planning/plans/navigator")
     assert response.status_code == 503
     assert "secret-never-returned" not in response.text
     assert "retry" in response.text
