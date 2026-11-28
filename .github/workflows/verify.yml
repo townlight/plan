@@ -67,7 +67,7 @@ jobs:
       PLANNING_TEST_DATABASE_URL: postgresql+psycopg2://planning_test:planning_test@127.0.0.1:5432/planning_p1p2_test
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
           cache: pip
